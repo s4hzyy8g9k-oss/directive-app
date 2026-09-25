@@ -16,9 +16,9 @@ export const nav = {
 
 export const hero = {
   kicker: "2026 Charter intake",
-  headline: "The scale says you gained 2.8 pounds. Your body says you didn't.",
+  headline: "Most diets don't fail on willpower. They fail on bad math.",
   subhead:
-    "Directive separates water from real tissue change, corrects inflated workout calories, and logs a meal in ten seconds. You stop reacting to noise and stay on course.",
+    "Three measurement errors quietly undo months of good work. Directive is an adaptive metabolic flight computer that separates fluid noise from true tissue, calculates burn with strict Net-MET math, and replaces tracking neurosis with 5-second rapid entry.",
   primaryCta: "Apply for Charter access",
   secondaryCta: "See the app",
 };
@@ -48,68 +48,87 @@ export const demoSteps = [
 ];
 
 export const traps = {
-  heading: "Most diets don't fail on willpower. They fail on bad math.",
-  intro: "Three measurement errors quietly undo months of good work.",
+  heading: "Three measurement errors. Every one of them fixable.",
+  intro: "None of these are willpower failures. They're bad inputs — and they compound against each other.",
   items: [
     {
       kind: "calories" as const,
-      title: "Your watch over-credits your workout",
-      body: "A 60-minute lift gets logged as 600 kcal. Subtract what you'd have burned sitting still and rest between sets, and it's closer to 225. Eat back the difference and your deficit is gone.",
+      title: "Your watch overestimates your burn",
+      body: "A 60-minute lift gets logged as 600 kcal. Subtract your natural resting burn and rest between sets, and it's closer to 225. Eat back the phantom difference and your deficit is gone.",
     },
     {
       kind: "water" as const,
-      title: "Water looks like failure",
-      body: "Salt, heavy training, or hormonal shifts can hold up to 4 lb of water overnight. Directive shows that swing for what it is, so you never cut food to fix a problem you don't have.",
+      title: "That overnight spike isn't fat",
+      body: "Salt, heavy training, or hormonal shifts can hold up to 4 lb of water overnight — and almost nobody's trained to tell the difference. Directive's Kalman filter decouples fluid swings from true dry mass, so you never cut food to fix a problem you don't have.",
     },
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then people quit. Directive's portion grid gets you within about 5% in under ten seconds.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison — rapid entry and visual meal selection get you logged in under ten seconds.",
     },
   ],
 };
 
 export const pillars = {
   heading: "Built around how bodies actually behave",
-  intro: "Not a calorie ledger. A model of your body under training, stress, and restriction.",
+  intro: "Not a calorie ledger. A dynamic model of your body under training, stress, and restriction.",
   items: [
     {
-      title: "Never diet against your cycle",
-      body: "Progesterone can hold water through the luteal phase and distort the scale for days. Directive separates that monthly swing from real tissue loss, so your plan stays calm and objective.",
+      title: "The Fuel Event Buffer",
+      body: "Real life happens. Instead of blowing the diet on a Saturday night and staring at a red failure screen, engage the Fuel Event Buffer. Directive shaves a small, unnoticeable amount off the preceding days and banks it for your event, so your weekly deficit stays intact.",
+    },
+    {
+      title: "The Rebound Shield",
+      body: "Hitting your goal weight is only half the flight — landing without bouncing is the hard part. When you reach your target, Directive systematically walks your calories back up to find true maintenance, preventing the rapid regain that follows most diets.",
     },
     {
       title: "Keep the muscle you've built",
-      body: "In a deep deficit, or on a GLP-1 medication that blunts appetite, Directive watches your protein floor and flags muscle-loss risk before your metabolism slows.",
+      body: "In a deep deficit, or on a GLP-1 medication that blunts appetite, the risk of muscle loss spikes. Directive monitors your daily protein floor and flags structural loss risk before your metabolism slows.",
     },
     {
-      title: "Accurate without the food scale",
-      body: "A 6×6 portion grid for solids and liquids replaces barcodes and gram counting. Tap what you ate and move on with your day.",
+      title: "Built for adults, not for streaks",
+      body: "No guilt, no mid-day nags asking if you drank water. A missed log becomes a quiet late-evening badge, not an alert. Take a week off and Directive enters standby — no alarms, no scolding.",
     },
     {
-      title: "Workouts counted conservatively",
-      body: "Every session is logged net of your resting burn, so a hard day never inflates what you think you can eat.",
+      title: "Speak your doctor's language",
+      body: "Stop handing your clinician a messy 40-page diary dump. Directive compiles your lean-mass trends, trajectory, and vitals into a clean PDF briefing in about 30 seconds.",
+    },
+    {
+      title: "The Afterburner Protocol",
+      body: "For deadline-driven targets — a shoot, an event, a hard calendar date. A temporary, aggressive deficit override for a short, sharp drop. Like a real afterburner, it can't run indefinitely, and Directive keeps it time-capped.",
+      badge: "Pro",
     },
   ],
 };
 
 export const stations = {
-  heading: "Three instruments. One flight plan.",
-  intro: "Everything in Directive lives on one of three screens.",
+  heading: "Five stations. One coherent trajectory.",
+  intro: "Everything Directive tracks routes through a dedicated instrument panel.",
   items: [
     {
-      id: "mission",
-      name: "Mission Control",
-      body: "Your true trend, your target runway, and your weekly dials on one screen. Zoom from one week to the whole mission.",
+      id: "fuel",
+      name: "Fuel",
+      body: "Agnostic energy balancing. Hit your calorie ceiling, lock in your protein floor, and use rapid entry with visual meal selection to log your day in seconds.",
     },
     {
-      id: "fuel",
-      name: "Fuel Station",
-      body: "Tap portions on the grid and watch the estimate update live. Log a full meal in about ten seconds. Try it.",
+      id: "altimeter",
+      name: "Altimeter",
+      body: "Kalman-smoothed trend telemetry. Daily scale readings decoupled from fluid swings to reveal your true dry-mass descent.",
+    },
+    {
+      id: "cruise",
+      name: "Cruising Altitude",
+      body: "Runway management. Dynamic pacing toward your touchdown date, Fuel Event Buffers, and automated Rebound Shield handling once you land.",
     },
     {
       id: "burn",
-      name: "Burn Station",
-      body: "Log a workout at low, medium, or high effort. Resting burn is subtracted automatically. Try it.",
+      name: "Burn",
+      body: "True net energy expenditure. Resistance load tracking and conservative step baselines that keep cardio from competing with strength gains.",
+    },
+    {
+      id: "briefing",
+      name: "Flight Briefing",
+      body: "Your weekly directive. An objective telemetry audit that diagnoses actual vs. expected loss and sets your exact parameters for the week ahead.",
     },
   ],
 };
@@ -122,14 +141,36 @@ export const finalCta = {
 
 export const modal = {
   step1: {
-    question: "What's your main goal?",
-    options: ["Lose fat and keep muscle", "Protect muscle on a GLP-1 or deep deficit", "Recomp and fuel for training"],
+    question: "What's your primary mission?",
+    options: [
+      "Lose fat, keep muscle",
+      "Protect muscle on GLP-1 or a deep deficit",
+      "Recomp for athletic training",
+      "Add muscle in a lean bulk",
+    ],
   },
   step2: {
-    question: "What gets in your way most?",
-    options: ["Scale swings make me panic", "My deficit stalls even when I train", "Tracking food burns me out"],
+    question: "What disrupts your flight plan the most?",
+    hint: "Choose up to two.",
+    max: 2,
+    options: [
+      "Seeing the scale move the wrong way frustrates me",
+      "My weight loss plateaus even when I'm working hard",
+      "The tedious effort of tracking every detail of my food",
+      "Severe diet fatigue and burnout from chronic restriction",
+      "Losing the weight, only to rapidly regain it after",
+    ],
   },
   step3: {
+    question: "What's the biggest failure of your current fitness app?",
+    options: [
+      "Raw data and charts, but no actionable direction",
+      "It punishes me with broken streaks and guilt",
+      "Every day is treated the same — no planning for real life",
+      "I have to dig through endless food databases to log a meal",
+    ],
+  },
+  step4: {
     heading: "Where should we send your access?",
     body: "We'll reserve your place in the 2026 Charter intake.",
     placeholder: "you@email.com",

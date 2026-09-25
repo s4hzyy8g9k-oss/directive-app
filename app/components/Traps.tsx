@@ -38,18 +38,50 @@ function WaterViz() {
   );
 }
 
+function MealIcon({ path }: { path: string }) {
+  return (
+    <svg viewBox="0 0 24 24" className="h-4 w-4 sm:h-[18px] sm:w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+      <path d={path} />
+    </svg>
+  );
+}
+
+const MEAL_PATHS = [
+  "M4 12a8 8 0 0 0 16 0Z M4 12h16", // bowl
+  "M12 3v18M7 3a5 5 0 0 0 0 10M17 3a5 5 0 0 0 0 10", // fork+knife
+  "M6 3h9l-1 13a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3Z M6 8h9", // cup
+  "M4 10 L12 4 L20 10 L20 12 L4 12 Z M5 12 L5 19 L19 19 L19 12", // sandwich/plate-ish
+];
+
 function ScaleViz() {
   return (
-    <div className="flex w-full items-center justify-between gap-4">
-      <div className="rounded-xl border hairline bg-space/60 px-4 py-3 text-center">
-        <div className="font-mono text-[26px] text-white/40 line-through decoration-coral/70">14.0 g</div>
-        <div className="text-[11px] text-white/40">every almond, forever</div>
+    <div className="w-full">
+      <div className="flex items-center justify-center gap-3">
+        <div className="rounded-xl border hairline bg-space/60 px-3 py-2.5 text-center">
+          <div className="font-mono text-[19px] text-white/35 line-through decoration-coral/70">14.0 g</div>
+          <div className="text-[10px] text-white/35">weighed, forever</div>
+        </div>
+        <svg viewBox="0 0 24 24" className="h-4 w-6 text-white/25 sm:w-8" fill="none" aria-hidden>
+          <path d="M4 12h16m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.5" />
+        </svg>
+        <div className="rounded-xl border border-gold/40 bg-gold/[0.08] px-3 py-2.5 text-center">
+          <div className="font-mono text-[19px] text-champagne">5.0 s</div>
+          <div className="text-[10px] text-gold/70">tap &amp; log</div>
+        </div>
       </div>
-      <div className="grid grid-cols-6 gap-[3px]">
-        {Array.from({ length: 36 }).map((_, i) => (
-          <span key={i} className={`h-3.5 w-3.5 rounded-[3px] ${[8, 14, 15, 21].includes(i) ? "bg-gold shadow-[0_0_6px_#D4AF37]" : "bg-white/[0.07]"}`} />
+      <div className="mt-4 grid grid-cols-4 gap-2">
+        {MEAL_PATHS.map((path, i) => (
+          <div
+            key={i}
+            className={`flex aspect-square items-center justify-center rounded-xl border transition-colors ${
+              i === 1 ? "border-gold bg-gold/15 text-champagne shadow-[0_0_10px_-2px_rgba(212,175,55,0.7)]" : "border-white/10 bg-white/[0.03] text-white/40"
+            }`}
+          >
+            <MealIcon path={path} />
+          </div>
         ))}
       </div>
+      <div className="mt-2.5 text-center text-[11px] text-champagne/80">Visual meal selection</div>
     </div>
   );
 }

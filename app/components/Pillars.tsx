@@ -22,9 +22,14 @@ export default function Pillars() {
 
         <div className="divide-y divide-white/[0.07] border-y border-white/[0.07]">
           {pillars.items.map((p) => (
-            <div key={p.title} className="py-9">
-              <h3 className="font-display text-[28px] leading-tight text-champagne sm:text-[32px]">{p.title}</h3>
-              <p className="mt-3 max-w-[58ch] text-[15.5px] leading-relaxed text-white/65">{p.body}</p>
+            <div key={p.title} className="py-7 sm:py-8">
+              <div className="flex flex-wrap items-center gap-2.5">
+                <h3 className="font-display text-[26px] leading-tight text-champagne sm:text-[30px]">{p.title}</h3>
+                {"badge" in p && p.badge && (
+                  <span className="rounded-full border border-gold/40 bg-gold/[0.08] px-2.5 py-0.5 text-[10.5px] font-semibold tracking-wide text-gold">{p.badge}</span>
+                )}
+              </div>
+              <p className="mt-2.5 max-w-[58ch] text-[15px] leading-relaxed text-white/65">{p.body}</p>
             </div>
           ))}
         </div>

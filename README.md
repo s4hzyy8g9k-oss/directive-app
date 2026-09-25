@@ -1,11 +1,30 @@
-# Directive — Marketing Site (v2)
+# Directive — Marketing Site (v3)
 
-## What changed in v2
-- New look: live starfield, brushed-gold instrument bezels, Instrument Serif display type
-- Hero animation: real-looking weigh-in data; the scale "panics", Directive separates water, reveals the smooth true trend and Nov 15 runway
-- Working Fuel grid and Burn logger previews, animated watch-dial complications
-- **All copy lives in `app/content.ts`** — edit messaging there without touching layout
-- Upgraded to Next 15.1 + React 19 (delete `node_modules` and `package-lock.json`, then `npm install`)
+## What changed in v3
+- **Full copy overhaul** from the latest messaging pass — new hero, reworded
+  trap headlines (dropped "over-credits" jargon, reframed the water-weight
+  trap), and the real feature set: Fuel Event Buffer, Rebound Shield,
+  Anti-Nagware Architecture, PDF Briefings, and the Afterburner Protocol
+- **6×6 grid retired.** The Fuel Station preview and the "almonds" trap
+  visual now show tappable meal cards (visual meal selection) plus rapid
+  entry — no more 36-square grid
+- **5 stations**, not 3: Fuel, Altimeter, Cruising Altitude, Burn, Flight
+  Briefing — each with its own small interactive preview
+- **Charter modal is now 4 steps**, with a real multi-select (choose up to
+  two) on step 2
+- **Favicon/app icon recentered** — cropped on the mark's actual top and
+  bottom edges instead of the full image bounds, so it isn't biased low in
+  the browser tab
+- **Hero chart is shorter** on desktop (less vertical padding, smaller
+  chart height) so the graph and its caption fit together on a laptop
+  screen without scrolling — the chart's own design/data is untouched
+- Fixed a real bug: a duplicate point in the forecast/corridor path math
+  was producing `NaN` in the SVG path — that's what a "Failed to load"-free
+  console with no path errors depends on
+- Added `data-scroll-behavior="smooth"` to quiet the Next.js route-scroll
+  console warning
+- **Aesthetic is unchanged** — starfield, navy/gold tokens, fonts, and the
+  chart's visual design are exactly as before, per request
 
 
 Next.js 15 (App Router) + Tailwind CSS + Framer Motion. Dark-mode "avionics"

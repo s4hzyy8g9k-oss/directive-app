@@ -65,8 +65,8 @@ export default function DecouplingDemo() {
 
   // ── geometry ───────────────────────────────────────────────
   const G = compact
-    ? { vw: 600, vh: 540, l: 48, r: 22, t: 28, b: 40, fs: 17, dot: 3.6 }
-    : { vw: 1000, vh: 500, l: 52, r: 30, t: 28, b: 36, fs: 12, dot: 3 };
+    ? { vw: 600, vh: 480, l: 48, r: 22, t: 26, b: 38, fs: 17, dot: 3.6 }
+    : { vw: 1000, vh: 380, l: 52, r: 30, t: 22, b: 30, fs: 12, dot: 3 };
   const plotW = G.vw - G.l - G.r;
   const plotH = G.vh - G.t - G.b;
   const x = (d: number) => G.l + (d / MISSION_DAYS) * plotW;
@@ -80,7 +80,7 @@ export default function DecouplingDemo() {
     const forecast: [number, number][] = [];
     const corridorTop: [number, number][] = [];
     const corridorBot: [number, number][] = [];
-    for (let d = TODAY; d <= MISSION_DAYS; d += 5) {
+    for (let d = TODAY; d < MISSION_DAYS; d += 5) {
       const k = (d - TODAY) / (MISSION_DAYS - TODAY);
       forecast.push([x(d), y(targetAt(d) + 0.8 * Math.pow(1 - k, 1.6))]);
       const spread = 0.6 + k * 2.4;
@@ -132,7 +132,7 @@ export default function DecouplingDemo() {
   ];
 
   return (
-    <div ref={wrapRef} className="bezel no-select relative overflow-hidden rounded-[22px] p-3 sm:p-5">
+    <div ref={wrapRef} className="bezel no-select relative overflow-hidden rounded-[22px] p-3 sm:p-4">
       {/* status strip */}
       <div className="flex items-center justify-between px-2 pb-3 sm:px-1">
         <div className="flex items-center gap-2">
@@ -159,9 +159,9 @@ export default function DecouplingDemo() {
       {/* readouts */}
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {readouts.map((r) => (
-          <div key={r.label} className="rounded-xl border hairline bg-space/50 px-3 py-2.5 sm:px-4 sm:py-3">
+          <div key={r.label} className="rounded-xl border hairline bg-space/50 px-3 py-2 sm:px-3.5 sm:py-2.5">
             <div className="text-[10.5px] text-white/45 sm:text-[12px]">{r.label}</div>
-            <div className="mt-0.5 font-mono text-[20px] font-medium tabular-nums sm:text-[28px]">
+            <div className="mt-0.5 font-mono text-[20px] font-medium tabular-nums sm:text-[23px]">
               <span className={r.valueTone}>{r.value}</span>
               <span className="ml-1 text-[11px] text-white/35 sm:text-[13px]">lb</span>
             </div>
@@ -392,7 +392,7 @@ export default function DecouplingDemo() {
           </button>
         ))}
       </div>
-      <div className="relative min-h-[76px] px-2 pb-1 pt-2 sm:min-h-[64px]">
+      <div className="relative min-h-[72px] px-2 pb-1 pt-2 sm:min-h-[50px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={phase}

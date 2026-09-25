@@ -17,7 +17,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
       {/* horizon glow behind the instrument */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[38%] h-[520px] bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,rgba(212,175,55,0.14),rgba(56,189,248,0.05)_45%,transparent_70%)]" />
 
-      <div className="relative mx-auto max-w-5xl px-5 pb-20 pt-14 sm:px-8 sm:pt-24">
+      <div className="relative mx-auto max-w-5xl px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div {...rise(0)} className="mx-auto w-[220px] sm:w-[280px]">
             <Image
@@ -70,7 +70,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
           initial={reduce ? false : { opacity: 0, y: 40, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.55, ease: [0.2, 0.7, 0.2, 1] }}
-          className="mt-14 sm:mt-16"
+          className="mt-10 sm:mt-10"
         >
           <DecouplingDemo />
         </motion.div>

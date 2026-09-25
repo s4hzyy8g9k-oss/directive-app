@@ -5,9 +5,13 @@ import Image from "next/image";
 import { AnimatePresence, motion } from "framer-motion";
 import { modal } from "@/app/content";
 
+const TOTAL_STEPS = 4;
+
 export default function DiagnosticModal({ open, onClose }: { open: boolean; onClose: () => void }) {
   const [step, setStep] = useState(1);
-  const [answers, setAnswers] = useState<{ goal?: string; friction?: string }>({});
+  const [mission, setMission] = useState<string | null>(null);
+  const [disruptors, setDisruptors] = useState<string[]>([]);
+  const [appFailure, setAppFailure] = useState<string | null>(null);
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
@@ -28,11 +32,21 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
     onClose();
     setTimeout(() => {
       setStep(1);
-      setAnswers({});
+      setMission(null);
+      setDisruptors([]);
+      setAppFailure(null);
       setEmail("");
       setError("");
       setDone(false);
     }, 300);
+  };
+
+  const toggleDisruptor = (o: string) => {
+    setDisruptors((cur) => {
+      if (cur.includes(o)) return cur.filter((x) => x !== o);
+      if (cur.length >= modal.step2.max) return cur;
+      return [...cur, o];
+    });
   };
 
   const submit = (e: React.FormEvent) => {
@@ -41,15 +55,18 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
       setError("Enter a full email address, like you@email.com.");
       return;
     }
-    // TODO: POST { email, ...answers } to your email-capture endpoint.
+    // TODO: POST { email, mission, disruptors, appFailure } to your email-capture endpoint.
     setDone(true);
   };
 
-  const option = (label: string, onPick: () => void) => (
+  const option = (label: string, selected: boolean, onPick: () => void) => (
     <button
       key={label}
       onClick={onPick}
-      className="w-full rounded-2xl border hairline bg-white/[0.02] px-5 py-4 text-left text-[15px] text-white/85 transition-colors hover:border-gold/60 hover:bg-gold/[0.06]"
+      aria-pressed={selected}
+      className={`w-full rounded-2xl border px-5 py-4 text-left text-[15px] transition-colors ${
+        selected ? "border-gold/70 bg-gold/[0.1] text-champagne" : "border hairline bg-white/[0.02] text-white/85 hover:border-gold/60 hover:bg-gold/[0.06]"
+      }`}
     >
       {label}
     </button>
@@ -77,20 +94,20 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.2, 0.7, 0.2, 1] }}
-            className="bezel w-full max-w-md rounded-t-[26px] sm:rounded-[26px]"
+            className="bezel max-h-[88vh] w-full max-w-md overflow-y-auto rounded-t-[26px] sm:rounded-[26px]"
           >
             <div className="flex items-center justify-between px-6 pt-5">
               <div className="flex items-center gap-2">
                 <Image src="/brand/icon.png" alt="" width={20} height={20} className="rounded-[5px] ring-1 ring-gold/25" />
-                <span className="text-[12.5px] text-white/50">{done ? "Complete" : `Step ${step} of 3`}</span>
+                <span className="text-[12.5px] text-white/50">{done ? "Complete" : `Step ${step} of ${TOTAL_STEPS}`}</span>
               </div>
               <button onClick={close} aria-label="Close" className="flex h-8 w-8 items-center justify-center rounded-full text-white/50 hover:bg-white/5 hover:text-white">
                 ✕
               </button>
             </div>
             <div className="mx-6 mt-3 flex gap-1.5">
-              {[1, 2, 3].map((n) => (
-                <span key={n} className={`h-[3px] flex-1 rounded-full transition-colors ${done || n <= step ? "bg-gold" : "bg-white/10"}`} />
+              {Array.from({ length: TOTAL_STEPS }).map((_, i) => (
+                <span key={i} className={`h-[3px] flex-1 rounded-full transition-colors ${done || i + 1 <= step ? "bg-gold" : "bg-white/10"}`} />
               ))}
             </div>
 
@@ -98,52 +115,106 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
               <AnimatePresence mode="wait">
                 {!done && step === 1 && (
                   <motion.div key="1" {...slide}>
-                    <h3 className="font-display text-[28px] leading-tight text-white">{modal.step1.question}</h3>
+                    <h3 className="font-display text-[26px] leading-tight text-white">{modal.step1.question}</h3>
                     <div className="mt-6 space-y-2.5">
-                      {modal.step1.options.map((o) => option(o, () => { setAnswers((a) => ({ ...a, goal: o })); setStep(2); }))}
+                      {modal.step1.options.map((o) =>
+                        option(o, mission === o, () => {
+                          setMission(o);
+                          setStep(2);
+                        })
+                      )}
                     </div>
                   </motion.div>
                 )}
+
                 {!done && step === 2 && (
                   <motion.div key="2" {...slide}>
-                    <h3 className="font-display text-[28px] leading-tight text-white">{modal.step2.question}</h3>
-                    <div className="mt-6 space-y-2.5">
-                      {modal.step2.options.map((o) => option(o, () => { setAnswers((a) => ({ ...a, friction: o })); setStep(3); }))}
+                    <h3 className="font-display text-[26px] leading-tight text-white">{modal.step2.question}</h3>
+                    <p className="mt-1.5 text-[13px] text-white/45">{modal.step2.hint}</p>
+                    <div className="mt-5 space-y-2.5">
+                      {modal.step2.options.map((o) => option(o, disruptors.includes(o), () => toggleDisruptor(o)))}
                     </div>
-                    <button onClick={() => setStep(1)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">Back</button>
+                    <div className="mt-5 flex items-center justify-between">
+                      <button onClick={() => setStep(1)} className="text-[13px] text-white/45 hover:text-white/80">
+                        Back
+                      </button>
+                      <button
+                        onClick={() => setStep(3)}
+                        disabled={disruptors.length === 0}
+                        className="rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] px-6 py-2.5 text-[13px] font-semibold text-obsidian disabled:opacity-30"
+                      >
+                        Continue
+                      </button>
+                    </div>
                   </motion.div>
                 )}
+
                 {!done && step === 3 && (
                   <motion.div key="3" {...slide}>
-                    <h3 className="font-display text-[28px] leading-tight text-white">{modal.step3.heading}</h3>
-                    <p className="mt-2 text-[14.5px] text-white/55">{modal.step3.body}</p>
+                    <h3 className="font-display text-[26px] leading-tight text-white">{modal.step3.question}</h3>
+                    <div className="mt-6 space-y-2.5">
+                      {modal.step3.options.map((o) =>
+                        option(o, appFailure === o, () => {
+                          setAppFailure(o);
+                          setStep(4);
+                        })
+                      )}
+                    </div>
+                    <button onClick={() => setStep(2)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">
+                      Back
+                    </button>
+                  </motion.div>
+                )}
+
+                {!done && step === 4 && (
+                  <motion.div key="4" {...slide}>
+                    <h3 className="font-display text-[26px] leading-tight text-white">{modal.step4.heading}</h3>
+                    <p className="mt-2 text-[14.5px] text-white/55">{modal.step4.body}</p>
                     <form onSubmit={submit} noValidate className="mt-6">
                       <input
                         type="email"
                         autoFocus
                         value={email}
-                        onChange={(e) => { setEmail(e.target.value); setError(""); }}
-                        placeholder={modal.step3.placeholder}
+                        onChange={(e) => {
+                          setEmail(e.target.value);
+                          setError("");
+                        }}
+                        placeholder={modal.step4.placeholder}
                         aria-invalid={!!error}
                         className="w-full rounded-2xl border hairline bg-space/70 px-5 py-4 text-[16px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
                       />
                       {error && <p className="mt-2 text-[13px] text-coral">{error}</p>}
                       <button type="submit" className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-4 text-[15px] font-semibold text-obsidian">
-                        {modal.step3.button}
+                        {modal.step4.button}
                       </button>
                     </form>
-                    <button onClick={() => setStep(2)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">Back</button>
+                    <button onClick={() => setStep(3)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">
+                      Back
+                    </button>
                   </motion.div>
                 )}
+
                 {done && (
                   <motion.div key="done" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="py-2 text-center">
                     <svg viewBox="0 0 64 64" className="mx-auto h-16 w-16" aria-hidden>
                       <circle cx="32" cy="32" r="30" fill="none" stroke="#D4AF37" strokeOpacity="0.5" />
-                      <motion.path d="M20 33 l8 8 l16 -18" fill="none" stroke="#D4AF37" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.1 }} />
+                      <motion.path
+                        d="M20 33 l8 8 l16 -18"
+                        fill="none"
+                        stroke="#D4AF37"
+                        strokeWidth="3"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        initial={{ pathLength: 0 }}
+                        animate={{ pathLength: 1 }}
+                        transition={{ duration: 0.6, delay: 0.1 }}
+                      />
                     </svg>
                     <h3 className="mt-5 font-display text-[28px] text-white">{modal.done.heading}</h3>
                     <p className="mt-2 text-[14.5px] text-white/60">{modal.done.body}</p>
-                    <button onClick={close} className="mt-7 rounded-full border hairline px-6 py-2.5 text-[13.5px] text-white/75 hover:border-white/30">Close</button>
+                    <button onClick={close} className="mt-7 rounded-full border hairline px-6 py-2.5 text-[13.5px] text-white/75 hover:border-white/30">
+                      Close
+                    </button>
                   </motion.div>
                 )}
               </AnimatePresence>
