@@ -1,4 +1,12 @@
-# Directive — Marketing Site
+# Directive — Marketing Site (v2)
+
+## What changed in v2
+- New look: live starfield, brushed-gold instrument bezels, Instrument Serif display type
+- Hero animation: real-looking weigh-in data; the scale "panics", Directive separates water, reveals the smooth true trend and Nov 15 runway
+- Working Fuel grid and Burn logger previews, animated watch-dial complications
+- **All copy lives in `app/content.ts`** — edit messaging there without touching layout
+- Upgraded to Next 15.1 + React 19 (delete `node_modules` and `package-lock.json`, then `npm install`)
+
 
 Next.js 15 (App Router) + Tailwind CSS + Framer Motion. Dark-mode "avionics"
 identity: obsidian background, navy/slate panels, Avionics Gold accents —
@@ -30,7 +38,7 @@ Open http://localhost:3000
    `sha256_cert_fingerprints` with your real Android signing cert.
 3. **Contact emails** — `privacy@directive.app`, `legal@directive.app`,
    `support@directive.app` are placeholders; point them at real inboxes.
-4. **Charter application submit** (`DiagnosticModal.tsx`) — currently a
+4. **Charter application submit** (`DiagnosticModal.tsx`, see the TODO) — currently a
    local state stub. Wire the `submit` handler to your email-capture
    endpoint (Resend, Postmark, a serverless route, etc).
 5. **Support form** (`app/support/SupportForm.tsx`) — same: wire to a real
@@ -40,7 +48,25 @@ Open http://localhost:3000
 7. **Favicon / OG image** — add `app/favicon.ico` and an OG image; only a
    text reference is scaffolded.
 
-## Design tokens
+## Brand assets (from your uploaded artwork)
+- `public/brand/lockup.png` — the mark + wordmark + tagline, cropped from your
+  banner. Used at the top of the hero, edges feathered with a CSS mask so it
+  blends into the starfield instead of sitting in a visible box.
+- `public/brand/icon.png` — the chevron mark alone, square-cropped. Used in
+  the nav bar, footer, and the Charter modal header.
+- `public/brand/banner.jpg` — your original full banner (with the Earth
+  horizon), used as the social preview (Open Graph / Twitter card) image.
+- `app/favicon.ico`, `public/brand/apple-touch-icon.png`,
+  `public/brand/icon-192.png`, `public/brand/icon-512.png` — generated from
+  the mark crop for browser tabs, iOS home screen, and PWA installs.
+- `public/manifest.json` — points at the two PWA icon sizes above.
+
+If you get a cleaner, higher-resolution export of the mark/wordmark as
+transparent PNGs from whoever designed them, swap these files 1:1 (same
+filenames) and everything above updates automatically — no code changes
+needed.
+
+
 
 | Token | Value |
 |---|---|

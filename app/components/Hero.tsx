@@ -1,56 +1,79 @@
 "use client";
 
-import HeroChart from "./HeroChart";
+import Image from "next/image";
+import { motion, useReducedMotion } from "framer-motion";
+import DecouplingDemo from "./DecouplingDemo";
+import { hero } from "@/app/content";
 
 export default function Hero({ onApply }: { onApply: () => void }) {
+  const reduce = useReducedMotion();
+  const rise = (delay: number) =>
+    reduce
+      ? {}
+      : { initial: { opacity: 0, y: 18 }, animate: { opacity: 1, y: 0 }, transition: { duration: 0.9, delay, ease: [0.2, 0.7, 0.2, 1] as const } };
+
   return (
-    <section className="relative overflow-hidden bg-grid-fade" id="telemetry">
-      <div className="mx-auto grid max-w-6xl gap-14 px-5 pb-20 pt-16 sm:px-8 sm:pt-24 lg:grid-cols-[1fr_1fr] lg:items-center lg:pb-28">
-        <div>
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border hairline px-3 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold" />
-            <span className="font-mono text-[10px] tracking-[0.14em] text-white/60">
-              TELEMETRY ARCHITECTURE · 2026 CHARTER INTAKE
-            </span>
-          </div>
+    <section id="how-it-works" className="relative">
+      {/* horizon glow behind the instrument */}
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[38%] h-[520px] bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,rgba(212,175,55,0.14),rgba(56,189,248,0.05)_45%,transparent_70%)]" />
 
-          <h1 className="text-[2.15rem] font-semibold leading-[1.12] tracking-tight text-white sm:text-[2.75rem] lg:text-[3.1rem]">
-            Stop letting water weight panic and phantom calories crash your
-            flight plan.
-          </h1>
+      <div className="relative mx-auto max-w-5xl px-5 pb-20 pt-14 sm:px-8 sm:pt-24">
+        <div className="mx-auto max-w-3xl text-center">
+          <motion.div {...rise(0)} className="mx-auto w-[220px] sm:w-[280px]">
+            <Image
+              src="/brand/lockup.png"
+              alt="Directive — Precision Body Composition Engine"
+              width={613}
+              height={287}
+              priority
+              className="w-full"
+              style={{
+                WebkitMaskImage: "radial-gradient(ellipse 75% 70% at 50% 45%, black 55%, transparent 100%)",
+                maskImage: "radial-gradient(ellipse 75% 70% at 50% 45%, black 55%, transparent 100%)",
+              }}
+            />
+          </motion.div>
 
-          <p className="mt-5 font-mono text-[13px] tracking-wide text-gold/80">
-            Precision Body Composition Engine
-          </p>
+          <motion.div {...rise(0.06)} className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/[0.06] px-3.5 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="text-[12.5px] text-champagne/90">{hero.kicker}</span>
+          </motion.div>
 
-          <p className="mt-5 max-w-[52ch] text-[15px] leading-relaxed text-white/65">
-            Most trackers treat human bodies like spreadsheet ledgers: every
-            water fluctuation reads as fat gain, workouts get wildly
-            over-credited, and you're stuck weighing food to the gram.
-            Directive separates transient fluid shifts from true dry tissue,
-            calculates burn with strict Net-MET math, and replaces tracking
-            neurosis with a tactile 6×6 portion matrix.
-          </p>
+          <motion.h1
+            {...rise(0.12)}
+            className="mt-7 font-display text-[44px] leading-[1.02] tracking-[-0.01em] text-white sm:text-[64px] lg:text-[78px]"
+          >
+            {hero.headline}
+          </motion.h1>
 
-          <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
+          <motion.p {...rise(0.28)} className="mx-auto mt-6 max-w-[56ch] text-[16px] leading-relaxed text-white/65 sm:text-[17.5px]">
+            {hero.subhead}
+          </motion.p>
+
+          <motion.div {...rise(0.4)} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <button
               onClick={onApply}
-              className="rounded-sm bg-gold px-6 py-3.5 text-[13px] font-semibold tracking-wide text-obsidian transition-transform hover:scale-[1.015] active:scale-[0.985]"
+              className="w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] px-7 py-3.5 text-[14.5px] font-semibold text-obsidian shadow-[0_10px_40px_-10px_rgba(212,175,55,0.7)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
             >
-              Apply for Charter Access
+              {hero.primaryCta}
             </button>
             <a
               href="#stations"
-              className="rounded-sm border hairline px-6 py-3.5 text-center text-[13px] font-medium tracking-wide text-white/75 transition-colors hover:border-white/30 hover:text-white"
+              className="w-full rounded-full border hairline bg-white/[0.03] px-7 py-3.5 text-[14.5px] text-white/80 transition-colors hover:border-champagne/40 hover:text-white sm:w-auto"
             >
-              Inspect the flight engine ↓
+              {hero.secondaryCta}
             </a>
-          </div>
+          </motion.div>
         </div>
 
-        <div>
-          <HeroChart />
-        </div>
+        <motion.div
+          initial={reduce ? false : { opacity: 0, y: 40, scale: 0.98 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 1.1, delay: 0.55, ease: [0.2, 0.7, 0.2, 1] }}
+          className="mt-14 sm:mt-16"
+        >
+          <DecouplingDemo />
+        </motion.div>
       </div>
     </section>
   );

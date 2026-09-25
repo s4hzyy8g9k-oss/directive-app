@@ -2,62 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
-
-:root {
-  --font-sans: "Space Grotesk", system-ui, sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, monospace;
-}
-
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background-color: #030612;
-  color: #ffffff;
-  font-family: var(--font-sans);
+  color: #fff;
+  font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  background-color: #02040c;
+  background-image:
+    radial-gradient(ellipse 80% 50% at 15% -5%, rgba(27, 49, 82, 0.55), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(212, 175, 55, 0.07), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 50% 110%, rgba(56, 189, 248, 0.06), transparent 60%);
+  background-attachment: fixed;
 }
 
-.tabular-nums {
-  font-variant-numeric: tabular-nums;
-}
+.tabular-nums { font-variant-numeric: tabular-nums; }
 
 .no-select {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
-  touch-action: none;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.hairline {
-  border-color: #2a3b5c;
+.hairline { border-color: #2a3b5c; }
+
+/* Brushed instrument bezel */
+.bezel {
+  background:
+    linear-gradient(180deg, rgba(19, 40, 74, 0.72), rgba(6, 12, 28, 0.88)) padding-box,
+    linear-gradient(160deg, rgba(241, 220, 154, 0.55), rgba(42, 59, 92, 0.5) 30%, rgba(42, 59, 92, 0.25) 70%, rgba(212, 175, 55, 0.4)) border-box;
+  border: 1px solid transparent;
+  box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(6px);
 }
 
-.gold-glow {
-  filter: drop-shadow(0 0 6px rgba(212, 175, 55, 0.35));
+.glass {
+  background: linear-gradient(180deg, rgba(11, 21, 40, 0.7), rgba(6, 12, 28, 0.6));
+  border: 1px solid rgba(42, 59, 92, 0.8);
+  backdrop-filter: blur(6px);
 }
 
-::selection {
-  background: #d4af37;
-  color: #030612;
+.gold-text {
+  background: linear-gradient(180deg, #f6e7b4 0%, #d4af37 55%, #a8862a 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
+
+::selection { background: #d4af37; color: #030612; }
+
+:focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; border-radius: 2px; }
 
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
-}
-
-/* visible keyboard focus, avionics-styled */
-:focus-visible {
-  outline: 2px solid #d4af37;
-  outline-offset: 3px;
-  border-radius: 2px;
 }

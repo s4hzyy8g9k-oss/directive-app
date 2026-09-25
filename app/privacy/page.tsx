@@ -26,11 +26,11 @@ function Section({
 
 export default function PrivacyPage() {
   return (
-    <main className="mx-auto max-w-3xl px-5 py-16 sm:px-8">
+    <main className="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8">
       <Link href="/" className="text-[12px] text-white/40 hover:text-white/70">
         ← Directive
       </Link>
-      <h1 className="mt-6 text-[28px] font-semibold tracking-tight text-white">
+      <h1 className="mt-6 font-display text-[44px] leading-tight text-white">
         Privacy Policy
       </h1>
       <p className="mt-2 text-[13px] text-white/40">

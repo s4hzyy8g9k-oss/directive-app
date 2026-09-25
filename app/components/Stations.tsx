@@ -1,154 +1,203 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useRef, useState, type ReactElement } from "react";
+import { motion, useInView, useReducedMotion } from "framer-motion";
+import { stations } from "@/app/content";
+import { buildTelemetry, monotonePath, TODAY } from "@/lib/telemetry";
 
-function MissionControlPreview() {
+function Dial({ value, label, unit }: { value: number; label: string; unit: string }) {
+  const ref = useRef<SVGSVGElement>(null);
+  const inView = useInView(ref, { once: true, amount: 0.6 });
+  const reduce = useReducedMotion();
+  const angle = -135 + (value / 100) * 270;
+  const r = 44;
+  const arcLen = 2 * Math.PI * r * 0.75;
+
   return (
-    <div className="no-select rounded-sm border hairline bg-obsidian/70 p-4">
-      <div className="flex items-center justify-between">
-        <div className="flex gap-1">
-          {["1W", "1M", "3M", "1Y", "MISSION"].map((r, i) => (
-            <span
-              key={r}
-              className={`rounded-[2px] px-1.5 py-0.5 text-[8px] ${
-                i === 4 ? "bg-gold text-obsidian" : "text-white/40"
-              }`}
-            >
-              {r}
-            </span>
-          ))}
-        </div>
-        <span className="font-mono text-[8px] text-white/35">RHR 54</span>
-      </div>
-      <svg viewBox="0 0 240 70" className="mt-3 h-16 w-full">
-        <path
-          d="M0,40 C30,44 50,50 80,54 C110,58 130,52 160,44 C185,37 210,26 240,18"
+    <div className="flex flex-col items-center">
+      <svg ref={ref} viewBox="0 0 120 120" className="h-28 w-28 sm:h-32 sm:w-32" aria-label={`${label}: ${value}${unit}`}>
+        <defs>
+          <radialGradient id={`face-${label.replace(/\s+/g, "-")}`} cx="50%" cy="40%" r="60%">
+            <stop offset="0" stopColor="#13284A" />
+            <stop offset="1" stopColor="#050B1A" />
+          </radialGradient>
+        </defs>
+        <circle cx="60" cy="60" r="57" fill={`url(#face-${label.replace(/\s+/g, "-")})`} stroke="#D4AF37" strokeOpacity="0.55" />
+        <circle cx="60" cy="60" r="53" fill="none" stroke="#F1DC9A" strokeOpacity="0.12" />
+        {Array.from({ length: 41 }).map((_, i) => {
+          const a = -135 + i * (270 / 40);
+          const major = i % 5 === 0;
+          return (
+            <line key={i} x1="60" y1="9" x2="60" y2={major ? 16 : 13} stroke={major ? "#F1DC9A" : "#9FB1CC"} strokeOpacity={major ? 0.85 : 0.35} strokeWidth={major ? 1.3 : 0.7} transform={`rotate(${a} 60 60)`} />
+          );
+        })}
+        <circle cx="60" cy="60" r={r} fill="none" stroke="#1B3152" strokeWidth="3" strokeDasharray={`${arcLen} 999`} transform="rotate(135 60 60)" strokeLinecap="round" />
+        <motion.circle
+          cx="60"
+          cy="60"
+          r={r}
           fill="none"
           stroke="#D4AF37"
-          strokeWidth="2"
+          strokeWidth="3"
+          strokeLinecap="round"
+          transform="rotate(135 60 60)"
+          initial={{ strokeDasharray: `0 999` }}
+          animate={{ strokeDasharray: `${inView || reduce ? arcLen * (value / 100) : 0} 999` }}
+          transition={{ duration: 1.6, ease: [0.2, 0.7, 0.2, 1] }}
         />
-        <circle cx="80" cy="54" r="2" fill="#fff" fillOpacity="0.7" />
-        <circle cx="140" cy="48" r="2" fill="#fff" fillOpacity="0.7" />
-        <circle cx="200" cy="30" r="2" fill="#fff" fillOpacity="0.7" />
+        <motion.g
+          initial={{ rotate: -135 }}
+          animate={{ rotate: inView || reduce ? angle : -135 }}
+          transition={{ duration: 1.6, ease: [0.2, 0.7, 0.2, 1] }}
+        >
+          <circle cx="60" cy="60" r="57" fill="none" stroke="none" />
+          <line x1="60" y1="64" x2="60" y2="22" stroke="#F1DC9A" strokeWidth="1.8" strokeLinecap="round" />
+        </motion.g>
+        <circle cx="60" cy="60" r="3.5" fill="#D4AF37" />
+        <text x="60" y="88" textAnchor="middle" fontSize="15" className="font-mono" fill="#fff">
+          {value}
+          <tspan fontSize="9" fill="#9FB1CC">{unit}</tspan>
+        </text>
+      </svg>
+      <span className="mt-2 text-[12px] text-white/55">{label}</span>
+    </div>
+  );
+}
+
+function MissionPreview() {
+  const d = useMemo(() => {
+    const t = buildTelemetry();
+    const x = (day: number) => 8 + (day / TODAY) * 304;
+    const y = (v: number) => 8 + ((208 - v) / 26) * 84;
+    return monotonePath(t.dry.filter((p) => p.d % 3 === 0 || p.d === TODAY).map((p) => [x(p.d), y(p.v)] as [number, number]));
+  }, []);
+  return (
+    <div>
+      <div className="flex justify-center gap-6 sm:gap-10">
+        <Dial value={86} label="MADI index" unit="" />
+        <Dial value={92} label="Weekly compliance" unit="%" />
+      </div>
+      <svg viewBox="0 0 320 100" className="mt-5 w-full" aria-hidden>
+        {[30, 60, 90].map((yy) => (
+          <line key={yy} x1="0" x2="320" y1={yy} y2={yy} stroke="#1B3152" />
+        ))}
+        <path d={d} fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
       </svg>
     </div>
   );
 }
 
-function FuelMatrixPreview() {
-  const [selected, setSelected] = useState<number[]>([7, 13]);
-  const toggle = (i: number) =>
-    setSelected((s) => (s.includes(i) ? s.filter((x) => x !== i) : [...s, i]));
-
+function FuelPreview() {
+  const [sel, setSel] = useState<number[]>([2, 3, 8, 14, 15, 21, 26, 33]);
+  const kcal = sel.length * 85;
+  const err = Math.round(20 + sel.length * 5.6);
   return (
-    <div className="no-select rounded-sm border hairline bg-obsidian/70 p-4">
-      <div className="grid grid-cols-6 gap-1">
-        {Array.from({ length: 36 }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => toggle(i)}
-            className={`aspect-square rounded-[2px] border transition-colors ${
-              selected.includes(i)
-                ? "border-gold bg-gold/25"
-                : "border-white/10 bg-white/[0.03]"
-            }`}
-          />
-        ))}
+    <div>
+      <div className="mb-3 flex justify-between text-[12px] text-white/45">
+        <span>Solids</span>
+        <span>Liquids</span>
       </div>
-      <div className="mt-3 flex items-center justify-between">
-        <span className="font-mono text-[9px] text-white/50 tabular-nums">
-          ESTIMATED FUEL: ~680 KCAL (±65)
-        </span>
-        <span className="rounded-sm bg-gold px-2 py-1 text-[8px] font-semibold text-obsidian">
-          LOG FUEL
-        </span>
+      <div className="grid grid-cols-6 gap-1.5">
+        {Array.from({ length: 36 }).map((_, i) => {
+          const on = sel.includes(i);
+          return (
+            <button
+              key={i}
+              aria-pressed={on}
+              aria-label={`Portion ${i + 1}`}
+              onClick={() => setSel((s) => (on ? s.filter((v) => v !== i) : [...s, i]))}
+              className={`aspect-square rounded-lg border transition-all duration-150 active:scale-90 ${
+                on ? "border-gold bg-gold/25 shadow-[0_0_12px_-2px_rgba(212,175,55,0.8)]" : i % 6 >= 4 ? "border-cyan/20 bg-cyan/[0.05]" : "border-white/10 bg-white/[0.03]"
+              }`}
+            />
+          );
+        })}
+      </div>
+      <div className="mt-4 flex items-center justify-between gap-3">
+        <div>
+          <div className="text-[11px] text-white/45">Estimated fuel</div>
+          <div className="font-mono text-[20px] tabular-nums text-white">
+            ~{kcal} <span className="text-[13px] text-white/40">kcal (±{err})</span>
+          </div>
+        </div>
+        <span className="rounded-full bg-gold px-4 py-2 text-[12px] font-semibold text-obsidian">Log fuel</span>
       </div>
     </div>
   );
 }
 
-function BurnLoggerPreview() {
+function BurnPreview() {
   const [effort, setEffort] = useState(1);
-  const levels = ["LOW", "MEDIUM", "HIGH"];
-  const net = [140, 225, 340];
+  const levels = [
+    { name: "Low", gross: 260, net: 140 },
+    { name: "Medium", gross: 420, net: 225 },
+    { name: "High", gross: 600, net: 340 },
+  ];
+  const l = levels[effort];
   return (
-    <div className="no-select rounded-sm border hairline bg-obsidian/70 p-4">
-      <div className="flex gap-1.5">
-        {levels.map((l, i) => (
+    <div>
+      <div className="text-[12px] text-white/45">Strength training, 60 min</div>
+      <div className="mt-3 flex gap-2">
+        {levels.map((lv, i) => (
           <button
-            key={l}
+            key={lv.name}
+            aria-pressed={i === effort}
             onClick={() => setEffort(i)}
-            className={`flex-1 rounded-[2px] border py-2 text-[9px] font-medium tracking-wide transition-colors ${
-              i === effort
-                ? "border-gold bg-gold/15 text-gold"
-                : "border-white/10 text-white/40"
+            className={`flex-1 rounded-full border py-2.5 text-[13px] transition-colors ${
+              i === effort ? "border-gold bg-gold/15 text-champagne" : "border-white/10 text-white/50 hover:text-white/80"
             }`}
           >
-            {l}
+            {lv.name}
           </button>
         ))}
       </div>
-      <div className="mt-3 flex items-center justify-between font-mono text-[9px] text-white/50 tabular-nums">
-        <span>RESTING BMR DEDUCTED</span>
-        <span className="text-gold">NET +{net[effort]} KCAL</span>
+      <div className="mt-5 space-y-2 font-mono text-[13px] tabular-nums">
+        <div className="flex justify-between text-white/45">
+          <span>Gross estimate</span>
+          <span className="line-through decoration-coral/60">{l.gross} kcal</span>
+        </div>
+        <div className="flex justify-between text-white/45">
+          <span>Resting burn removed</span>
+          <span>−{l.gross - l.net} kcal</span>
+        </div>
+        <div className="flex justify-between border-t border-white/10 pt-2 text-[15px] text-gold">
+          <span>Net credited</span>
+          <motion.span key={l.net} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}>
+            +{l.net} kcal
+          </motion.span>
+        </div>
       </div>
     </div>
   );
 }
 
-const STATIONS = [
-  {
-    n: "01",
-    name: "Mission Control",
-    body: "Multi-tier timeframe zoom, fluid-decoupled telemetry, resting heart rate, and tactile horology dials — one honest read on where you actually stand.",
-    preview: <MissionControlPreview />,
-  },
-  {
-    n: "02",
-    name: "Fuel Station",
-    body: "A symmetrical 6×6 avionics matrix for solids and liquids, with a live estimate ticker. Tap, don't weigh — logged in under ten seconds.",
-    preview: <FuelMatrixPreview />,
-  },
-  {
-    n: "03",
-    name: "Burn Station",
-    body: "Three-tier effort logging that deducts resting BMR automatically, so a hard session never overstates your net energy expenditure.",
-    preview: <BurnLoggerPreview />,
-  },
-];
+const PREVIEWS: Record<string, () => ReactElement> = { mission: MissionPreview, fuel: FuelPreview, burn: BurnPreview };
 
 export default function Stations() {
   return (
-    <section id="stations" className="border-t hairline">
-      <div className="mx-auto max-w-6xl px-5 py-20 sm:px-8 sm:py-24">
-        <div className="max-w-[46ch]">
-          <h2 className="text-2xl font-semibold tracking-tight text-white sm:text-3xl">
-            Three stations. One flight plan.
-          </h2>
-          <p className="mt-4 text-[15px] leading-relaxed text-white/60">
-            Everything Directive tracks routes through one of three
-            instrument panels.
-          </p>
+    <section id="stations" className="relative">
+      <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
+        <div className="max-w-2xl">
+          <h2 className="font-display text-[38px] leading-[1.05] text-white sm:text-[54px]">{stations.heading}</h2>
+          <p className="mt-5 text-[16.5px] leading-relaxed text-white/60">{stations.intro}</p>
         </div>
 
-        <div className="mt-12 grid gap-6 lg:grid-cols-3">
-          {STATIONS.map((s) => (
-            <div
-              key={s.n}
-              className="rounded-md border hairline bg-slate-deep/40 p-6"
-            >
-              <span className="font-mono text-[11px] text-gold/70">
-                STATION {s.n}
-              </span>
-              <h3 className="mt-1.5 text-[17px] font-semibold text-white">
-                {s.name}
-              </h3>
-              <p className="mt-2.5 text-[13.5px] leading-relaxed text-white/60">
-                {s.body}
-              </p>
-              <div className="mt-5">{s.preview}</div>
-            </div>
-          ))}
+        <div className="mt-16 space-y-10 sm:space-y-16">
+          {stations.items.map((s, i) => {
+            const Preview = PREVIEWS[s.id];
+            return (
+              <div key={s.id} className={`grid items-center gap-8 lg:grid-cols-2 lg:gap-16 ${i % 2 ? "lg:[&>*:first-child]:order-2" : ""}`}>
+                <div>
+                  <div className="text-[13px] text-gold/80">Station {i + 1}</div>
+                  <h3 className="mt-2 font-display text-[34px] leading-tight text-white sm:text-[44px]">{s.name}</h3>
+                  <p className="mt-4 max-w-[46ch] text-[15.5px] leading-relaxed text-white/60">{s.body}</p>
+                </div>
+                <div className="bezel no-select rounded-[22px] p-6 sm:p-8">
+                  <Preview />
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
