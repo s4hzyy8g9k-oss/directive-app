@@ -59,7 +59,7 @@ export const traps = {
     {
       kind: "water" as const,
       title: "That overnight spike isn't fat",
-      body: "Salt, heavy training, or hormonal shifts can hold up to 4 lb of water overnight — and almost nobody's trained to tell the difference. Directive's Kalman filter decouples fluid swings from true dry mass, so you never cut food to fix a problem you don't have.",
+      body: "Salt, heavy training, or hormonal shifts can hold up to 4 lbs of water overnight — and almost nobody's trained to tell the difference. Directive's Kalman filter decouples fluid swings from true dry mass, so you never cut food to fix a problem you don't have.",
     },
     {
       kind: "scale" as const,
@@ -74,16 +74,16 @@ export const pillars = {
   intro: "Not a calorie ledger. A dynamic model of your body under training, stress, and restriction.",
   items: [
     {
-      title: "The Fuel Event Buffer",
-      body: "Real life happens. Instead of blowing the diet on a Saturday night and staring at a red failure screen, engage the Fuel Event Buffer. Directive shaves a small, unnoticeable amount off the preceding days and banks it for your event, so your weekly deficit stays intact.",
+      title: "The Event Allowance",
+      body: "Real life happens. Instead of blowing your diet on a Saturday night and staring at a red failure screen, engage the Event Allowance. Directive shaves a small, unnoticeable amount off the preceding days and banks it for your event, so your weekly deficit stays intact.",
     },
     {
       title: "The Rebound Shield",
-      body: "Hitting your goal weight is only half the flight — landing without bouncing is the hard part. When you reach your target, Directive systematically walks your calories back up to find true maintenance, preventing the rapid regain that follows most diets.",
+      body: "Hitting your goal weight is only half the flight — landing without bouncing is the hard part. When you reach your target, Directive systematically walks your calories back up to find true maintenance, preventing the rapid regain that follows most strict diets.",
     },
     {
       title: "Keep the muscle you've built",
-      body: "In a deep deficit, or on a GLP-1 medication that blunts appetite, the risk of muscle loss spikes. Directive monitors your daily protein floor and flags structural loss risk before your metabolism slows.",
+      body: "In a deep deficit, or while managing appetite with modern medical protocols like GLP-1s, the risk of muscle loss spikes. Directive monitors your daily protein floor and flags structural loss risk before your metabolism slows.",
     },
     {
       title: "Built for adults, not for streaks",
@@ -91,34 +91,33 @@ export const pillars = {
     },
     {
       title: "Speak your doctor's language",
-      body: "Stop handing your clinician a messy 40-page diary dump. Directive compiles your lean-mass trends, trajectory, and vitals into a clean PDF briefing in about 30 seconds.",
+      body: "Stop handing your clinician a messy 40-page diary dump. Directive compiles your lean-mass trends, trajectory, and key vitals into a clean PDF briefing in about 30 seconds.",
     },
     {
       title: "The Afterburner Protocol",
-      body: "For deadline-driven targets — a shoot, an event, a hard calendar date. A temporary, aggressive deficit override for a short, sharp drop. Like a real afterburner, it can't run indefinitely, and Directive keeps it time-capped.",
-      badge: "Pro",
+      body: "For deadline-driven targets — a photo shoot, an event, a hard calendar date. A temporary, aggressive deficit override for a short, sharp drop. Like a real afterburner, it can't run indefinitely, and Directive keeps it strictly time-capped.",
     },
   ],
 };
 
 export const stations = {
-  heading: "Five stations. One coherent trajectory.",
+  heading: "Five instruments. One coherent trajectory.",
   intro: "Everything Directive tracks routes through a dedicated instrument panel.",
   items: [
     {
       id: "fuel",
       name: "Fuel",
-      body: "Agnostic energy balancing. Hit your calorie ceiling, lock in your protein floor, and use rapid entry with visual meal selection to log your day in seconds.",
+      body: "Agnostic energy balancing. Hit your calorie target, hold your protein and fat floors, and bank a caloric reserve for the nights that matter — logged in seconds with visual meal selection.",
     },
     {
-      id: "altimeter",
-      name: "Altimeter",
-      body: "Kalman-smoothed trend telemetry. Daily scale readings decoupled from fluid swings to reveal your true dry-mass descent.",
+      id: "mission",
+      name: "Mission Control",
+      body: "Your daily instrument panel. Scale readings decoupled from fluid swings reveal your true dry-mass descent, alongside your compliance, HRV, and recovery dials and your distance to target.",
     },
     {
       id: "cruise",
       name: "Cruising Altitude",
-      body: "Runway management. Dynamic pacing toward your touchdown date, Fuel Event Buffers, and automated Rebound Shield handling once you land.",
+      body: "Runway management. Dynamic pacing through your cut, a short reverse diet after touchdown, then a cruise held under a Rebound Shield so the weight doesn't climb back.",
     },
     {
       id: "burn",
@@ -126,9 +125,9 @@ export const stations = {
       body: "True net energy expenditure. Resistance load tracking and conservative step baselines that keep cardio from competing with strength gains.",
     },
     {
-      id: "briefing",
-      name: "Flight Briefing",
-      body: "Your weekly directive. An objective telemetry audit that diagnoses actual vs. expected loss and sets your exact parameters for the week ahead.",
+      id: "directive",
+      name: "Weekly Directive",
+      body: "Every Sunday, an objective audit compares actual to expected loss and sets your exact calorie target for the week ahead. Lock an event date and see what it takes to get there.",
     },
   ],
 };
@@ -145,7 +144,7 @@ export const modal = {
     options: [
       "Lose fat, keep muscle",
       "Protect muscle on GLP-1 or a deep deficit",
-      "Recomp for athletic training",
+      "Body Recomposition",
       "Add muscle in a lean bulk",
     ],
   },
@@ -154,15 +153,17 @@ export const modal = {
     hint: "Choose up to two.",
     max: 2,
     options: [
-      "Seeing the scale move the wrong way frustrates me",
-      "My weight loss plateaus even when I'm working hard",
-      "The tedious effort of tracking every detail of my food",
-      "Severe diet fatigue and burnout from chronic restriction",
+      "The scale is moving the wrong way and it frustrates me",
+      "My weight plateaus even when I'm working hard",
+      "The effort of tracking every detail of my food",
+      "Diet fatigue and burnout from chronic restriction",
       "Losing the weight, only to rapidly regain it after",
     ],
   },
   step3: {
     question: "What's the biggest failure of your current fitness app?",
+    writeInLabel: "Something else? Write it in (optional)",
+    writeInPlaceholder: "Tell us in your own words",
     options: [
       "Raw data and charts, but no actionable direction",
       "It punishes me with broken streaks and guilt",
@@ -187,3 +188,11 @@ export const footer = {
   disclaimer:
     "Directive is an educational body-composition estimation tool. It is not a medical device and does not provide medical advice.",
 };
+
+export const supportTopics = [
+  "Telemetry accuracy",
+  "HealthKit / Health Connect sync",
+  "Charter billing",
+  "Account & data deletion",
+  "Other",
+] as const;

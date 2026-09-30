@@ -5,6 +5,9 @@ import { motion, useReducedMotion } from "framer-motion";
 import DecouplingDemo from "./DecouplingDemo";
 import { hero } from "@/app/content";
 
+const SIDE_FADE = "linear-gradient(to right, transparent 0%, black 9%, black 91%, transparent 100%)";
+const BOTTOM_FADE = "linear-gradient(to bottom, black 0%, black 72%, transparent 100%)";
+
 export default function Hero({ onApply }: { onApply: () => void }) {
   const reduce = useReducedMotion();
   const rise = (delay: number) =>
@@ -17,23 +20,28 @@ export default function Hero({ onApply }: { onApply: () => void }) {
       {/* horizon glow behind the instrument */}
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[38%] h-[520px] bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,rgba(212,175,55,0.14),rgba(56,189,248,0.05)_45%,transparent_70%)]" />
 
-      <div className="relative mx-auto max-w-5xl px-5 pb-16 pt-10 sm:px-8 sm:pt-14">
-        <div className="mx-auto max-w-3xl text-center">
-          <motion.div {...rise(0)} className="mx-auto w-[220px] sm:w-[280px]">
+      {/* Earth banner: logo over Earth. Edges fade into the page so there is no visible box.
+          On phones it is cropped tighter (5:4) so the logo stays large and the side taglines drop out. */}
+      <motion.div {...rise(0)} className="relative mx-auto w-full max-w-[1400px]">
+        <div style={{ WebkitMaskImage: SIDE_FADE, maskImage: SIDE_FADE }}>
+          <div
+            className="relative aspect-[5/4] w-full sm:aspect-[16/9]"
+            style={{ WebkitMaskImage: BOTTOM_FADE, maskImage: BOTTOM_FADE }}
+          >
             <Image
-              src="/brand/lockup.png"
+              src="/brand/hero-earth.jpg"
               alt="Directive — Precision Body Composition Engine"
-              width={613}
-              height={287}
+              fill
               priority
-              className="w-full"
-              style={{
-                WebkitMaskImage: "radial-gradient(ellipse 75% 70% at 50% 45%, black 55%, transparent 100%)",
-                maskImage: "radial-gradient(ellipse 75% 70% at 50% 45%, black 55%, transparent 100%)",
-              }}
+              sizes="(min-width: 1400px) 1400px, 100vw"
+              className="object-cover object-center"
             />
-          </motion.div>
+          </div>
+        </div>
+      </motion.div>
 
+      <div className="relative mx-auto max-w-5xl px-5 pb-16 pt-0 sm:px-8">
+        <div className="mx-auto -mt-6 max-w-3xl text-center sm:-mt-12">
           <motion.div {...rise(0.06)} className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/[0.06] px-3.5 py-1.5">
             <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_#D4AF37]" />
             <span className="text-[12.5px] text-champagne/90">{hero.kicker}</span>
@@ -70,7 +78,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
           initial={reduce ? false : { opacity: 0, y: 40, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
           transition={{ duration: 1.1, delay: 0.55, ease: [0.2, 0.7, 0.2, 1] }}
-          className="mt-10 sm:mt-10"
+          className="mt-8 sm:mt-6"
         >
           <DecouplingDemo />
         </motion.div>

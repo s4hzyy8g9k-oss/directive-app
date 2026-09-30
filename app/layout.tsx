@@ -8,7 +8,7 @@ const sans = Manrope({ subsets: ["latin"], variable: "--font-sans" });
 const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://directive.app"),
+  metadataBase: new URL("https://directivefitness.com"),
   title: "Directive: Mission Control for your body",
   description:
     "Directive separates water weight from real tissue change, corrects inflated workout calories, and logs a meal in ten seconds. Apply for 2026 Charter access.",

@@ -55,16 +55,27 @@ Open http://localhost:3000
    `TEAMID.com.directive.app` with your real Apple Team ID + bundle ID.
 2. **`public/.well-known/assetlinks.json`** — replace `package_name` and
    `sha256_cert_fingerprints` with your real Android signing cert.
-3. **Contact emails** — `privacy@directive.app`, `legal@directive.app`,
-   `support@directive.app` are placeholders; point them at real inboxes.
-4. **Charter application submit** (`DiagnosticModal.tsx`, see the TODO) — currently a
-   local state stub. Wire the `submit` handler to your email-capture
-   endpoint (Resend, Postmark, a serverless route, etc).
-5. **Support form** (`app/support/SupportForm.tsx`) — same: wire to a real
-   ticketing/email endpoint.
-6. **Metadata** — set the real production domain in
-   `app/layout.tsx` (`metadataBase`).
-7. **Favicon / OG image** — add `app/favicon.ico` and an OG image; only a
+3. **Contact emails** — `privacy@directivefitness.com`, `legal@directivefitness.com`,
+   `support@directivefitness.com` are placeholders; point them at real inboxes.
+4. **Charter application + support form email** — both forms now POST to
+   `/api/charter` and `/api/support`, which send email through Resend
+   (`lib/mail.ts`). Setup:
+   - Create a Resend account, add and verify the domain `directivefitness.com`
+     (add the DNS records Resend shows you).
+   - In Vercel → Settings → Environment Variables, add `RESEND_API_KEY`.
+   - Optional: `MAIL_FROM` (default `Directive <noreply@directivefitness.com>`),
+     `CHARTER_TO` and `SUPPORT_TO` (both default to
+     `support@directivefitness.com`).
+   - Redeploy after adding variables.
+   **Saving Charter applications (Supabase):**
+   - In your Supabase project, open SQL Editor → New query, paste the contents of
+     `supabase/charter_applications.sql`, and Run. This creates a private table.
+   - In Vercel, add `SUPABASE_URL` (Project Settings → API) and
+     `SUPABASE_SECRET_KEY` (the secret key; server-only, never share it).
+   - Redeploy. Each application is saved (one row per email) and also emailed.
+     If one of the two fails, the other still goes through.
+5. **Metadata** — production domain is set in `app/layout.tsx` (`metadataBase`).
+6. **Favicon / OG image** — add `app/favicon.ico` and an OG image; only a
    text reference is scaffolded.
 
 ## Brand assets (from your uploaded artwork)
