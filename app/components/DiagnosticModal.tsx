@@ -15,6 +15,8 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
   const [done, setDone] = useState(false);
+  const [sending, setSending] = useState(false);
+  const [website, setWebsite] = useState(""); // honeypot, must stay empty
 
   useEffect(() => {
     if (!open) return;
@@ -38,6 +40,8 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
       setEmail("");
       setError("");
       setDone(false);
+      setSending(false);
+      setWebsite("");
     }, 300);
   };
 
@@ -49,14 +53,32 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
     });
   };
 
-  const submit = (e: React.FormEvent) => {
+  const submit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (sending) return;
     if (!/^\S+@\S+\.\S+$/.test(email)) {
       setError("Enter a full email address, like you@email.com.");
       return;
     }
-    // TODO: POST { email, mission, disruptors, appFailure } to your email-capture endpoint.
-    setDone(true);
+    setSending(true);
+    setError("");
+    try {
+      const res = await fetch("/api/charter", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, mission, disruptors, appFailure, website }),
+      });
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok || !data.ok) {
+        setError(data.error || "Something went wrong. Please try again.");
+      } else {
+        setDone(true);
+      }
+    } catch {
+      setError("Network error. Please check your connection and try again.");
+    } finally {
+      setSending(false);
+    }
   };
 
   const option = (label: string, selected: boolean, onPick: () => void) => (
@@ -183,9 +205,15 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                         aria-invalid={!!error}
                         className="w-full rounded-2xl border hairline bg-space/70 px-5 py-4 text-[16px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
                       />
+                      <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
+                        <label>
+                          Website
+                          <input type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
+                        </label>
+                      </div>
                       {error && <p className="mt-2 text-[13px] text-coral">{error}</p>}
-                      <button type="submit" className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-4 text-[15px] font-semibold text-obsidian">
-                        {modal.step4.button}
+                      <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-4 text-[15px] font-semibold text-obsidian disabled:opacity-60">
+                        {sending ? "Sending..." : modal.step4.button}
                       </button>
                     </form>
                     <button onClick={() => setStep(3)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">

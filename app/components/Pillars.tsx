@@ -25,9 +25,6 @@ export default function Pillars() {
             <div key={p.title} className="py-7 sm:py-8">
               <div className="flex flex-wrap items-center gap-2.5">
                 <h3 className="font-display text-[26px] leading-tight text-champagne sm:text-[30px]">{p.title}</h3>
-                {"badge" in p && p.badge && (
-                  <span className="rounded-full border border-gold/40 bg-gold/[0.08] px-2.5 py-0.5 text-[10.5px] font-semibold tracking-wide text-gold">{p.badge}</span>
-                )}
               </div>
               <p className="mt-2.5 max-w-[58ch] text-[15px] leading-relaxed text-white/65">{p.body}</p>
             </div>

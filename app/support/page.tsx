@@ -23,10 +23,10 @@ export default function SupportPage() {
 
       <div className="mt-8 flex flex-wrap gap-4 border-y hairline py-6">
         <a
-          href="mailto:support@directive.app"
+          href="mailto:support@directivefitness.com"
           className="text-[13px] text-gold hover:underline"
         >
-          support@directive.app
+          support@directivefitness.com
         </a>
         <span className="text-[13px] text-white/30">
           Typical response time: under 24 hours

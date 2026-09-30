@@ -87,10 +87,10 @@ export default function PrivacyPage() {
           stored telemetry at any time from Settings → Account → Delete
           Account, or by contacting{" "}
           <a
-            href="mailto:privacy@directive.app"
+            href="mailto:privacy@directivefitness.com"
             className="text-gold hover:underline"
           >
-            privacy@directive.app
+            privacy@directivefitness.com
           </a>
           . Deletion requests are processed within 30 days, and all
           associated biometric records, logs, and derived telemetry are
@@ -117,10 +117,10 @@ export default function PrivacyPage() {
         <p>
           Questions about this policy: <br />
           <a
-            href="mailto:privacy@directive.app"
+            href="mailto:privacy@directivefitness.com"
             className="text-gold hover:underline"
           >
-            privacy@directive.app
+            privacy@directivefitness.com
           </a>
         </p>
       </Section>
