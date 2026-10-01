@@ -265,11 +265,6 @@ function CruisePreview() {
         {/* cut: the initial steep drop */}
         <path d="M14,18 C72,22 124,68 172,114" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
 
-        {/* event allowance dip */}
-        <path d="M84,46 C92,60 102,59 110,50" fill="none" stroke="#38BDF8" strokeWidth="2" strokeDasharray="2 3" />
-        <circle cx="96.8" cy="50.2" r="2.5" fill="#38BDF8" />
-        <text x="97" y="34" textAnchor="middle" fontSize="9" fill="#7DD3FC">Event allowance</text>
-
         {/* touchdown marker */}
         <circle cx="172" cy="114" r="4.5" fill="none" stroke="#D4AF37" strokeWidth="1.5" />
         <circle cx="172" cy="114" r="2" fill="#D4AF37" />
