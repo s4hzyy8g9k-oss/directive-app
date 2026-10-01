@@ -153,7 +153,7 @@ export const modal = {
     hint: "Choose up to two.",
     max: 2,
     options: [
-      "The scale is moving the wrong way and it frustrates me",
+      "The scale is moving the wrong way",
       "My weight plateaus even when I'm working hard",
       "The effort of tracking every detail of my food",
       "Diet fatigue and burnout from chronic restriction",
@@ -162,8 +162,6 @@ export const modal = {
   },
   step3: {
     question: "What's the biggest failure of your current fitness app?",
-    writeInLabel: "Something else? Write it in (optional)",
-    writeInPlaceholder: "Tell us in your own words",
     options: [
       "Raw data and charts, but no actionable direction",
       "It punishes me with broken streaks and guilt",
@@ -172,6 +170,9 @@ export const modal = {
     ],
   },
   step4: {
+    writeInLabel: "Something else? (optional)",
+    writeInPlaceholder: "Tell us in your own words",
+    emailLabel: "Email address",
     heading: "Where should we send your access?",
     body: "We'll reserve your place in the 2026 Charter intake.",
     placeholder: "you@email.com",

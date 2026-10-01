@@ -429,7 +429,7 @@ function DirectivePreview() {
       </div>
 
       <div className="mt-4 rounded-xl border hairline bg-space/50 px-3.5 py-3">
-        <div className="font-mono text-[10px] tracking-[0.16em] text-gold/80">HOW TO CLOSE THE 150 KCAL</div>
+        <div className="font-mono text-[10px] tracking-[0.16em] text-gold/80">DEFICIT SPLIT</div>
 
         <div className="mt-3">
           <div className="flex items-baseline justify-between">
@@ -454,7 +454,7 @@ function DirectivePreview() {
           <div className="flex items-baseline justify-between">
             <span className="font-mono text-[10px] tracking-[0.14em] text-white/55">ACTIVITY</span>
             <span className="font-mono text-[15px] tabular-nums text-white">
-              +{activity} <span className="text-[10px] text-white/45">kcal/day</span>
+              −{activity} <span className="text-[10px] text-white/45">kcal/day</span>
             </span>
           </div>
           <input

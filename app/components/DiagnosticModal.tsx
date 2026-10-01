@@ -178,28 +178,13 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                     <h3 className="font-display text-[26px] leading-tight text-white">{modal.step3.question}</h3>
                     <div className="mt-6 space-y-2.5">
                       {modal.step3.options.map((o) =>
-                        option(o, appFailure === o, () => setAppFailure(o))
+                        option(o, appFailure === o, () => {
+                          setAppFailure(o);
+                          setStep(4);
+                        })
                       )}
                     </div>
-                    <label className="mt-5 block">
-                      <span className="text-[13px] text-white/55">{modal.step3.writeInLabel}</span>
-                      <textarea
-                        value={writeIn}
-                        onChange={(e) => setWriteIn(e.target.value.slice(0, 500))}
-                        rows={3}
-                        placeholder={modal.step3.writeInPlaceholder}
-                        className="mt-2 w-full resize-none rounded-2xl border hairline bg-space/70 px-4 py-3 text-[15px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
-                      />
-                    </label>
-                    <button
-                      type="button"
-                      disabled={!appFailure && writeIn.trim().length === 0}
-                      onClick={() => setStep(4)}
-                      className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-3.5 text-[15px] font-semibold text-obsidian disabled:opacity-40"
-                    >
-                      Continue
-                    </button>
-                    <button onClick={() => setStep(2)} className="mt-4 text-[13px] text-white/45 hover:text-white/80">
+                    <button onClick={() => setStep(2)} className="mt-5 text-[13px] text-white/45 hover:text-white/80">
                       Back
                     </button>
                   </motion.div>
@@ -209,10 +194,21 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                   <motion.div key="4" {...slide}>
                     <h3 className="font-display text-[26px] leading-tight text-white">{modal.step4.heading}</h3>
                     <p className="mt-2 text-[14.5px] text-white/55">{modal.step4.body}</p>
-                    <form onSubmit={submit} noValidate className="mt-6">
+                    <form onSubmit={submit} noValidate className="mt-5">
+                      <label className="block">
+                        <span className="text-[13px] text-white/55">{modal.step4.writeInLabel}</span>
+                        <textarea
+                          value={writeIn}
+                          onChange={(e) => setWriteIn(e.target.value.slice(0, 500))}
+                          rows={2}
+                          placeholder={modal.step4.writeInPlaceholder}
+                          className="mt-2 w-full resize-none rounded-2xl border hairline bg-space/70 px-4 py-3 text-[15px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
+                        />
+                      </label>
+                      <label className="mt-4 block">
+                        <span className="text-[13px] text-white/55">{modal.step4.emailLabel}</span>
                       <input
                         type="email"
-                        autoFocus
                         value={email}
                         onChange={(e) => {
                           setEmail(e.target.value);
@@ -220,8 +216,9 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                         }}
                         placeholder={modal.step4.placeholder}
                         aria-invalid={!!error}
-                        className="w-full rounded-2xl border hairline bg-space/70 px-5 py-4 text-[16px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
+                        className="mt-2 w-full rounded-2xl border hairline bg-space/70 px-5 py-3.5 text-[16px] text-white placeholder:text-white/30 focus:border-gold/60 focus:outline-none"
                       />
+                      </label>
                       <div aria-hidden="true" style={{ position: "absolute", left: "-9999px", height: 0, overflow: "hidden" }}>
                         <label>
                           Website
@@ -229,7 +226,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                         </label>
                       </div>
                       {error && <p className="mt-2 text-[13px] text-coral">{error}</p>}
-                      <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-4 text-[15px] font-semibold text-obsidian disabled:opacity-60">
+                      <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-3.5 text-[15px] font-semibold text-obsidian disabled:opacity-60">
                         {sending ? "Sending..." : modal.step4.button}
                       </button>
                     </form>
