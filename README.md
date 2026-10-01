@@ -70,7 +70,7 @@ Open http://localhost:3000
    **Saving Charter applications (Supabase):**
    - In your Supabase project, open SQL Editor → New query, paste the contents of
      `supabase/charter_applications.sql`, and Run. This creates a private table.
-   - In Vercel, add `SUPABASE_URL` (Project Settings → API) and
+   - In Vercel, add `SUPABASE_URL` (Project Settings → Data API; it must end at `.supabase.co`, like `https://yourprojectcode.supabase.co`) and
      `SUPABASE_SECRET_KEY` (the secret key; server-only, never share it).
    - Redeploy. Each application is saved (one row per email) and also emailed.
      If one of the two fails, the other still goes through.

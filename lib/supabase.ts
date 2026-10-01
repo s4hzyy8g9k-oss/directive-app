@@ -17,9 +17,20 @@ export function supabaseConfigured(): boolean {
 }
 
 export async function saveCharterApplication(row: CharterRow): Promise<void> {
-  const base = process.env.SUPABASE_URL?.replace(/\/+$/, "");
-  const key = process.env.SUPABASE_SECRET_KEY;
-  if (!base || !key) throw new Error("Supabase is not configured");
+  const rawUrl = process.env.SUPABASE_URL?.trim();
+  const key = process.env.SUPABASE_SECRET_KEY?.trim();
+  if (!rawUrl || !key) throw new Error("Supabase is not configured");
+  // Keep only the web address itself, so extra text such as /rest/v1/ on the end is ignored.
+  let base: string;
+  try {
+    base = new URL(rawUrl).origin;
+  } catch {
+    throw new Error(`SUPABASE_URL is not a valid web address ("${rawUrl.slice(0, 60)}")`);
+  }
+  // Guard against pasting the wrong address (for example the dashboard address supabase.com).
+  if (!/^https:\/\/[a-z0-9-]+\.supabase\.(co|in)$/i.test(base)) {
+    throw new Error(`SUPABASE_URL looks wrong ("${base.slice(0, 60)}"). It must look like https://yourprojectcode.supabase.co`);
+  }
 
   const headers: Record<string, string> = {
     apikey: key,
@@ -36,7 +47,8 @@ export async function saveCharterApplication(row: CharterRow): Promise<void> {
     body: JSON.stringify({ ...row, email: row.email.toLowerCase(), updated_at: new Date().toISOString() }),
   });
 
-  if (!res.ok) {
+  const contentType = res.headers?.get?.("content-type") || "";
+  if (!res.ok || contentType.includes("text/html")) {
     const detail = await res.text().catch(() => "");
     throw new Error(`Supabase error ${res.status}: ${detail.slice(0, 300)}`);
   }
