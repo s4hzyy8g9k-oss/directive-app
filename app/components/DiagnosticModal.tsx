@@ -88,7 +88,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
       key={label}
       onClick={onPick}
       aria-pressed={selected}
-      className={`w-full rounded-2xl border px-5 py-4 text-left text-[15px] transition-colors ${
+      className={`w-full rounded-2xl border px-5 py-3 text-left text-[15px] transition-colors ${
         selected ? "border-gold/70 bg-gold/[0.1] text-champagne" : "border hairline bg-white/[0.02] text-white/85 hover:border-gold/60 hover:bg-gold/[0.06]"
       }`}
     >
@@ -118,7 +118,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 40, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.2, 0.7, 0.2, 1] }}
-            className="bezel max-h-[88vh] w-full max-w-md overflow-y-auto rounded-t-[26px] sm:rounded-[26px]"
+            className="bezel max-h-[92vh] w-full max-w-md overflow-y-auto overflow-x-hidden sm:max-w-lg rounded-t-[26px] sm:rounded-[26px]"
           >
             <div className="flex items-center justify-between px-6 pt-5">
               <div className="flex items-center gap-2">
@@ -135,12 +135,12 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
               ))}
             </div>
 
-            <div className="px-6 pb-8 pt-7">
+            <div className="px-6 pb-6 pt-5">
               <AnimatePresence mode="wait">
                 {!done && step === 1 && (
                   <motion.div key="1" {...slide}>
                     <h3 className="font-display text-[26px] leading-tight text-white">{modal.step1.question}</h3>
-                    <div className="mt-6 space-y-2.5">
+                    <div className="mt-5 space-y-2">
                       {modal.step1.options.map((o) =>
                         option(o, mission === o, () => {
                           setMission(o);
@@ -155,10 +155,10 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                   <motion.div key="2" {...slide}>
                     <h3 className="font-display text-[26px] leading-tight text-white">{modal.step2.question}</h3>
                     <p className="mt-1.5 text-[13px] text-white/45">{modal.step2.hint}</p>
-                    <div className="mt-5 space-y-2.5">
+                    <div className="mt-4 space-y-2">
                       {modal.step2.options.map((o) => option(o, disruptors.includes(o), () => toggleDisruptor(o)))}
                     </div>
-                    <div className="mt-5 flex items-center justify-between">
+                    <div className="mt-4 flex items-center justify-between">
                       <button onClick={() => setStep(1)} className="text-[13px] text-white/45 hover:text-white/80">
                         Back
                       </button>
@@ -176,7 +176,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                 {!done && step === 3 && (
                   <motion.div key="3" {...slide}>
                     <h3 className="font-display text-[26px] leading-tight text-white">{modal.step3.question}</h3>
-                    <div className="mt-6 space-y-2.5">
+                    <div className="mt-5 space-y-2">
                       {modal.step3.options.map((o) =>
                         option(o, appFailure === o, () => {
                           setAppFailure(o);
