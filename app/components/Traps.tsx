@@ -1,4 +1,5 @@
 import { traps } from "@/app/content";
+import MealConsole from "./MealConsole";
 
 function CaloriesViz() {
   return (
@@ -27,70 +28,31 @@ function CaloriesViz() {
 }
 
 function WaterViz() {
+  // Dry weight drops along the same angle as the Cruise control cut. Water weight rides above it in
+  // three peaks, then settles onto the dry weight line, runs with it, and ends on it after one slight wave.
+  const trend = "M0.0,60.0 L2.0,60.1 L4.0,60.2 L6.0,60.3 L8.0,60.5 L10.0,60.6 L12.0,60.8 L14.0,60.9 L16.0,61.1 L18.0,61.3 L20.0,61.5 L22.0,61.7 L24.0,62.0 L26.0,62.2 L28.0,62.5 L30.0,62.7 L32.0,63.0 L34.0,63.3 L36.0,63.6 L38.0,64.0 L40.0,64.3 L42.0,64.6 L44.0,65.0 L46.0,65.4 L48.0,65.7 L50.0,66.1 L52.0,66.5 L54.0,66.9 L56.0,67.4 L58.0,67.8 L60.0,68.3 L62.0,68.7 L64.0,69.2 L66.0,69.7 L68.0,70.2 L70.0,70.7 L72.0,71.2 L74.0,71.7 L76.0,72.3 L78.0,72.8 L80.0,73.4 L82.0,74.0 L84.0,74.6 L86.0,75.2 L88.0,75.8 L90.0,76.4 L92.0,77.0 L94.0,77.7 L96.0,78.3 L98.0,79.0 L100.0,79.7 L102.0,80.3 L104.0,81.0 L106.0,81.7 L108.0,82.5 L110.0,83.2 L112.0,83.9 L114.0,84.7 L116.0,85.4 L118.0,86.2 L120.0,87.0 L122.0,87.7 L124.0,88.5 L126.0,89.3 L128.0,90.1 L130.0,91.0 L132.0,91.8 L134.0,92.6 L136.0,93.5 L138.0,94.4 L140.0,95.2 L142.0,96.1 L144.0,97.0 L146.0,97.9 L148.0,98.8 L150.0,99.7 L152.0,100.6 L154.0,101.5 L156.0,102.5 L158.0,103.4 L160.0,104.4 L162.0,105.3 L164.0,106.3 L166.0,107.3 L168.0,108.3 L170.0,109.3 L172.0,110.3 L174.0,111.3 L176.0,112.3 L178.0,113.3 L180.0,114.3 L182.0,115.4 L184.0,116.4 L186.0,117.5 L188.0,118.5 L190.0,119.6 L192.0,120.7 L194.0,121.7 L196.0,122.8 L198.0,123.9 L200.0,125.0 L202.0,126.1 L204.0,127.2 L206.0,128.3 L208.0,129.4 L210.0,130.6 L212.0,131.7 L214.0,132.8 L216.0,134.0 L218.0,135.1 L220.0,136.3 L222.0,137.4 L224.0,138.6 L226.0,139.7 L228.0,140.9 L230.0,142.1 L232.0,143.2 L234.0,144.4 L236.0,145.6 L238.0,146.8 L240.0,148.0 L242.0,149.2 L244.0,150.3 L246.0,151.5 L248.0,152.7 L250.0,153.9 L252.0,155.2 L254.0,156.4 L256.0,157.6 L258.0,158.8 L260.0,160.0";
+  const top = "M0.0,52.0 L2.0,50.5 L4.0,49.0 L6.0,47.3 L8.0,45.6 L10.0,43.8 L12.0,42.0 L14.0,40.2 L16.0,38.4 L18.0,36.7 L20.0,34.9 L22.0,33.3 L24.0,31.7 L26.0,30.2 L28.0,28.9 L30.0,27.7 L32.0,26.7 L34.0,25.8 L36.0,25.2 L38.0,24.8 L40.0,24.6 L42.0,24.7 L44.0,25.1 L46.0,25.9 L48.0,27.2 L50.0,28.8 L52.0,30.7 L54.0,32.8 L56.0,34.9 L58.0,37.1 L60.0,39.3 L62.0,41.3 L64.0,43.2 L66.0,44.7 L68.0,45.9 L70.0,46.7 L72.0,47.1 L74.0,47.3 L76.0,47.4 L78.0,47.2 L80.0,47.0 L82.0,46.7 L84.0,46.3 L86.0,45.8 L88.0,45.3 L90.0,44.8 L92.0,44.4 L94.0,44.0 L96.0,43.6 L98.0,43.4 L100.0,43.3 L102.0,43.3 L104.0,43.5 L106.0,43.9 L108.0,44.5 L110.0,46.3 L112.0,50.0 L114.0,54.9 L116.0,60.2 L118.0,65.3 L120.0,69.8 L122.0,74.9 L124.0,80.3 L126.0,85.2 L128.0,89.0 L130.0,91.0 L132.0,91.8 L134.0,92.6 L136.0,93.5 L138.0,94.4 L140.0,95.2 L142.0,96.1 L144.0,97.0 L146.0,97.9 L148.0,98.8 L150.0,99.7 L152.0,100.6 L154.0,101.5 L156.0,102.5 L158.0,103.4 L160.0,104.4 L162.0,105.3 L164.0,106.3 L166.0,107.3 L168.0,108.3 L170.0,109.3 L172.0,110.3 L174.0,111.3 L176.0,112.3 L178.0,113.3 L180.0,114.3 L182.0,115.4 L184.0,116.4 L186.0,117.5 L188.0,118.5 L190.0,119.6 L192.0,120.7 L194.0,121.7 L196.0,122.7 L198.0,123.2 L200.0,123.1 L202.0,122.7 L204.0,122.1 L206.0,121.5 L208.0,121.1 L210.0,120.9 L212.0,120.5 L214.0,120.0 L216.0,119.6 L218.0,119.4 L220.0,119.6 L222.0,120.4 L224.0,121.8 L226.0,123.7 L228.0,126.0 L230.0,128.5 L232.0,131.2 L234.0,133.9 L236.0,136.4 L238.0,138.8 L240.0,141.0 L242.0,143.2 L244.0,145.4 L246.0,147.5 L248.0,149.5 L250.0,151.4 L252.0,153.2 L254.0,155.0 L256.0,156.6 L258.0,158.3 L260.0,160.0";
+  const fill = "M0.0,52.0 L2.0,50.5 L4.0,49.0 L6.0,47.3 L8.0,45.6 L10.0,43.8 L12.0,42.0 L14.0,40.2 L16.0,38.4 L18.0,36.7 L20.0,34.9 L22.0,33.3 L24.0,31.7 L26.0,30.2 L28.0,28.9 L30.0,27.7 L32.0,26.7 L34.0,25.8 L36.0,25.2 L38.0,24.8 L40.0,24.6 L42.0,24.7 L44.0,25.1 L46.0,25.9 L48.0,27.2 L50.0,28.8 L52.0,30.7 L54.0,32.8 L56.0,34.9 L58.0,37.1 L60.0,39.3 L62.0,41.3 L64.0,43.2 L66.0,44.7 L68.0,45.9 L70.0,46.7 L72.0,47.1 L74.0,47.3 L76.0,47.4 L78.0,47.2 L80.0,47.0 L82.0,46.7 L84.0,46.3 L86.0,45.8 L88.0,45.3 L90.0,44.8 L92.0,44.4 L94.0,44.0 L96.0,43.6 L98.0,43.4 L100.0,43.3 L102.0,43.3 L104.0,43.5 L106.0,43.9 L108.0,44.5 L110.0,46.3 L112.0,50.0 L114.0,54.9 L116.0,60.2 L118.0,65.3 L120.0,69.8 L122.0,74.9 L124.0,80.3 L126.0,85.2 L128.0,89.0 L130.0,91.0 L132.0,91.8 L134.0,92.6 L136.0,93.5 L138.0,94.4 L140.0,95.2 L142.0,96.1 L144.0,97.0 L146.0,97.9 L148.0,98.8 L150.0,99.7 L152.0,100.6 L154.0,101.5 L156.0,102.5 L158.0,103.4 L160.0,104.4 L162.0,105.3 L164.0,106.3 L166.0,107.3 L168.0,108.3 L170.0,109.3 L172.0,110.3 L174.0,111.3 L176.0,112.3 L178.0,113.3 L180.0,114.3 L182.0,115.4 L184.0,116.4 L186.0,117.5 L188.0,118.5 L190.0,119.6 L192.0,120.7 L194.0,121.7 L196.0,122.7 L198.0,123.2 L200.0,123.1 L202.0,122.7 L204.0,122.1 L206.0,121.5 L208.0,121.1 L210.0,120.9 L212.0,120.5 L214.0,120.0 L216.0,119.6 L218.0,119.4 L220.0,119.6 L222.0,120.4 L224.0,121.8 L226.0,123.7 L228.0,126.0 L230.0,128.5 L232.0,131.2 L234.0,133.9 L236.0,136.4 L238.0,138.8 L240.0,141.0 L242.0,143.2 L244.0,145.4 L246.0,147.5 L248.0,149.5 L250.0,151.4 L252.0,153.2 L254.0,155.0 L256.0,156.6 L258.0,158.3 L260.0,160.0 L260.0,160.0 L258.0,158.8 L256.0,157.6 L254.0,156.4 L252.0,155.2 L250.0,153.9 L248.0,152.7 L246.0,151.5 L244.0,150.3 L242.0,149.2 L240.0,148.0 L238.0,146.8 L236.0,145.6 L234.0,144.4 L232.0,143.2 L230.0,142.1 L228.0,140.9 L226.0,139.7 L224.0,138.6 L222.0,137.4 L220.0,136.3 L218.0,135.1 L216.0,134.0 L214.0,132.8 L212.0,131.7 L210.0,130.6 L208.0,129.4 L206.0,128.3 L204.0,127.2 L202.0,126.1 L200.0,125.0 L198.0,123.9 L196.0,122.8 L194.0,121.7 L192.0,120.7 L190.0,119.6 L188.0,118.5 L186.0,117.5 L184.0,116.4 L182.0,115.4 L180.0,114.3 L178.0,113.3 L176.0,112.3 L174.0,111.3 L172.0,110.3 L170.0,109.3 L168.0,108.3 L166.0,107.3 L164.0,106.3 L162.0,105.3 L160.0,104.4 L158.0,103.4 L156.0,102.5 L154.0,101.5 L152.0,100.6 L150.0,99.7 L148.0,98.8 L146.0,97.9 L144.0,97.0 L142.0,96.1 L140.0,95.2 L138.0,94.4 L136.0,93.5 L134.0,92.6 L132.0,91.8 L130.0,91.0 L128.0,90.1 L126.0,89.3 L124.0,88.5 L122.0,87.7 L120.0,87.0 L118.0,86.2 L116.0,85.4 L114.0,84.7 L112.0,83.9 L110.0,83.2 L108.0,82.5 L106.0,81.7 L104.0,81.0 L102.0,80.3 L100.0,79.7 L98.0,79.0 L96.0,78.3 L94.0,77.7 L92.0,77.0 L90.0,76.4 L88.0,75.8 L86.0,75.2 L84.0,74.6 L82.0,74.0 L80.0,73.4 L78.0,72.8 L76.0,72.3 L74.0,71.7 L72.0,71.2 L70.0,70.7 L68.0,70.2 L66.0,69.7 L64.0,69.2 L62.0,68.7 L60.0,68.3 L58.0,67.8 L56.0,67.4 L54.0,66.9 L52.0,66.5 L50.0,66.1 L48.0,65.7 L46.0,65.4 L44.0,65.0 L42.0,64.6 L40.0,64.3 L38.0,64.0 L36.0,63.6 L34.0,63.3 L32.0,63.0 L30.0,62.7 L28.0,62.5 L26.0,62.2 L24.0,62.0 L22.0,61.7 L20.0,61.5 L18.0,61.3 L16.0,61.1 L14.0,60.9 L12.0,60.8 L10.0,60.6 L8.0,60.5 L6.0,60.3 L4.0,60.2 L2.0,60.1 L0.0,60.0 Z";
   return (
-    <svg viewBox="0 0 260 110" className="w-full" aria-hidden>
-      <path d="M0,40 C40,38 60,20 90,34 C120,48 140,14 170,22 C200,30 215,6 260,12 L260,72 C215,78 200,80 170,82 C140,84 120,86 90,88 C60,90 40,92 0,94 Z" fill="#38BDF8" fillOpacity="0.22" />
-      <path d="M0,40 C40,38 60,20 90,34 C120,48 140,14 170,22 C200,30 215,6 260,12" fill="none" stroke="#9FB1CC" strokeOpacity="0.6" strokeDasharray="2 4" />
-      <path d="M0,94 C40,92 60,90 90,88 C120,86 140,84 170,82 C200,80 215,78 260,72" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
-      <text x="258" y="104" textAnchor="end" fontSize="11" fill="#F1DC9A">true trend</text>
-      <text x="4" y="30" fontSize="11" fill="#7DD3FC">water</text>
+    <svg viewBox="0 0 260 176" className="w-full" aria-hidden>
+      <path d={fill} fill="#38BDF8" fillOpacity="0.22" />
+      <path d={top} fill="none" stroke="#9FB1CC" strokeOpacity="0.6" strokeDasharray="2 4" />
+      <path d={trend} fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      <text x="62" y="12" fontSize="11" fill="#7DD3FC">water weight</text>
+      <text x="75" y="92" fontSize="11" fill="#F1DC9A">dry weight</text>
     </svg>
   );
 }
-
-function MealIcon({ path }: { path: string }) {
-  return (
-    <svg viewBox="0 0 24 24" className="h-4 w-4 sm:h-[18px] sm:w-[18px]" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-      <path d={path} />
-    </svg>
-  );
-}
-
-const MEAL_PATHS = [
-  "M4 12a8 8 0 0 0 16 0Z M4 12h16", // bowl
-  "M12 3v18M7 3a5 5 0 0 0 0 10M17 3a5 5 0 0 0 0 10", // fork+knife
-  "M6 3h9l-1 13a3 3 0 0 1-3 3H10a3 3 0 0 1-3-3Z M6 8h9", // cup
-  "M4 10 L12 4 L20 10 L20 12 L4 12 Z M5 12 L5 19 L19 19 L19 12", // sandwich/plate-ish
-];
 
 function ScaleViz() {
-  return (
-    <div className="w-full">
-      <div className="flex items-center justify-center gap-3">
-        <div className="rounded-xl border hairline bg-space/60 px-3 py-2.5 text-center">
-          <div className="font-mono text-[19px] text-white/35 line-through decoration-coral/70">14.0 g</div>
-          <div className="text-[10px] text-white/35">weighed, forever</div>
-        </div>
-        <svg viewBox="0 0 24 24" className="h-4 w-6 text-white/25 sm:w-8" fill="none" aria-hidden>
-          <path d="M4 12h16m0 0l-5-5m5 5l-5 5" stroke="currentColor" strokeWidth="1.5" />
-        </svg>
-        <div className="rounded-xl border border-gold/40 bg-gold/[0.08] px-3 py-2.5 text-center">
-          <div className="font-mono text-[19px] text-champagne">5.0 s</div>
-          <div className="text-[10px] text-gold/70">tap &amp; log</div>
-        </div>
-      </div>
-      <div className="mt-4 grid grid-cols-4 gap-2">
-        {MEAL_PATHS.map((path, i) => (
-          <div
-            key={i}
-            className={`flex aspect-square items-center justify-center rounded-xl border transition-colors ${
-              i === 1 ? "border-gold bg-gold/15 text-champagne shadow-[0_0_10px_-2px_rgba(212,175,55,0.7)]" : "border-white/10 bg-white/[0.03] text-white/40"
-            }`}
-          >
-            <MealIcon path={path} />
-          </div>
-        ))}
-      </div>
-      <div className="mt-2.5 text-center text-[11px] text-champagne/80">Visual meal selection</div>
-    </div>
-  );
+  return <MealConsole />;
 }
 
 const VIZ = { calories: CaloriesViz, water: WaterViz, scale: ScaleViz };
 
 export default function Traps() {
   return (
-    <section className="relative">
+    <section id="how-it-works" className="relative scroll-mt-16">
       <div className="mx-auto max-w-6xl px-5 py-24 sm:px-8 sm:py-32">
         <div className="max-w-2xl">
           <h2 className="font-display text-[38px] leading-[1.05] text-white sm:text-[54px]">{traps.heading}</h2>
@@ -101,7 +63,7 @@ export default function Traps() {
           {traps.items.map((t) => {
             const Viz = VIZ[t.kind];
             return (
-              <div key={t.title} className="glass grid items-center gap-6 rounded-[20px] p-6 sm:grid-cols-[1fr_320px] sm:gap-12 sm:p-9">
+              <div key={t.title} className="glass grid items-center gap-6 rounded-[20px] p-6 sm:grid-cols-[1fr_340px] sm:gap-12 sm:p-9">
                 <div>
                   <h3 className="font-display text-[27px] leading-tight text-white sm:text-[32px]">{t.title}</h3>
                   <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-white/60">{t.body}</p>

@@ -112,10 +112,10 @@ export default function TermsPage() {
       <Section title="Contact">
         <p>
           <a
-            href="mailto:legal@directive.app"
+            href="mailto:legal@directivefitness.com"
             className="text-gold hover:underline"
           >
-            legal@directive.app
+            legal@directivefitness.com
           </a>
         </p>
       </Section>

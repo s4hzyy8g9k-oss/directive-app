@@ -66,7 +66,7 @@ export default function DecouplingDemo() {
   // ── geometry ───────────────────────────────────────────────
   const G = compact
     ? { vw: 600, vh: 480, l: 48, r: 22, t: 26, b: 38, fs: 17, dot: 3.6 }
-    : { vw: 1000, vh: 380, l: 52, r: 30, t: 22, b: 30, fs: 12, dot: 3 };
+    : { vw: 1000, vh: 292, l: 52, r: 30, t: 14, b: 24, fs: 12, dot: 3 };
   const plotW = G.vw - G.l - G.r;
   const plotH = G.vh - G.t - G.b;
   const x = (d: number) => G.l + (d / MISSION_DAYS) * plotW;
@@ -132,9 +132,9 @@ export default function DecouplingDemo() {
   ];
 
   return (
-    <div ref={wrapRef} className="bezel no-select relative overflow-hidden rounded-[22px] p-3 sm:p-4">
+    <div ref={wrapRef} className="bezel no-select relative overflow-hidden rounded-[22px] p-3 sm:p-3.5">
       {/* status strip */}
-      <div className="flex items-center justify-between px-2 pb-3 sm:px-1">
+      <div className="flex items-center justify-between px-2 pb-2 sm:px-1">
         <div className="flex items-center gap-2">
           <span className="relative flex h-2 w-2">
             <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-gold opacity-50" />
@@ -159,9 +159,9 @@ export default function DecouplingDemo() {
       {/* readouts */}
       <div className="grid grid-cols-3 gap-2 sm:gap-3">
         {readouts.map((r) => (
-          <div key={r.label} className="rounded-xl border hairline bg-space/50 px-3 py-2 sm:px-3.5 sm:py-2.5">
+          <div key={r.label} className="rounded-xl border hairline bg-space/50 px-3 py-2 sm:px-3.5 sm:py-1.5">
             <div className="text-[10.5px] text-white/45 sm:text-[12px]">{r.label}</div>
-            <div className="mt-0.5 font-mono text-[20px] font-medium tabular-nums sm:text-[23px]">
+            <div className="mt-0.5 font-mono text-[20px] font-medium tabular-nums sm:text-[20px]">
               <span className={r.valueTone}>{r.value}</span>
               <span className="ml-1 text-[11px] text-white/35 sm:text-[13px]">lb</span>
             </div>
@@ -171,7 +171,7 @@ export default function DecouplingDemo() {
       </div>
 
       {/* chart */}
-      <div className="mt-3 rounded-xl border hairline bg-space/40">
+      <div className="mt-2 rounded-xl border hairline bg-space/40">
         <svg
           viewBox={`0 0 ${G.vw} ${G.vh}`}
           className="block h-auto w-full touch-none"
@@ -368,7 +368,7 @@ export default function DecouplingDemo() {
       </div>
 
       {/* narration */}
-      <div className="mt-3 grid grid-cols-5 gap-1.5 px-1">
+      <div className="mt-1.5 grid grid-cols-5 gap-1.5 px-1">
         {demoSteps.map((s, i) => (
           <button
             key={s.title}
@@ -392,7 +392,7 @@ export default function DecouplingDemo() {
           </button>
         ))}
       </div>
-      <div className="relative min-h-[72px] px-2 pb-1 pt-2 sm:min-h-[50px]">
+      <div className="relative min-h-[72px] px-2 pb-0.5 pt-1 sm:min-h-[44px]">
         <AnimatePresence mode="wait">
           <motion.div
             key={phase}
@@ -401,7 +401,7 @@ export default function DecouplingDemo() {
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.35 }}
           >
-            <div className="font-display text-[22px] leading-tight text-white sm:text-[26px]">{demoSteps[phase].title}</div>
+            <div className="font-display text-[22px] leading-tight text-white sm:text-[22px]">{demoSteps[phase].title}</div>
             <div className="mt-1 text-[13.5px] leading-snug text-white/60 sm:text-[14.5px]">{demoSteps[phase].body}</div>
           </motion.div>
         </AnimatePresence>

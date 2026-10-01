@@ -53,6 +53,24 @@ export default function PrivacyPage() {
         </p>
       </Section>
 
+      <Section title="Website applications">
+        <p>
+          If you apply for the Charter on directivefitness.com, we collect
+          your email address and the answers you choose or write in. We use
+          them only to manage the Charter intake and to contact you about
+          it. They are stored in a private database that only Directive can
+          access, and we never sell or share them for advertising. To see,
+          correct, or delete your application, email{" "}
+          <a
+            href="mailto:privacy@directivefitness.com"
+            className="text-gold hover:underline"
+          >
+            privacy@directivefitness.com
+          </a>
+          .
+        </p>
+      </Section>
+
       <Section title="How we use it">
         <p>
           Biometric data is used exclusively to calculate your body
@@ -87,10 +105,10 @@ export default function PrivacyPage() {
           stored telemetry at any time from Settings → Account → Delete
           Account, or by contacting{" "}
           <a
-            href="mailto:privacy@directive.app"
+            href="mailto:privacy@directivefitness.com"
             className="text-gold hover:underline"
           >
-            privacy@directive.app
+            privacy@directivefitness.com
           </a>
           . Deletion requests are processed within 30 days, and all
           associated biometric records, logs, and derived telemetry are
@@ -117,10 +135,10 @@ export default function PrivacyPage() {
         <p>
           Questions about this policy: <br />
           <a
-            href="mailto:privacy@directive.app"
+            href="mailto:privacy@directivefitness.com"
             className="text-gold hover:underline"
           >
-            privacy@directive.app
+            privacy@directivefitness.com
           </a>
         </p>
       </Section>
