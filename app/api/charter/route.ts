@@ -68,6 +68,7 @@ export async function POST(req: NextRequest) {
     }),
   ]);
 
+  if (saved.status === "fulfilled") console.log("Charter saved to Supabase");
   if (saved.status === "rejected") console.error("Charter save failed:", saved.reason);
   if (emailed.status === "rejected") console.error("Charter email failed:", emailed.reason);
 
