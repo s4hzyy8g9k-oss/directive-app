@@ -26,7 +26,7 @@ export default function FinalCta({ onApply }: { onApply: () => void }) {
             style={{ WebkitMaskImage: TOP_FADE, maskImage: TOP_FADE }}
           >
             <Image
-              src="/brand/footer-moon.jpg"
+              src="/brand/footer-moon.webp"
               alt="Directive — Precision Body Composition Engine"
               fill
               sizes="(min-width: 1400px) 1400px, 100vw"

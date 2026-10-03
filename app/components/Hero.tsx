@@ -29,7 +29,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
             style={{ WebkitMaskImage: BOTTOM_FADE, maskImage: BOTTOM_FADE }}
           >
             <Image
-              src="/brand/hero-earth.jpg"
+              src="/brand/hero-earth.webp"
               alt="Directive — Precision Body Composition Engine"
               fill
               priority

@@ -134,7 +134,7 @@ export const stations = {
 
 export const finalCta = {
   heading: "Stop steering by the scale.",
-  body: "Charter members get early access, founding pricing, and a direct line to the team shaping Directive.",
+  body: "Charter members get early access and a direct line to the team shaping Directive.",
   cta: "Apply for Charter access",
 };
 
