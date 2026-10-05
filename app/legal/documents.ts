@@ -10,12 +10,12 @@ export type Block =
 export type LegalDoc = { title: string; updated: string; blocks: Block[] };
 
 /** True while any document still has a [blank] to fill in. The site must not be published until this is false. */
-export const HAS_BLANKS = true;
+export const HAS_BLANKS = false;
 
 export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
  "terms": {
   "title": "Terms of Service",
-  "updated": "[date]",
+  "updated": "October 5, 2026",
   "blocks": [
    {
     "k": "p",
@@ -779,7 +779,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
  },
  "privacy": {
   "title": "Privacy Policy",
-  "updated": "[date]",
+  "updated": "October 5, 2026",
   "blocks": [
    {
     "k": "p",
@@ -1700,7 +1700,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
  },
  "health": {
   "title": "Consumer Health Data Privacy Policy",
-  "updated": "[date]",
+  "updated": "October 5, 2026",
   "blocks": [
    {
     "k": "p",
