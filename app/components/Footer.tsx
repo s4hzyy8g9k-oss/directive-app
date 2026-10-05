@@ -40,7 +40,7 @@ export default function Footer() {
             </div>
           </div>
         </div>
-        <p className="mt-8 text-[11.5px] text-white/25">© {new Date().getFullYear()} Directive</p>
+        <p className="mt-8 text-[11.5px] text-white/25">© {new Date().getFullYear()} Directive LLC</p>
       </div>
     </footer>
   );

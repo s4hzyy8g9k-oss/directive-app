@@ -21,7 +21,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "These Terms are an agreement between you and [full legal name of the LLC], a Kentucky limited liability company (\"Directive\", \"we\", \"us\"). They cover the Directive mobile app (the \"App\") and the website at directivefitness.com (the \"Website\"). Together we call them the \"Service\"."
+      "t": "These Terms are an agreement between you and Directive LLC, a Kentucky limited liability company (\"Directive\", \"we\", \"us\"). They cover the Directive mobile app (the \"App\") and the website at directivefitness.com (the \"Website\"). Together we call them the \"Service\"."
      }
     ]
    },
@@ -747,12 +747,12 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "lines": [
      [
       {
-       "t": "[Full legal name of the LLC]"
+       "t": "Directive LLC"
       }
      ],
      [
       {
-       "t": "[Postal address]"
+       "t": "952 Winchester Rd, Unit #308, Lexington, KY 40505"
       }
      ],
      [
@@ -771,7 +771,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by [full legal name of the LLC], [postal address]. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at [support@directivefitness.com]. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
+      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at [support@directivefitness.com]. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
      }
     ]
    }
@@ -785,7 +785,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "This policy explains what information Directive handles and what happens to it. It covers the Directive mobile app (the \"App\") and the website at directivefitness.com (the \"Website\"). Directive is published by [publisher's legal name], [postal address] (\"Directive\", \"we\", \"us\")."
+      "t": "This policy explains what information Directive handles and what happens to it. It covers the Directive mobile app (the \"App\") and the website at directivefitness.com (the \"Website\"). Directive is published by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505 (\"Directive\", \"we\", \"us\")."
      }
     ]
    },
@@ -1579,7 +1579,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "Parents or guardians with questions, or who wish to review or delete their child's information, may contact us at [publisher's legal name], [postal address], or by email at privacy@directivefitness.com."
+      "t": "Parents or guardians with questions, or who wish to review or delete their child's information, may contact us at Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505, or by email at privacy@directivefitness.com."
      }
     ]
    },
@@ -1676,12 +1676,12 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "lines": [
      [
       {
-       "t": "[Publisher's legal name]"
+       "t": "Directive LLC"
       }
      ],
      [
       {
-       "t": "[Postal address]"
+       "t": "952 Winchester Rd, Unit #308, Lexington, KY 40505"
       }
      ],
      [
@@ -1905,12 +1905,12 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "lines": [
      [
       {
-       "t": "[Publisher's legal name]"
+       "t": "Directive LLC"
       }
      ],
      [
       {
-       "t": "[Postal address]"
+       "t": "952 Winchester Rd, Unit #308, Lexington, KY 40505"
       }
      ],
      [
