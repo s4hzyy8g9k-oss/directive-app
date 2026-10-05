@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://directivefitness.com"),
   title: "Directive: Mission Control for your body",
   description:
-    "Directive separates water weight from real tissue change, corrects inflated workout calories, and logs a meal in ten seconds. Apply for 2026 Charter access.",
+    "Directive separates likely water weight from your real trend, counts workout calories conservatively, and lets you log a meal in seconds. Apply for 2026 Charter access.",
   openGraph: {
     title: "Directive: Mission Control for your body",
     description: "The scale says you gained 2.8 pounds. Your body says you didn't.",

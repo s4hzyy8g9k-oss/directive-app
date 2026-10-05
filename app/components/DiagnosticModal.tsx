@@ -18,6 +18,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
   const [done, setDone] = useState(false);
   const [sending, setSending] = useState(false);
   const [website, setWebsite] = useState(""); // honeypot, must stay empty
+  const [adult, setAdult] = useState(false); // Directive is for adults 18 and over
 
   useEffect(() => {
     if (!open) return;
@@ -44,6 +45,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
       setDone(false);
       setSending(false);
       setWebsite("");
+      setAdult(false);
     }, 300);
   };
 
@@ -62,13 +64,17 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
       setError("Enter a full email address, like you@email.com.");
       return;
     }
+    if (!adult) {
+      setError(modal.step4.adultError);
+      return;
+    }
     setSending(true);
     setError("");
     try {
       const res = await fetch("/api/charter", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, mission, disruptors, appFailure, writeIn, website }),
+        body: JSON.stringify({ email, mission, disruptors, appFailure, writeIn, website, adult }),
       });
       const data = await res.json().catch(() => ({}));
       if (!res.ok || !data.ok) {
@@ -225,6 +231,18 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                           <input type="text" tabIndex={-1} autoComplete="off" value={website} onChange={(e) => setWebsite(e.target.value)} />
                         </label>
                       </div>
+                      <label className="mt-4 flex cursor-pointer items-center gap-3">
+                        <input
+                          type="checkbox"
+                          checked={adult}
+                          onChange={(e) => {
+                            setAdult(e.target.checked);
+                            setError("");
+                          }}
+                          className="h-5 w-5 shrink-0 accent-[#D4AF37]"
+                        />
+                        <span className="text-[14px] text-white/80">{modal.step4.adultCheck}</span>
+                      </label>
                       {error && <p className="mt-2 text-[13px] text-coral">{error}</p>}
                       <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-3.5 text-[15px] font-semibold text-obsidian disabled:opacity-60">
                         {sending ? "Sending..." : modal.step4.button}

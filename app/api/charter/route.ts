@@ -28,6 +28,11 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ ok: false, error: "Enter a full email address, like you@email.com." }, { status: 400 });
   }
 
+  // Directive is for adults 18 and over: the form's tick box must be ticked. Nothing about age is stored.
+  if (body.adult !== true) {
+    return NextResponse.json({ ok: false, error: "Directive is for adults 18 and over. Please confirm your age to apply." }, { status: 400 });
+  }
+
   const missionRaw = clean(body.mission, 200);
   const appFailureRaw = clean(body.appFailure, 200);
   const writeInRaw = typeof body.writeIn === "string" ? body.writeIn.trim().slice(0, 500) : "";

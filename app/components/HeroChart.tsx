@@ -17,19 +17,19 @@ const CALLOUTS: Callout[] = [
     x: 300,
     y: 108,
     align: "left",
-    lines: ["EXTRACELLULAR FLUID DETECTED (+2.8 LBS)", "DRY TISSUE MASS STABLE"],
+    lines: ["LIKELY WATER (+2.8 LBS)", "TREND WEIGHT STABLE"],
   },
   {
     x: 470,
     y: 214,
     align: "right",
-    lines: ["FLUID-DECOUPLED TRUE DRY MASS: 183.1 LBS", "ON FLIGHT PATH"],
+    lines: ["ESTIMATED DRY WEIGHT: 183.1 LBS", "ON FLIGHT PATH"],
   },
   {
     x: 792,
     y: 268,
     align: "left",
-    lines: ["PRESCRIBED TOUCHDOWN RUNWAY: NOV 15", "170.0 LBS"],
+    lines: ["PROJECTED TOUCHDOWN (EXAMPLE): NOV 15", "170.0 LBS"],
   },
 ];
 

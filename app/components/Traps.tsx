@@ -22,7 +22,7 @@ function CaloriesViz() {
           <div className="h-full w-[37.5%] rounded-full bg-gradient-to-r from-[#A8862A] to-champagne" />
         </div>
       </div>
-      <div className="text-[12px] text-coral/80">375 kcal of phantom food, every session</div>
+      <div className="text-[12px] text-coral/80">375 kcal of difference in this example</div>
     </div>
   );
 }

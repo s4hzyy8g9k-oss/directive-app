@@ -110,7 +110,7 @@ function FuelPreview() {
       <div className="mt-5 grid grid-cols-3 gap-3">
         <MacroPill label="PROTEIN" value={122} of={180} pct={68} sub="Protein floor 94%" />
         <MacroPill label="CARBS" value={151} of={240} pct={63} sub="Discretionary intact" />
-        <MacroPill label="FAT" value={41} of={70} pct={59} sub="Hormonal floor 68%" />
+        <MacroPill label="FAT" value={41} of={70} pct={59} sub="Fat floor 68%" />
       </div>
 
       <div className="mt-5 rounded-xl border hairline bg-space/50 px-3.5 py-3">
@@ -143,7 +143,7 @@ function FuelPreview() {
   );
 }
 
-// ── Mission Control: dials, decoupled weight chart, plates, Scale Shield ──
+// ── Mission Control: dials, weight chart with likely water separated out, plates, the water banner ──
 function MissionPreview() {
   const chart = useMemo(() => {
     const t = buildTelemetry();
@@ -182,7 +182,7 @@ function MissionPreview() {
 
   return (
     <div>
-      <svg viewBox={`0 0 ${chart.W} ${chart.H}`} className="w-full" role="img" aria-label="Scale readings with the fluid zone separated from a smooth true-weight trend">
+      <svg viewBox={`0 0 ${chart.W} ${chart.H}`} className="w-full" role="img" aria-label="Sample scale readings with the likely-water zone separated from a smooth trend">
         {[0.25, 0.55, 0.85].map((f) => (
           <line key={f} x1="0" x2={chart.W} y1={chart.H * f} y2={chart.H * f} stroke="#1B3152" strokeOpacity="0.7" />
         ))}
@@ -205,14 +205,14 @@ function MissionPreview() {
       </svg>
       <div className="mt-1 flex justify-center gap-4 text-[10px] text-white/45">
         <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-steel/80" />Scale reading</span>
-        <span className="flex items-center gap-1.5"><span className="h-1.5 w-3 rounded-sm bg-cyan/30" />Fluid zone</span>
-        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />True trend</span>
+        <span className="flex items-center gap-1.5"><span className="h-1.5 w-3 rounded-sm bg-cyan/30" />Likely water</span>
+        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />Trend</span>
       </div>
 
       <div className="mt-4 flex justify-center gap-3 sm:gap-7">
-        <Dial value={86} unit="%" label="Compliance" goal="Goal: 100%" />
-        <Dial value={62} pct={((62 - 10) / 140) * 100} unit="" label="HRV" goal="Goal: 70 ms" />
-        <Dial value={78} unit="" label="Recovery" goal="Goal: 85" />
+        <Dial value={0.7} pct={(0.7 / 0.75) * 100} unit="%" label="Velocity" goal="Goal: 0.75% / wk" />
+        <Dial value={86} unit="%" label="Adherence" goal="Last 7 days" />
+        <Dial value={-480} pct={(480 / 520) * 100} unit="" label="Energy balance" goal="kcal today" />
       </div>
 
       <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-xl border hairline bg-space/50">
@@ -228,69 +228,91 @@ function MissionPreview() {
         ))}
       </div>
 
-      <div className="mt-3 rounded-full border border-gold/30 bg-gold/[0.06] px-3 py-1.5 text-center font-mono text-[9.5px] tracking-[0.12em] text-champagne/90">
-        SCALE SHIELD ACTIVE // FLUID DECOUPLED FROM TRUE DRY MASS
+      <div className="mt-3 rounded-full border border-cyan/30 bg-cyan/[0.06] px-3 py-1.5 text-center font-mono text-[9.5px] tracking-[0.12em] text-cyan/90">
+        TEMPORARY WATER WEIGHT // LIKELY WATER SEPARATED FROM YOUR TREND
       </div>
     </div>
   );
 }
 
-// ── Cruise control: cut, short reverse diet, then a cruise held under a lower Rebound Shield ──
+// ── After touchdown, as the app runs it (owner and Gemini, 2026-10-05) ──
+// Scale Shield = the first 10 days after touchdown. Rebound Shield = the six-week reverse diet, while calories step
+// back up toward maintenance. Then the weight is watched against a corridor of 3 lb either side of the target.
+// The picture shows what the app does; it does not promise where anyone's weight will go.
 function CruisePreview() {
   return (
     <div>
-      <div className="text-[18px] font-medium text-white/85 sm:text-[20px]">Cruise control</div>
+      <div className="text-[18px] font-medium text-white/85 sm:text-[20px]">After touchdown</div>
 
-      <svg viewBox="0 0 340 170" className="mt-3 w-full" role="img" aria-label="Body weight drops steeply during the cut, rises slightly during a short reverse diet after touchdown, then creeps up during cruise and levels off just below a lower Rebound Shield line">
+      <svg
+        viewBox="0 0 340 176"
+        className="mt-3 w-full"
+        role="img"
+        aria-label="Illustration: body weight drops during the cut to touchdown. Scale Shield covers the first 10 days after touchdown. Rebound Shield covers the six-week reverse diet, while calories step back up toward maintenance. After that, the weight is watched against a corridor of 3 pounds either side of the target."
+      >
         <text x="14" y="10" fontSize="9" letterSpacing="1.2" fill="#D4AF37" fillOpacity="0.85">BODY WEIGHT</text>
 
-        {/* touchdown baseline */}
+        {/* maintenance corridor: 3 lb either side of the target, from touchdown on */}
+        <rect x="172" y="104" width="158" height="20" fill="#F1DC9A" fillOpacity="0.06" />
+        <line x1="172" y1="104" x2="330" y2="104" stroke="#F1DC9A" strokeOpacity="0.55" strokeDasharray="5 5" />
+        <line x1="172" y1="124" x2="330" y2="124" stroke="#F1DC9A" strokeOpacity="0.55" strokeDasharray="5 5" />
+        <text x="330" y="134" textAnchor="end" fontSize="8.5" fill="#F1DC9A" fillOpacity="0.85">Corridor: target ± 3 lb</text>
+
+        {/* target line */}
         <line x1="10" y1="114" x2="330" y2="114" stroke="#1B3152" />
 
-        {/* phase dividers */}
-        <line x1="172" y1="136" x2="172" y2="166" stroke="#F1DC9A" strokeOpacity="0.2" />
-        <line x1="232" y1="136" x2="232" y2="166" stroke="#F1DC9A" strokeOpacity="0.2" />
+        {/* phase dividers and names */}
+        <line x1="172" y1="134" x2="172" y2="172" stroke="#F1DC9A" strokeOpacity="0.2" />
+        <line x1="246" y1="134" x2="246" y2="172" stroke="#F1DC9A" strokeOpacity="0.2" />
         <g fontSize="9" letterSpacing="1.4" textAnchor="middle" fill="#9FB1CC">
-          <text x="93" y="154">CUT</text>
-          <text x="202" y="150">REVERSE</text>
-          <text x="202" y="161">DIET</text>
-          <text x="281" y="154">CRUISE</text>
+          <text x="93" y="158">CUT</text>
+          <text x="209" y="152">REVERSE DIET</text>
+          <text x="209" y="163">6 WEEKS</text>
+          <text x="288" y="158">MAINTENANCE</text>
         </g>
 
-        {/* Rebound Shield: starts after the reverse diet, sits at a lower height */}
-        <line x1="232" y1="95.6" x2="330" y2="95.6" stroke="#F1DC9A" strokeWidth="1.5" strokeDasharray="7 5" strokeOpacity="0.85" />
-        <line x1="232" y1="95.6" x2="232" y2="114" stroke="#F1DC9A" strokeOpacity="0.18" strokeDasharray="2 4" />
-        <text x="330" y="87" textAnchor="end" fontSize="9" fill="#F1DC9A">Rebound Shield</text>
-
-        {/* cut: the initial steep drop */}
+        {/* cut: the descent to the target */}
         <path d="M14,18 C72,22 124,68 172,114" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
 
         {/* touchdown marker */}
         <circle cx="172" cy="114" r="4.5" fill="none" stroke="#D4AF37" strokeWidth="1.5" />
         <circle cx="172" cy="114" r="2" fill="#D4AF37" />
-        <text x="172" y="130" textAnchor="middle" fontSize="9" fill="#F1DC9A">Touchdown</text>
+        <text x="166" y="132" textAnchor="end" fontSize="9" fill="#F1DC9A">Touchdown</text>
 
-        {/* reverse diet: a minimal rise, about one sixth of the old shield height */}
-        <path d="M172,114 C188,113 210,109 232,104.8" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
+        {/* Scale Shield: the first 10 days after touchdown (10 of the reverse diet's 42 days) */}
+        <rect x="172" y="60" width="17.6" height="64" fill="#38BDF8" fillOpacity="0.1" />
+        <line x1="172" y1="60" x2="189.6" y2="60" stroke="#38BDF8" strokeOpacity="0.8" strokeWidth="1.5" />
+        <text x="174" y="54" fontSize="8.5" fill="#7DD3FC">Scale Shield</text>
+        <text x="174" y="44" fontSize="7.5" fill="#7DD3FC" fillOpacity="0.75">10 DAYS</text>
 
-        {/* cruise: slow rise that levels off just below the lower shield */}
+        {/* Rebound Shield: the six-week reverse diet */}
+        <line x1="172" y1="78" x2="246" y2="78" stroke="#F1DC9A" strokeWidth="1.5" strokeOpacity="0.9" />
+        <line x1="172" y1="74" x2="172" y2="82" stroke="#F1DC9A" strokeOpacity="0.9" />
+        <line x1="246" y1="74" x2="246" y2="82" stroke="#F1DC9A" strokeOpacity="0.9" />
+        <text x="246" y="72" textAnchor="end" fontSize="8.5" fill="#F1DC9A">Rebound Shield</text>
+
+        {/* calories stepping back up, one step at each of six Sunday Audits */}
         <motion.path
-          d="M232,104.8 C254,103 272,100.8 292,99.4 C308,98.7 320,98.6 330,98.6"
+          d="M172,96 h12.3 v-2.2 h12.3 v-1.5 h12.3 v-1.5 h12.3 v-1.5 h12.3 v-1.5 h12.5"
           fill="none"
           stroke="#F1DC9A"
-          strokeWidth="2"
-          strokeDasharray="1 5"
-          strokeLinecap="round"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
+          strokeWidth="1.6"
+          strokeOpacity="0.9"
+          initial={{ pathLength: 0 }}
+          whileInView={{ pathLength: 1 }}
           viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 0.9, delay: 0.5 }}
+          transition={{ duration: 1.2, delay: 0.3 }}
         />
+
+        {/* body weight after touchdown: an example line inside the corridor */}
+        <path d="M172,114 C190,112.5 206,115 224,112 C234,110.6 240,111.5 246,111" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M246,111 C262,110 280,113 298,111.5 C312,110.5 322,111.5 330,111" fill="none" stroke="#D4AF37" strokeWidth="2" strokeDasharray="1 5" strokeLinecap="round" />
       </svg>
 
-      <div className="mt-1 flex justify-center gap-4 text-[10px] text-white/45">
-        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />Body weight</span>
-        <span className="flex items-center gap-1.5"><span className="h-0 w-3 border-t border-dashed border-champagne" />Rebound Shield</span>
+      <div className="mt-1 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-white/45">
+        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />Body weight (example)</span>
+        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-champagne" />Calories stepping up</span>
+        <span className="flex items-center gap-1.5"><span className="h-0 w-3 border-t border-dashed border-champagne" />Corridor</span>
       </div>
 
       <div className="mt-3 flex items-center justify-between rounded-lg border hairline bg-space/50 px-3 py-2">

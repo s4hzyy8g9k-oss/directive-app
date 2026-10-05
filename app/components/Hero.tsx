@@ -81,6 +81,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
           className="mt-8 sm:mt-6"
         >
           <DecouplingDemo />
+          <p className="mt-2 text-center text-[11px] text-white/35">{hero.sampleNote}</p>
         </motion.div>
       </div>
     </section>

@@ -118,14 +118,14 @@ export default function DecouplingDemo() {
     {
       label: "Water",
       value: phase >= 2 ? FLUID_TODAY.toFixed(1) : "···",
-      note: phase >= 2 ? "Temporary, not fat" : "Not yet separated",
+      note: phase >= 2 ? "Likely water, not fat" : "Not yet separated",
       tone: "text-cyan/80",
       valueTone: "text-cyan",
     },
     {
-      label: "True dry mass",
+      label: "Estimated dry weight",
       value: phase >= 3 ? DRY_TODAY.toFixed(1) : "···",
-      note: phase >= 4 ? "+0.8 lb vs plan, on course" : phase >= 3 ? "Trend intact" : "Awaiting decoupling",
+      note: phase >= 4 ? "+0.8 lb vs plan, on course" : phase >= 3 ? "Trend intact" : "Awaiting the trend",
       tone: "text-champagne/80",
       valueTone: "gold-text",
     },
@@ -176,7 +176,7 @@ export default function DecouplingDemo() {
           viewBox={`0 0 ${G.vw} ${G.vh}`}
           className="block h-auto w-full touch-none"
           role="img"
-          aria-label="Animated chart: raw scale readings spike 2.8 pounds overnight, Directive separates the spike as water, and reveals a smooth true weight trend on track to reach 170 pounds by November 15."
+          aria-label="Animated illustration with sample data: raw scale readings spike 2.8 pounds overnight, Directive flags the spike as likely water, and shows a smooth trend with an example projection of 170 pounds around November 15."
         >
           <defs>
             <linearGradient id="dd-gold" x1="0" x2="1" y1="0" y2="0">

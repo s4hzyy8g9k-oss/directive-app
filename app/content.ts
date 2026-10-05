@@ -18,9 +18,10 @@ export const hero = {
   kicker: "2026 Charter intake",
   headline: "Most diets don't fail on willpower. They fail on bad math.",
   subhead:
-    "Three measurement errors quietly undo months of good work. Directive is an adaptive metabolic flight computer that separates fluid noise from true tissue, calculates burn with strict Net-MET math, and replaces tracking neurosis with 5-second rapid entry.",
+    "Three measurement errors can quietly undo months of good work. Directive separates likely water from your real trend, counts only the calories a workout adds beyond rest, and lets you log a meal in seconds.",
   primaryCta: "Apply for Charter access",
   secondaryCta: "See the app",
+  sampleNote: "Illustration with sample data.",
 };
 
 // Captions for the hero animation, in order. Each plays as one step.
@@ -34,16 +35,16 @@ export const demoSteps = [
     body: "A normal app calls this a setback. Most people cut calories in a panic.",
   },
   {
-    title: "Directive reads it as water",
-    body: "Salt, a hard leg day, or your cycle. The cyan band is fluid, not fat.",
+    title: "Directive flags it as likely water",
+    body: "Salt, a hard leg day, or your cycle. The cyan band is the app's estimate of fluid, not fat.",
   },
   {
     title: "Your real trend is intact",
-    body: "True dry mass: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
+    body: "Estimated dry weight: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
   },
   {
-    title: "Touchdown, on schedule",
-    body: "Projected 170.0 lb by Nov 15. Keep flying the plan.",
+    title: "Projected touchdown",
+    body: "Example: at this pace, 170.0 lb around Nov 15. A projection, not a promise.",
   },
 ];
 
@@ -53,18 +54,18 @@ export const traps = {
   items: [
     {
       kind: "calories" as const,
-      title: "Your watch overestimates your burn",
-      body: "A 60-minute lift gets logged as 600 kcal. Subtract your natural resting burn and rest between sets, and it's closer to 225. Eat back the phantom difference and your deficit is gone.",
+      title: "Your watch can overestimate your burn",
+      body: "An example: a watch logs a 60-minute lift as 600 kcal. Take out what you would have burned at rest anyway, and the time between sets, and the extra is far smaller: about 225 kcal in this example. Eat back the difference and your deficit shrinks.",
     },
     {
       kind: "water" as const,
       title: "That overnight spike isn't fat",
-      body: "Salt, heavy training, or hormonal shifts can hold up to 4 lbs of water overnight — and almost nobody's trained to tell the difference. Directive's Kalman filter decouples fluid swings from true dry mass, so you never cut food to fix a problem you don't have.",
+      body: "Salt, heavy training, or hormonal shifts can move the scale by several pounds overnight, and it is hard to tell water from fat by eye. Directive's trend filter separates likely water swings from your underlying trend, so you can see a spike for what it is before you cut food to fix it.",
     },
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison — rapid entry and visual meal selection get you logged in under ten seconds.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Visual Portions lets you log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds.",
     },
   ],
 };
@@ -75,27 +76,51 @@ export const pillars = {
   items: [
     {
       title: "The Event Allowance",
-      body: "Real life happens. Instead of blowing your diet on a Saturday night and staring at a red failure screen, engage the Event Allowance. Directive shaves a small, unnoticeable amount off the preceding days and banks it for your event, so your weekly deficit stays intact.",
+      body: "Real life happens. Instead of blowing your diet on a Saturday night and staring at a red failure screen, schedule an Event Allowance. Directive takes a small amount off the days before and adds it to your event day, so the week still adds up. Your calorie floors always come first.",
     },
     {
       title: "The Rebound Shield",
-      body: "Hitting your goal weight is only half the flight — landing without bouncing is the hard part. When you reach your target, Directive systematically walks your calories back up to find true maintenance, preventing the rapid regain that follows most strict diets.",
+      body: "Hitting your goal weight is only half the flight. Landing without bouncing is the hard part. When you reach your target, Directive walks your calories back up over six weeks to find your maintenance level, a transition designed to help you avoid the rapid regain that follows most strict diets.",
     },
     {
-      title: "Keep the muscle you've built",
-      body: "In a deep deficit, or while managing appetite with modern medical protocols like GLP-1s, the risk of muscle loss spikes. Directive monitors your daily protein floor and flags structural loss risk before your metabolism slows.",
+      title: "Protein comes first",
+      body: "In a deep deficit, or while using a GLP-1 medication, holding on to muscle gets harder. Directive sets a protein floor for every day and raises it when you cut aggressively or use a GLP-1 medication. Protein and fat floors come first; carbohydrates fill what is left.",
     },
     {
       title: "Built for adults, not for streaks",
       body: "No guilt, no mid-day nags asking if you drank water. A missed log becomes a quiet late-evening badge, not an alert. Take a week off and Directive enters standby — no alarms, no scolding.",
     },
     {
-      title: "Speak your doctor's language",
-      body: "Stop handing your clinician a messy 40-page diary dump. Directive compiles your lean-mass trends, trajectory, and key vitals into a clean PDF briefing in about 30 seconds.",
+      title: "Bring your numbers to your appointment",
+      body: "Instead of a 40-page diary, Directive puts your weight trend, estimated body composition, resting heart rate, sleep and energy intake into a clean PDF for your doctor. A trainer's version covers training volume and steps, and a nutritionist's covers intake, macros and your protein floor. Each is a summary of what you logged, not a medical record.",
     },
     {
       title: "The Afterburner Protocol",
-      body: "For deadline-driven targets — a photo shoot, an event, a hard calendar date. A temporary, aggressive deficit override for a short, sharp drop. Like a real afterburner, it can't run indefinitely, and Directive keeps it strictly time-capped.",
+      body: "For deadline-driven targets: a photo shoot, an event, a hard calendar date. A temporary, aggressive deficit for a short push, capped at 14 days. Directive tells you what you are trading for the speed, then leaves the decision to you.",
+    },
+  ],
+};
+
+// The three Shields, as the app uses them (owner and Gemini, 2026-10-05). Wording approved: S5 (Rebound), and the
+// app's own glossary for Scale and Fluid. No Shield line may promise a result: "designed to help".
+export const shields = {
+  heading: "The three Shields",
+  intro: "Each one covers a stretch where the scale is at its least trustworthy.",
+  items: [
+    {
+      name: "Scale Shield",
+      when: "The first 10 days after touchdown",
+      body: "The first 10 days after touchdown, when water-weight swings are expected and the app reminds you to trust the trend line.",
+    },
+    {
+      name: "Fluid Shield",
+      when: "The week before a period",
+      body: "In the week before a period is due, the app expects water retention and treats those weigh-ins as less reliable.",
+    },
+    {
+      name: "Rebound Shield",
+      when: "The six weeks after touchdown",
+      body: "Engineered post-diet transitions that step your calories back up strategically, designed to help protect your hard-earned muscle and prevent the classic post-cut weight rebound.",
     },
   ],
 };
@@ -112,22 +137,22 @@ export const stations = {
     {
       id: "mission",
       name: "Mission Control",
-      body: "Your daily instrument panel. Scale readings decoupled from fluid swings reveal your true dry-mass descent, alongside your compliance, HRV, and recovery dials and your distance to target.",
+      body: "Your daily instrument panel. Scale readings with likely water separated out show your underlying trend, alongside dials for velocity, adherence and energy balance, and your distance to target.",
     },
     {
       id: "cruise",
       name: "Cruising Altitude",
-      body: "Runway management. Dynamic pacing through your cut, a short reverse diet after touchdown, then a cruise held under a Rebound Shield so the weight doesn't climb back.",
+      body: "Runway management. A pace you choose for your cut, a six-week reverse diet after touchdown, then a cruise under a Rebound Shield designed to help keep the weight from climbing back.",
     },
     {
       id: "burn",
       name: "Burn",
-      body: "True net energy expenditure. Resistance load tracking and conservative step baselines that keep cardio from competing with strength gains.",
+      body: "Net energy expenditure, counted conservatively. Log resistance and cardio sessions and see your training volume for the week.",
     },
     {
       id: "directive",
       name: "Weekly Directive",
-      body: "Every Sunday, an objective audit compares actual to expected loss and sets your exact calorie target for the week ahead. Lock an event date and see what it takes to get there.",
+      body: "Every Sunday, an audit compares your actual change with the expected one and updates your calorie target for the week ahead. Schedule an event and see how the days around it adjust.",
     },
   ],
 };
@@ -143,7 +168,7 @@ export const modal = {
     question: "What's your primary mission?",
     options: [
       "Lose fat, keep muscle",
-      "Protect muscle on GLP-1 or a deep deficit",
+      "Keep muscle while losing weight, including on a GLP-1 medication",
       "Body Recomposition",
       "Add muscle in a lean bulk",
     ],
@@ -177,6 +202,8 @@ export const modal = {
     body: "We'll reserve your place in the 2026 Charter intake.",
     placeholder: "you@email.com",
     button: "Submit application",
+    adultCheck: "I am 18 or over.",
+    adultError: "Directive is for adults 18 and over. Please confirm your age to apply.",
   },
   done: {
     heading: "Application received",
@@ -185,15 +212,23 @@ export const modal = {
 };
 
 export const footer = {
-  badges: ["Apple Health integration", "Google Health Connect ready", "Your data is never sold"],
+  // "Apple Health integration" and "Google Health Connect ready" were removed on 2026-10-05: neither is built yet.
+  badges: ["Your data stays on your device", "Your data is never sold", "For adults 18 and over"],
+  // Gemini's approved medical disclaimer, word for word (the same text the app shows). Never reword it.
   disclaimer:
-    "Directive is an educational body-composition estimation tool. It is not a medical device and does not provide medical advice.",
+    "Directive is an informational tool designed to assist with personal fitness, nutrition planning, and macro-tracking. It does not provide medical advice, diagnosis, or treatment. Always consult a qualified physician or healthcare professional before beginning any new diet, caloric deficit program, or exercise regimen, particularly if you are managing a medical condition, taking prescription medications such as GLP-1 agonists, or experiencing rapid weight changes.",
+  // California Business and Professions Code section 2068: the statute's wording, as in the Terms. Never reword it.
+  californiaNoticeTitle: "California notice (Business and Professions Code section 2068)",
+  californiaNotice:
+    "NOTICE: State law allows any person to provide nutritional advice or give advice concerning proper nutrition—which is the giving of advice as to the role of food and food ingredients, including dietary supplements. This state law does NOT confer authority to practice medicine or to undertake the diagnosis, prevention, treatment, or cure of any disease, pain, deformity, injury, or physical or mental condition and specifically does not authorize any person other than one who is a licensed health practitioner to state that any product might cure any disease, disorder, or condition.",
+  // The link text is fixed by Washington's My Health My Data Act: exactly this, and always its own link.
+  healthPolicyLink: "Consumer Health Data Privacy Policy",
 };
 
 export const supportTopics = [
-  "Telemetry accuracy",
-  "HealthKit / Health Connect sync",
-  "Charter billing",
-  "Account & data deletion",
+  "Using the app",
+  "Charter application",
+  "Privacy or data request",
+  "Subscriptions",
   "Other",
 ] as const;

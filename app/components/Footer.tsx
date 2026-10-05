@@ -20,12 +20,24 @@ export default function Footer() {
             ))}
           </div>
         </div>
-        <div className="mt-10 flex flex-col gap-6 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-center sm:justify-between">
-          <p className="max-w-[52ch] text-[12.5px] leading-relaxed text-white/35">{footer.disclaimer}</p>
-          <div className="flex gap-6">
-            <Link href="/privacy" className="text-[13px] text-white/55 hover:text-white">Privacy</Link>
-            <Link href="/terms" className="text-[13px] text-white/55 hover:text-white">Terms</Link>
-            <Link href="/support" className="text-[13px] text-white/55 hover:text-white">Support</Link>
+        <div className="mt-10 flex flex-col gap-6 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-start sm:justify-between">
+          <div className="max-w-[68ch] space-y-3 text-[12px] leading-relaxed text-white/40">
+            <p>{footer.disclaimer}</p>
+            <p>
+              <span className="text-white/50">{footer.californiaNoticeTitle}: </span>
+              {footer.californiaNotice}
+            </p>
+          </div>
+          <div className="flex shrink-0 flex-col gap-3 sm:items-end">
+            {/* Its own link, with exactly this title (Washington's My Health My Data Act). Never merge it with Privacy. */}
+            <Link href="/consumer-health-data-privacy-policy" className="text-[13px] text-champagne/90 underline decoration-gold/40 underline-offset-2 hover:text-white">
+              {footer.healthPolicyLink}
+            </Link>
+            <div className="flex gap-6">
+              <Link href="/privacy" className="text-[13px] text-white/55 hover:text-white">Privacy Policy</Link>
+              <Link href="/terms" className="text-[13px] text-white/55 hover:text-white">Terms of Service</Link>
+              <Link href="/support" className="text-[13px] text-white/55 hover:text-white">Support</Link>
+            </div>
           </div>
         </div>
         <p className="mt-8 text-[11.5px] text-white/25">© {new Date().getFullYear()} Directive</p>

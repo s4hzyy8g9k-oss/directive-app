@@ -5,6 +5,7 @@ import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Traps from "./components/Traps";
 import Pillars from "./components/Pillars";
+import Shields from "./components/Shields";
 import Stations from "./components/Stations";
 import FinalCta from "./components/FinalCta";
 import DiagnosticModal from "./components/DiagnosticModal";
@@ -22,6 +23,7 @@ export default function Home() {
           <Hero onApply={apply} />
           <Traps />
           <Pillars />
+          <Shields />
           <Stations />
           <FinalCta onApply={apply} />
         </main>
