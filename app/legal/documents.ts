@@ -175,7 +175,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "YOU USE THE SERVICE AT YOUR OWN RISK. YOU ARE RESPONSIBLE FOR YOUR OWN DECISIONS ABOUT DIET, EXERCISE, MEDICATION AND HEALTH. TO THE FULLEST EXTENT ALLOWED BY LAW, YOU RELEASE US FROM ALL CLAIMS FOR PERSONAL INJURY, ILLNESS OR ANY OTHER HEALTH OUTCOME ARISING FROM YOUR USE OF THE SERVICE, INCLUDING CLAIMS ARISING FROM OUR OWN NEGLIGENCE. THIS RELEASE DOES NOT APPLY TO OUR GROSS NEGLIGENCE, RECKLESSNESS OR INTENTIONAL MISCONDUCT, OR TO ANY LIABILITY THAT CANNOT BE RELEASED BY LAW.",
+      "t": "YOU USE THE SERVICE AT YOUR OWN RISK. YOU ARE RESPONSIBLE FOR YOUR OWN DECISIONS ABOUT DIET, EXERCISE, MEDICATION AND HEALTH. YOU UNDERSTAND THAT CHANGING YOUR DIET, LOSING OR GAINING WEIGHT, AND EXERCISING CARRY INHERENT RISKS, INCLUDING THE RISK OF INJURY AND ILLNESS, AND YOU VOLUNTARILY ASSUME THOSE RISKS. TO THE FULLEST EXTENT ALLOWED BY LAW, YOU RELEASE US FROM ALL CLAIMS FOR PERSONAL INJURY, ILLNESS OR ANY OTHER HEALTH OUTCOME ARISING FROM YOUR USE OF THE SERVICE, INCLUDING CLAIMS ARISING FROM OUR OWN NEGLIGENCE. THIS RELEASE DOES NOT APPLY TO OUR GROSS NEGLIGENCE, RECKLESSNESS OR INTENTIONAL MISCONDUCT, OR TO ANY LIABILITY THAT CANNOT BE RELEASED BY LAW.",
       "b": true
      }
     ]
@@ -404,7 +404,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
       "b": true
      },
      {
-      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $6.99 a month for Pro. We may change prices for new subscribers, and we will tell existing subscribers in advance of any price change as the app store's rules require."
+      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $6.99 a month for Pro. We may change prices for new subscribers. We will not raise the price of a subscription you already have without clear notice at least 30 days before the new price applies. The notice states the new price and how to cancel, and it is given by the app store and in the App. If you do not want to pay the new price, cancel before it applies and you will not be charged it."
      }
     ]
    },
@@ -468,7 +468,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
       "b": true
      },
      {
-      "t": " The features of that plan stop. If a Pro-only program (a Targeted Refeed or Afterburner) is running at that moment, it ends, and the App goes back to calculating your ordinary daily targets. Your recorded data is kept."
+      "t": " The features of that plan stop. If a Pro-only program (a Targeted Refeed or Afterburner) is running at that moment, it ends, and the App goes back to calculating your ordinary daily targets. Your recorded data stays on your device; ending a plan deletes nothing."
      }
     ]
    },
@@ -720,7 +720,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "We may update these Terms. When we do, we will change the date at the top. If a change is material, we will give you notice before it takes effect, through a prominent notice in the App and on the Website, at least 30 days in advance unless the law requires the change sooner. A change does not apply to a dispute that arose before it took effect. If you keep using the Service after a change takes effect, you accept the updated Terms. If you do not agree, stop using the Service and cancel any subscription."
+      "t": "We may update these Terms. When we do, we will change the date at the top. If a change is material, we will give you notice before it takes effect, through a prominent notice in the App and on the Website, at least 30 days in advance unless the law requires the change sooner. When a material change takes effect, the App asks you to agree to the updated Terms before you continue using it. A change does not apply to a dispute that arose before it took effect. If you keep using the Service after a change takes effect, you accept the updated Terms. If you do not agree, stop using the Service and cancel any subscription."
      }
     ]
    },
@@ -1473,7 +1473,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
       "b": true
      },
      {
-      "t": " Your information stays on your device until you delete it. \"Delete all my data\" in the App's Settings erases everything the App stored on the device, and so does deleting the App. Copies you made yourself (a backup file, a report, a spreadsheet) and your device's own backup are yours to delete. Because we hold no copy, we cannot recover your data for you, and we have nothing to delete on our side."
+      "t": " Your information stays on your device until you delete it. \"Delete all my data\" in the App's Settings erases everything the App stored on the device, and so does deleting the App. Copies you made yourself (a backup file, a report, a spreadsheet) and your device's own backup are yours to delete. Because we hold no copy of the information in the App, we cannot recover it for you, and there is nothing of it for us to delete on our side."
      }
     ]
    },
@@ -1528,7 +1528,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
        "b": true
       },
       {
-       "t": " to the App handling your health information, use \"Withdraw health data consent\" in the App's Settings. The App then stops and shows the consent screen until you consent again. Withdrawing does not delete the information already on your device; \"Delete all my data\" does."
+       "t": " to the App handling your health information, use \"Withdraw health data consent\" in the App's Settings. The App asks whether you also want to delete your data, and you can do both in one step. It then stops and shows the consent screen until you consent again. If you choose to keep your data, it stays on your device until you delete it with \"Delete all my data\"."
       }
      ],
      [
@@ -1782,7 +1782,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "You can withdraw your consent at any time with \"Withdraw health data consent\" in the app's Settings. The app then stops until you consent again. Withdrawing does not delete the information already on your phone; \"Delete all my data\" in the app's Settings does."
+      "t": "You can withdraw your consent at any time with \"Withdraw health data consent\" in the app's Settings. The app asks whether you also want to delete your data, and you can do both in one step. The app then stops until you consent again. If you choose to keep your data, it stays on your phone until you delete it with \"Delete all my data\" in the app's Settings."
      }
     ]
    },
