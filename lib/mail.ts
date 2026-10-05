@@ -2,14 +2,14 @@
 // Required environment variables (set them in Vercel → Settings → Environment Variables):
 //   RESEND_API_KEY  – your Resend API key
 // Optional:
-//   MAIL_FROM       – sender, default "Directive <noreply@directivefitness.com>"
+//   MAIL_FROM       – sender, default "Directive <info@directivefitness.com>" (a monitored inbox: owner, 2026-10-05)
 //   CHARTER_TO      – where Charter applications go, default support@directivefitness.com
 //   SUPPORT_TO      – where support inquiries go, default support@directivefitness.com
 
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export const mailConfig = {
-  from: () => process.env.MAIL_FROM || "Directive <noreply@directivefitness.com>",
+  from: () => process.env.MAIL_FROM || "Directive <info@directivefitness.com>",
   charterTo: () => process.env.CHARTER_TO || "support@directivefitness.com",
   supportTo: () => process.env.SUPPORT_TO || "support@directivefitness.com",
 };

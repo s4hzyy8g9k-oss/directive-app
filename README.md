@@ -56,14 +56,16 @@ Open http://localhost:3000
 2. **`public/.well-known/assetlinks.json`** — replace `package_name` and
    `sha256_cert_fingerprints` with your real Android signing cert.
 3. **Contact emails** — `privacy@directivefitness.com`, `legal@directivefitness.com`,
-   `support@directivefitness.com` are placeholders; point them at real inboxes.
+   `support@directivefitness.com` and `info@directivefitness.com` are real, monitored inboxes
+   (owner, 2026-10-05): legal@ for legal notices and disputes, privacy@ for privacy and health-data
+   requests, support@ for help and the support form, info@ for general contact and marketing emails.
 4. **Charter application + support form email** — both forms now POST to
    `/api/charter` and `/api/support`, which send email through Resend
    (`lib/mail.ts`). Setup:
    - Create a Resend account, add and verify the domain `directivefitness.com`
      (add the DNS records Resend shows you).
    - In Vercel → Settings → Environment Variables, add `RESEND_API_KEY`.
-   - Optional: `MAIL_FROM` (default `Directive <noreply@directivefitness.com>`),
+   - Optional: `MAIL_FROM` (default `Directive <info@directivefitness.com>`),
      `CHARTER_TO` and `SUPPORT_TO` (both default to
      `support@directivefitness.com`).
    - Redeploy after adding variables.

@@ -404,7 +404,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
       "b": true
      },
      {
-      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $6.99 a month for Pro. We may change prices for new subscribers. We will not raise the price of a subscription you already have without clear notice at least 30 days before the new price applies. The notice states the new price and how to cancel, and it is given by the app store and in the App. If you do not want to pay the new price, cancel before it applies and you will not be charged it."
+      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $6.99 a month for Pro. We may change prices for new subscribers. We will not raise the price of a subscription you already have without clear notice between 7 and 30 days before the new price applies. The notice states the new price and how to cancel, and it is given by the app store and in the App. If you do not want to pay the new price, cancel before it applies and you will not be charged it."
      }
     ]
    },
@@ -627,7 +627,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "If you have a dispute with us, please contact us first at privacy@directivefitness.com. We will try to resolve it informally within 60 days. If we cannot, any claim must be brought exclusively in the state or federal courts located in Fayette County, Kentucky, and you and we agree to the exclusive jurisdiction of those courts. Either of us may instead bring an individual claim in small claims court where you live, if it qualifies. Nothing in this section takes away any right the law of the place where you live gives you to bring a claim there."
+      "t": "If you have a dispute with us, please contact us first at legal@directivefitness.com. We will try to resolve it informally within 60 days. If we cannot, any claim must be brought exclusively in the state or federal courts located in Fayette County, Kentucky, and you and we agree to the exclusive jurisdiction of those courts. Either of us may instead bring an individual claim in small claims court where you live, if it qualifies. Nothing in this section takes away any right the law of the place where you live gives you to bring a claim there."
      }
     ]
    },
@@ -757,12 +757,12 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
      ],
      [
       {
-       "t": "Legal questions: privacy@directivefitness.com"
+       "t": "Legal questions: legal@directivefitness.com"
       }
      ],
      [
       {
-       "t": "Support: privacy@directivefitness.com, or the support form at directivefitness.com/support"
+       "t": "Support: support@directivefitness.com, or the support form at directivefitness.com/support"
       }
      ]
     ]
@@ -771,7 +771,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505, telephone [business telephone number]. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at privacy@directivefitness.com. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
+      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at legal@directivefitness.com. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
      }
     ]
    }
@@ -1691,7 +1691,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
      ],
      [
       {
-       "t": "Support: privacy@directivefitness.com, or the support form at directivefitness.com/support"
+       "t": "Support: support@directivefitness.com, or the support form at directivefitness.com/support"
       }
      ]
     ]
