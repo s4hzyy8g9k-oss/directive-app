@@ -17,8 +17,8 @@ export default function SupportPage() {
         Flight Operations
       </h1>
       <p className="mt-3 max-w-[52ch] text-[14px] leading-relaxed text-white/60">
-        Questions about telemetry accuracy, Charter billing, HealthKit
-        syncing, or account deletion — reach the team directly.
+        Questions about the app, a Charter application, or a privacy
+        request — reach the team directly.
       </p>
 
       <div className="mt-8 flex flex-wrap gap-4 border-y hairline py-6">
