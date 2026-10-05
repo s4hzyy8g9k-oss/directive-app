@@ -21,13 +21,14 @@ export default function Footer() {
           </div>
         </div>
         <div className="mt-10 flex flex-col gap-6 border-t border-white/[0.06] pt-8 sm:flex-row sm:items-start sm:justify-between">
-          <div className="max-w-[68ch] space-y-3 text-[12px] leading-relaxed text-white/40">
-            <p>{footer.disclaimer}</p>
-            <p>
-              <span className="text-white/50">{footer.californiaNoticeTitle}: </span>
-              {footer.californiaNotice}
-            </p>
-          </div>
+          {/* Owner, 2026-10-05: one short line here. The full medical disclaimer and the California section 2068
+              notice are in the Terms of Service (section 2), which this line links to. */}
+          <p className="max-w-[68ch] text-[12px] leading-relaxed text-white/40">
+            {footer.disclaimerShort}{" "}
+            <Link href="/terms" className="text-white/55 underline decoration-white/20 underline-offset-2 hover:text-white">
+              {footer.disclaimerLink}
+            </Link>
+          </p>
           <div className="flex shrink-0 flex-col gap-3 sm:items-end">
             {/* Its own link, with exactly this title (Washington's My Health My Data Act). Never merge it with Privacy. */}
             <Link href="/consumer-health-data-privacy-policy" className="text-[13px] text-champagne/90 underline decoration-gold/40 underline-offset-2 hover:text-white">

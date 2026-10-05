@@ -214,13 +214,11 @@ export const modal = {
 export const footer = {
   // "Apple Health integration" and "Google Health Connect ready" were removed on 2026-10-05: neither is built yet.
   badges: ["Your data stays on your device", "Your data is never sold", "For adults 18 and over"],
-  // Gemini's approved medical disclaimer, word for word (the same text the app shows). Never reword it.
-  disclaimer:
-    "Directive is an informational tool designed to assist with personal fitness, nutrition planning, and macro-tracking. It does not provide medical advice, diagnosis, or treatment. Always consult a qualified physician or healthcare professional before beginning any new diet, caloric deficit program, or exercise regimen, particularly if you are managing a medical condition, taking prescription medications such as GLP-1 agonists, or experiencing rapid weight changes.",
-  // California Business and Professions Code section 2068: the statute's wording, as in the Terms. Never reword it.
-  californiaNoticeTitle: "California notice (Business and Professions Code section 2068)",
-  californiaNotice:
-    "NOTICE: State law allows any person to provide nutritional advice or give advice concerning proper nutrition—which is the giving of advice as to the role of food and food ingredients, including dietary supplements. This state law does NOT confer authority to practice medicine or to undertake the diagnosis, prevention, treatment, or cure of any disease, pain, deformity, injury, or physical or mental condition and specifically does not authorize any person other than one who is a licensed health practitioner to state that any product might cure any disease, disorder, or condition.",
+  // Owner, 2026-10-05: the home page carries one short line. The full approved medical disclaimer and the California
+  // section 2068 notice were taken off this page; both are in the Terms of Service, section 2, word for word.
+  // This short line is Claude's wording (the opening of the approved disclaimer, cut short), not yet approved.
+  disclaimerShort: "Directive is an informational tool and does not provide medical advice.",
+  disclaimerLink: "See the Terms of Service.",
   // The link text is fixed by Washington's My Health My Data Act: exactly this, and always its own link.
   healthPolicyLink: "Consumer Health Data Privacy Policy",
 };
