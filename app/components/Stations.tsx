@@ -414,8 +414,8 @@ function BurnPreview() {
 // ── Weekly Directive: this week's mission, calorie target, and how to split the week's change ──
 const WEEKLY_CUT = 150;
 const LAST_WEEK_TARGET = 2300;
-// The app counts a step as body weight in lb x 0.0003 kcal; this example is a 180 lb person. Shown to the nearest 50.
-const KCAL_PER_STEP = 180 * 0.0003;
+// The app counts a step as body weight in lb x 0.00015 kcal (the extra cost above resting); this example is a 180 lb person. Shown to the nearest 50.
+const KCAL_PER_STEP = 180 * 0.00015;
 
 function DirectivePreview() {
   const [food, setFood] = useState(95); // activity is always the other part of the 150
