@@ -404,7 +404,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
       "b": true
      },
      {
-      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $6.99 a month for Pro. We may change prices for new subscribers. We will not raise the price of a subscription you already have without clear notice between 7 and 30 days before the new price applies. The notice states the new price and how to cancel, and it is given by the app store and in the App. If you do not want to pay the new price, cancel before it applies and you will not be charged it."
+      "t": " The App has a free plan and two paid plans, called Cruise and Pro. The features in each plan, and the price, are shown in the App before you subscribe. At the time of writing the prices in the United States are $2.99 a month for Cruise and $7.99 a month for Pro. We may change prices for new subscribers. We will not raise the price of a subscription you already have without clear notice between 7 and 30 days before the new price applies. The notice states the new price and how to cancel, and it is given by the app store and in the App. If you do not want to pay the new price, cancel before it applies and you will not be charged it."
      }
     ]
    },
