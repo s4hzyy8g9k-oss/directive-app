@@ -65,7 +65,7 @@ export const traps = {
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: one food from its label, or a whole day from another tracker.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: a food from its label, or one you make often, saved by name for next time.",
     },
   ],
 };

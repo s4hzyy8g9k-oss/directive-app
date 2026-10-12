@@ -162,7 +162,7 @@ export default function MealConsole() {
         </span>
       </button>
 
-      {/* The typed food: for one food from its label, or a whole day's totals from another tracker. */}
+      {/* The typed food: a food from its label, or one the person makes often. */}
       <button
         type="button"
         aria-expanded={foodOpen}
@@ -171,7 +171,7 @@ export default function MealConsole() {
       >
         <span>
           Add a food with its macros
-          <span className="block text-[10.5px] text-white/45">One food, or a whole day from another tracker.</span>
+          <span className="block text-[10.5px] text-white/45">A food from its label, or one you make often.</span>
         </span>
         <svg viewBox="0 0 24 24" className={`h-4 w-4 flex-none text-gold transition-transform ${foodOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M6 9l6 6 6-6" />
