@@ -36,7 +36,7 @@ export const demoSteps = [
   },
   {
     title: "Directive flags it as likely water",
-    body: "Salt, a hard leg day, or your cycle. The cyan band is the app's estimate of fluid, not fat.",
+    body: "Salt, a hard leg day or, for women, the menstrual cycle. The cyan band is the app's estimate of fluid, not fat.",
   },
   {
     title: "Your real trend is intact",
@@ -65,7 +65,7 @@ export const traps = {
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Visual Portions lets you log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: one food from its label, or a whole day from another tracker.",
     },
   ],
 };
@@ -88,7 +88,8 @@ export const pillars = {
     },
     {
       title: "Built for adults, not for streaks",
-      body: "No guilt, no mid-day nags asking if you drank water. A missed log becomes a quiet late-evening badge, not an alert. Take a week off and Directive enters standby — no alarms, no scolding.",
+      // Reworded 2026-10-12 (owner): the app has no late-evening badge and no standby mode. It sends no reminders at all.
+      body: "No guilt, no streaks, no mid-day nags asking if you drank water. Directive sends no reminders at all. Miss a day, or take a week off, and nothing scolds you. Log again and it picks up from where you are.",
     },
     {
       title: "Bring your numbers to your appointment",
@@ -114,8 +115,9 @@ export const shields = {
     },
     {
       name: "Fluid Shield",
-      when: "The week before a period",
-      body: "In the week before a period is due, the app expects water retention and treats those weigh-ins as less reliable.",
+      // Owner, 2026-10-12: say plainly that this one is for women.
+      when: "For women: the week before a period",
+      body: "For women who track their menstrual cycle. In the week before a period is due, the app expects water retention and treats those weigh-ins as less reliable.",
     },
     {
       name: "Rebound Shield",
@@ -132,7 +134,7 @@ export const stations = {
     {
       id: "fuel",
       name: "Fuel",
-      body: "Agnostic energy balancing. Hit your calorie target, hold your protein and fat floors, and bank a caloric reserve for the nights that matter — logged in seconds with visual meal selection.",
+      body: "Agnostic energy balancing. Hit your calorie target, hold your protein and fat floors, and plan an Event Allowance for the nights that matter. Log a meal in seconds by portion, or type in the numbers when you have them.",
     },
     {
       id: "mission",
@@ -141,8 +143,9 @@ export const stations = {
     },
     {
       id: "cruise",
-      name: "Cruising Altitude",
-      body: "Runway management. A pace you choose for your cut, a six-week reverse diet after touchdown, then a cruise under a Rebound Shield designed to help keep the weight from climbing back.",
+      // Renamed 2026-10-12: "Cruising Altitude" is not a name the app shows. Cruise Control is the planned pause.
+      name: "Runway and Landing",
+      body: "Runway management. A pace you choose for your cut, planned pauses at maintenance with Cruise Control, and after touchdown a six-week reverse diet under a Rebound Shield designed to help keep the weight from climbing back.",
     },
     {
       id: "burn",
@@ -152,7 +155,7 @@ export const stations = {
     {
       id: "directive",
       name: "Weekly Directive",
-      body: "Every Sunday, an audit compares your actual change with the expected one and updates your calorie target for the week ahead. Schedule an event and see how the days around it adjust.",
+      body: "Every Sunday, an audit reviews your week, updates your maintenance estimate and tells you plainly whether your calories change. When they do, you choose how to take the change: eat a little less, walk a little more, or a mix.",
     },
   ],
 };

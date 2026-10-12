@@ -115,7 +115,7 @@ function FuelPreview() {
 
       <div className="mt-5 rounded-xl border hairline bg-space/50 px-3.5 py-3">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] tracking-[0.16em] text-gold/80">CALORIC RESERVE</span>
+          <span className="font-mono text-[10px] tracking-[0.16em] text-gold/80">EVENT ALLOWANCE</span>
           <button
             type="button"
             role="switch"
@@ -132,10 +132,10 @@ function FuelPreview() {
         <div className="mt-2 min-h-[32px] text-[11.5px] leading-snug text-white/55">
           {reserve ? (
             <>
-              <span className="text-champagne">+1,000 kcal banked for your event.</span> Counterbalancing 333 kcal/day across the 3 preceding days.
+              <span className="text-champagne">+1,000 kcal planned for your event.</span> Offset by 200 kcal a day over the 5 days before it. Your calorie floors always come first.
             </>
           ) : (
-            "Bank calories ahead of a dinner or celebration without breaking your week."
+            "Plan extra calories for a dinner or celebration without breaking your week."
           )}
         </div>
       </div>
@@ -411,14 +411,18 @@ function BurnPreview() {
   );
 }
 
-// ── Weekly Directive: this week's mission, calorie target, and how to split the cut ──
+// ── Weekly Directive: this week's mission, calorie target, and how to split the week's change ──
 const WEEKLY_CUT = 150;
-const CARDIO_KCAL_PER_MIN = 6; // moderate cardio, net of resting burn
+const LAST_WEEK_TARGET = 2300;
+// The app counts a step as body weight in lb x 0.0003 kcal; this example is a 180 lb person. Shown to the nearest 50.
+const KCAL_PER_STEP = 180 * 0.0003;
 
 function DirectivePreview() {
   const [food, setFood] = useState(95); // activity is always the other part of the 150
   const activity = WEEKLY_CUT - food;
-  const minutes = Math.round(activity / CARDIO_KCAL_PER_MIN);
+  const steps = Math.round(activity / KCAL_PER_STEP / 50) * 50;
+  // Only the FOOD part comes off what you eat; the ACTIVITY part is walked.
+  const target = LAST_WEEK_TARGET - food;
   return (
     <div>
       <div className="font-mono text-[10.5px] tracking-[0.16em] text-gold">THIS WEEK&apos;S MISSION</div>
@@ -429,7 +433,8 @@ function DirectivePreview() {
           <path d="M12 7v5l3.5 2" />
         </svg>
         <p className="text-[12.5px] leading-relaxed text-white/75">
-          Your telemetry indicates a dip in deep sleep and recovery metrics over the last few days, suggesting your body might be retaining some stress-related water weight. Despite that, your dry weight has dropped one pound against a 1.4 pound target. Let&apos;s trim your daily fuel target by 150 calories to keep the momentum going, but make sure to prioritize rest this week so your recovery can be improved.
+          Textbook deficit: 6/7 days logged, net energy balance -3150 kcal for the week. Sustained deficit streak continues.{" "}
+          {food > 0 ? `Your calories come down this week: ${food} fewer a day.` : "Your calories stay the same this week."}
         </p>
       </div>
 
@@ -438,20 +443,23 @@ function DirectivePreview() {
           <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
             <path d="M12 5v14M5 12l7 7 7-7" />
           </svg>
-          −150 kcal
+          {food > 0 ? `−${food} kcal` : "no change"}
         </span>
-        <span className="text-[11px] text-white/40">vs last week&apos;s target</span>
+        <span className="text-[11px] text-white/40">change from last week</span>
       </div>
 
       <div className="mt-4 flex items-baseline justify-between">
         <span className="font-mono text-[10px] tracking-[0.14em] text-white/45">CALORIE TARGET</span>
         <span className="font-mono text-[22px] tabular-nums text-white">
-          2,150<span className="text-[11px] text-white/45"> kcal/day</span>
+          {target.toLocaleString("en-US")}<span className="text-[11px] text-white/45"> kcal/day</span>
         </span>
       </div>
 
       <div className="mt-4 rounded-xl border hairline bg-space/50 px-3.5 py-3">
-        <div className="font-mono text-[10px] tracking-[0.16em] text-gold/80">DEFICIT SPLIT</div>
+        <div className="flex items-baseline justify-between font-mono text-[10px] tracking-[0.16em] text-gold/80">
+          <span>DEFICIT ALLOCATION</span>
+          <span className="text-white/55">ADDED THIS WEEK −{WEEKLY_CUT}</span>
+        </div>
 
         <div className="mt-3">
           <div className="flex items-baseline justify-between">
@@ -486,15 +494,15 @@ function DirectivePreview() {
             step={5}
             value={activity}
             onChange={(e) => setFood(WEEKLY_CUT - Number(e.target.value))}
-            aria-label="Calories burned through added activity each day"
+            aria-label="Calories burned through added daily steps"
             className="mt-1.5 w-full cursor-pointer accent-gold"
           />
           <div className="mt-1 text-[11.5px] text-champagne">
-            ≈ {minutes} min of added moderate cardio per day
+            +{steps.toLocaleString("en-US")} · Added daily steps above baseline
           </div>
         </div>
 
-        <div className="mt-2 text-[10px] text-white/35">Move either slider and the other adjusts. Cardio estimated at about {CARDIO_KCAL_PER_MIN} kcal/min, net of resting burn.</div>
+        <div className="mt-2 text-[10px] text-white/35">Move either slider and the other adjusts. The sliders share out only what changed this week. Steps are estimated from body weight.</div>
       </div>
 
       <p className="mt-3 text-center font-mono text-[9.5px] tracking-[0.12em] text-white/35">RECALIBRATED EVERY SUNDAY // FLIGHT AUDIT</p>

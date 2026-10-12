@@ -23,9 +23,52 @@ const LIQUIDS = [
 
 const MAX = 9;
 
+// The typed food: enter any three of the four numbers and the fourth is worked out (4 / 4 / 9 kcal per gram), as in the app.
+type FoodKey = "calories" | "protein" | "carbs" | "fat";
+const FOOD_KEYS: FoodKey[] = ["calories", "protein", "carbs", "fat"];
+const FOOD_LABELS: Record<FoodKey, string> = { calories: "CALORIES", protein: "PROTEIN (g)", carbs: "CARBS (g)", fat: "FAT (g)" };
+const KCAL: Record<Exclude<FoodKey, "calories">, number> = { protein: 4, carbs: 4, fat: 9 };
+const EMPTY_FOOD: Record<FoodKey, string> = { calories: "", protein: "", carbs: "", fat: "" };
+
+function settleFood(texts: Record<FoodKey, string>, auto: FoodKey | null): { texts: Record<FoodKey, string>; auto: FoodKey | null } {
+  const typed = FOOD_KEYS.filter((k) => k !== auto && texts[k].trim() !== "");
+  const next = { ...texts };
+  if (typed.length === 4) return { texts: next, auto: null };
+  if (typed.length < 3) {
+    if (auto) next[auto] = "";
+    return { texts: next, auto: null };
+  }
+  const missing = FOOD_KEYS.find((k) => !typed.includes(k)) as FoodKey;
+  const v = { calories: 0, protein: 0, carbs: 0, fat: 0 } as Record<FoodKey, number>;
+  let bad = false;
+  typed.forEach((k) => {
+    v[k] = parseFloat(texts[k].replace(",", "."));
+    if (isNaN(v[k]) || v[k] < 0) bad = true;
+  });
+  let out: number | null = null;
+  if (!bad) {
+    if (missing === "calories") out = Math.round(v.protein * 4 + v.carbs * 4 + v.fat * 9);
+    else {
+      let left = v.calories;
+      (["protein", "carbs", "fat"] as const).forEach((k) => {
+        if (k !== missing) left -= v[k] * KCAL[k];
+      });
+      out = left < -KCAL[missing] ? null : Math.round((Math.max(0, left) / KCAL[missing]) * 10) / 10;
+    }
+  }
+  next[missing] = out == null ? "" : String(out);
+  return { texts: next, auto: missing };
+}
+
 export default function MealConsole() {
   const [counts, setCounts] = useState<Record<string, number>>({});
   const [logged, setLogged] = useState(false);
+  const [restaurant, setRestaurant] = useState(false);
+  const [foodOpen, setFoodOpen] = useState(false);
+  const [food, setFood] = useState<{ texts: Record<FoodKey, string>; auto: FoodKey | null }>({ texts: EMPTY_FOOD, auto: null });
+  const typeFood = (k: FoodKey, text: string) =>
+    setFood((f) => settleFood({ ...f.texts, [k]: text.replace(/[^0-9.,]/g, "") }, f.auto === k ? null : f.auto));
+  const foodReady = foodOpen && food.texts.calories.trim() !== "";
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => {
@@ -43,10 +86,12 @@ export default function MealConsole() {
     setCounts((c) => ({ ...c, [k]: Math.max(0, (c[k] || 0) - 1) }));
   };
   const log = () => {
-    if (total === 0 || logged) return;
+    if ((total === 0 && !foodReady) || logged) return;
     setLogged(true);
     timer.current = setTimeout(() => {
       setCounts({});
+      setFood({ texts: EMPTY_FOOD, auto: null });
+      setRestaurant(false);
       setLogged(false);
     }, 1400);
   };
@@ -100,19 +145,78 @@ export default function MealConsole() {
         {column("BEVERAGE", LIQUIDS)}
       </div>
 
+      {/* Eating out: one switch. In the app a restaurant meal's portions are estimated 20% higher. */}
+      <button
+        type="button"
+        role="switch"
+        aria-checked={restaurant}
+        onClick={() => setRestaurant((v) => !v)}
+        className="mt-3 flex w-full items-center justify-between rounded-[10px] border border-gold/20 bg-white/[0.03] px-3 py-2 text-left text-[12px] text-white/75"
+      >
+        <span>
+          Restaurant Meal
+          {restaurant && <span className="block text-[10.5px] text-white/45">Portions estimated 20% higher.</span>}
+        </span>
+        <span className={`relative h-[18px] w-8 flex-none rounded-full border transition-colors ${restaurant ? "border-gold bg-gold/30" : "border-white/15 bg-white/[0.05]"}`}>
+          <span className={`absolute top-[2px] h-3 w-3 rounded-full transition-all ${restaurant ? "left-[16px] bg-champagne" : "left-[2px] bg-white/50"}`} />
+        </span>
+      </button>
+
+      {/* The typed food: for one food from its label, or a whole day's totals from another tracker. */}
+      <button
+        type="button"
+        aria-expanded={foodOpen}
+        onClick={() => setFoodOpen((v) => !v)}
+        className="mt-2 flex w-full items-center justify-between rounded-[10px] border border-gold/20 bg-white/[0.03] px-3 py-2 text-left text-[12px] text-white/75"
+      >
+        <span>
+          Add a food with its macros
+          <span className="block text-[10.5px] text-white/45">One food, or a whole day from another tracker.</span>
+        </span>
+        <svg viewBox="0 0 24 24" className={`h-4 w-4 flex-none text-gold transition-transform ${foodOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <path d="M6 9l6 6 6-6" />
+        </svg>
+      </button>
+      {foodOpen && (
+        <div className="mt-2">
+          <div className="grid grid-cols-4 gap-1.5">
+            {FOOD_KEYS.map((k) => {
+              const auto = food.auto === k && food.texts[k] !== "";
+              return (
+                <label key={k} className="min-w-0">
+                  <span className="block truncate font-mono text-[8px] tracking-[0.08em] text-white/45">{FOOD_LABELS[k]}</span>
+                  <input
+                    inputMode="decimal"
+                    value={food.texts[k]}
+                    onChange={(e) => typeFood(k, e.target.value)}
+                    placeholder="0"
+                    aria-label={FOOD_LABELS[k]}
+                    className={`mt-1 w-full rounded-md border bg-transparent px-1 py-1.5 text-center font-mono text-[13px] tabular-nums outline-none ${
+                      auto ? "border-champagne text-champagne" : "border-white/15 text-white"
+                    }`}
+                  />
+                  <span className={`mt-0.5 block text-center font-mono text-[7px] tracking-[0.08em] text-champagne ${auto ? "" : "invisible"}`}>CALCULATED</span>
+                </label>
+              );
+            })}
+          </div>
+          <div className="mt-1 text-[10px] leading-snug text-white/35">Enter any three and the fourth is worked out.</div>
+        </div>
+      )}
+
       <button
         type="button"
         onClick={log}
-        disabled={total === 0 && !logged}
+        disabled={total === 0 && !foodReady && !logged}
         className={`mt-3 w-full rounded-[10px] py-2.5 font-mono text-[11.5px] tracking-[0.14em] transition-colors ${
           logged
             ? "bg-[#4ADE80]/20 text-[#86EFAC]"
-            : total === 0
+            : total === 0 && !foodReady
               ? "cursor-not-allowed border border-[#3a4049] bg-[#2c313a] text-[#7a838e]"
               : "bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] font-semibold text-obsidian"
         }`}
       >
-        {logged ? "✓ LOGGED" : total === 0 ? "TAP FOODS TO ADD SERVINGS" : `LOG ${total} SERVING${total === 1 ? "" : "S"}`}
+        {logged ? "✓ LOGGED" : total === 0 && !foodReady ? "TAP FOODS TO ADD SERVINGS" : "LOG FUEL"}
       </button>
       <div className="mt-1.5 text-center text-[10px] text-white/30">Tap a food to add a serving · tap the number to remove one</div>
     </div>
