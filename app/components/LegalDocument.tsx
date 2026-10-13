@@ -37,7 +37,10 @@ function Text({ spans }: { spans: Span[] }) {
   );
 }
 
-export default function LegalDocument({ doc }: { doc: LegalDoc }) {
+// `notice` is the website's own line about which version applies when a change is pending (never legal wording).
+export type LegalNotice = { text: string; linkText: string; href: string };
+
+export default function LegalDocument({ doc, notice }: { doc: LegalDoc; notice?: LegalNotice }) {
   return (
     <main className="relative z-10 mx-auto max-w-3xl px-5 py-16 sm:px-8">
       <Link href="/" className="text-[12px] text-white/40 hover:text-white/70">
@@ -45,6 +48,14 @@ export default function LegalDocument({ doc }: { doc: LegalDoc }) {
       </Link>
       <h1 className="mt-6 font-display text-[40px] leading-tight text-white sm:text-[44px]">{doc.title}</h1>
       {doc.updated && <p className="mt-2 text-[13px] text-white/40">Last updated: {doc.updated}</p>}
+      {notice && (
+        <p className="mt-5 rounded border hairline px-4 py-3 text-[13.5px] leading-relaxed text-white/80">
+          {notice.text}{" "}
+          <Link href={notice.href} className="text-champagne underline decoration-gold/40 underline-offset-2 hover:text-white">
+            {notice.linkText}
+          </Link>
+        </p>
+      )}
 
       <div className="mt-8 space-y-4 text-[14.5px] leading-relaxed text-white/70">
         {doc.blocks.map((b, i) => {
