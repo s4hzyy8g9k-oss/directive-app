@@ -771,7 +771,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at legal@directivefitness.com. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
+      "t": "California residents. Under California Civil Code section 1789.3, California users are entitled to the following consumer rights notice. The Service is provided by Directive LLC, 952 Winchester Rd, Unit #308, Lexington, KY 40505, telephone 859-414-6943. The Website is free to use. The App's plans and prices are described in section 7. If you have a complaint about the Service, or want more information about using it, contact us at legal@directivefitness.com. You may also contact the Complaint Assistance Unit of the Division of Consumer Services of the California Department of Consumer Affairs in writing at 1625 North Market Blvd., Suite N 112, Sacramento, California 95834, or by telephone at (800) 952-5210."
      }
     ]
    }
