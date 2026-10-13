@@ -21,7 +21,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "These changes take effect on January 1, 2027.",
+      "t": "These changes take effect on November 16, 2026.",
       "b": true
      }
     ]
@@ -842,7 +842,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "These changes take effect on January 1, 2027.",
+      "t": "These changes take effect on November 16, 2026.",
       "b": true
      }
     ]
@@ -1870,7 +1870,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
     "k": "p",
     "s": [
      {
-      "t": "These changes take effect on January 1, 2027.",
+      "t": "These changes take effect on November 16, 2026.",
       "b": true
      }
     ]
@@ -2161,7 +2161,7 @@ export const LEGAL: Record<"terms" | "privacy" | "health", LegalDoc> = {
 };
 
 /** The day the versions in LEGAL take effect, or "" when no change is pending. */
-export const LEGAL_EFFECTIVE: string = "January 1, 2027";
+export const LEGAL_EFFECTIVE: string = "November 16, 2026";
 
 /** The versions in force until LEGAL_EFFECTIVE (shown on the "/previous" pages); empty when no change is pending. */
 export const LEGAL_PREVIOUS: Partial<Record<"terms" | "privacy" | "health", LegalDoc>> = {
