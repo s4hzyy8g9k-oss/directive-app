@@ -23,6 +23,13 @@ const LIQUIDS = [
 
 const MAX = 9;
 
+// MANUAL ENTRY's saved foods, meals and recipes (as in the app since 2026-10-18): one tap on "+" logs a serving.
+const SAVED = [
+  { name: "Greek yogurt", kind: "FOOD", serving: "1 cup", p: 23, c: 9, f: 0, kcal: 130 },
+  { name: "Overnight oats", kind: "RECIPE", serving: "1 serving", p: 18, c: 52, f: 9, kcal: 361 },
+  { name: "Chicken rice bowl", kind: "MEAL", serving: "1 meal", p: 42, c: 61, f: 14, kcal: 538 },
+];
+
 // The typed food: enter any three of the four numbers and the fourth is worked out (4 / 4 / 9 kcal per gram), as in the app.
 type FoodKey = "calories" | "protein" | "carbs" | "fat";
 const FOOD_KEYS: FoodKey[] = ["calories", "protein", "carbs", "fat"];
@@ -69,6 +76,12 @@ export default function MealConsole() {
   const typeFood = (k: FoodKey, text: string) =>
     setFood((f) => settleFood({ ...f.texts, [k]: text.replace(/[^0-9.,]/g, "") }, f.auto === k ? null : f.auto));
   const foodReady = foodOpen && food.texts.calories.trim() !== "";
+  const [added, setAdded] = useState<string | null>(null);
+  const quickAdd = (name: string) => {
+    setAdded(name);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => setAdded(null), 1400);
+  };
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => () => {
@@ -139,13 +152,14 @@ export default function MealConsole() {
         <span className="font-mono text-champagne">5 s tap &amp; log</span>
       </div>
 
-      <div className="mt-3 flex gap-3.5">
-        {column("FOOD", SOLIDS)}
+      <div className="mt-3 font-mono text-[10.5px] tracking-[0.16em] text-gold">QUICK LOG</div>
+      <div className="mt-2 flex gap-3.5">
+        {column("SOLIDS", SOLIDS)}
         <div className="w-px flex-none bg-gold/15" aria-hidden />
-        {column("BEVERAGE", LIQUIDS)}
+        {column("LIQUIDS", LIQUIDS)}
       </div>
 
-      {/* Eating out: one switch. In the app a restaurant meal's portions are estimated 20% higher. */}
+      {/* Eating out: one switch. In the app a restaurant meal's cooked portions are estimated 20% higher. */}
       <button
         type="button"
         role="switch"
@@ -155,14 +169,14 @@ export default function MealConsole() {
       >
         <span>
           Restaurant Meal
-          {restaurant && <span className="block text-[10.5px] text-white/45">Portions estimated 20% higher.</span>}
+          {restaurant && <span className="block text-[10.5px] text-white/45">Cooked portions estimated 20% higher.</span>}
         </span>
         <span className={`relative h-[18px] w-8 flex-none rounded-full border transition-colors ${restaurant ? "border-gold bg-gold/30" : "border-white/15 bg-white/[0.05]"}`}>
           <span className={`absolute top-[2px] h-3 w-3 rounded-full transition-all ${restaurant ? "left-[16px] bg-champagne" : "left-[2px] bg-white/50"}`} />
         </span>
       </button>
 
-      {/* The typed food: a food from its label, or one the person makes often. */}
+      {/* MANUAL ENTRY (the app since 2026-10-18): saved foods, meals and recipes with a one-tap "+", or a food's numbers. */}
       <button
         type="button"
         aria-expanded={foodOpen}
@@ -170,8 +184,8 @@ export default function MealConsole() {
         className="mt-2 flex w-full items-center justify-between rounded-[10px] border border-gold/20 bg-white/[0.03] px-3 py-2 text-left text-[12px] text-white/75"
       >
         <span>
-          Add a food with its macros
-          <span className="block text-[10.5px] text-white/45">A food from its label, or one you make often.</span>
+          Manual Entry
+          <span className="block text-[10.5px] text-white/45">Your saved foods, meals and recipes, or a food from its label.</span>
         </span>
         <svg viewBox="0 0 24 24" className={`h-4 w-4 flex-none text-gold transition-transform ${foodOpen ? "rotate-180" : ""}`} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
           <path d="M6 9l6 6 6-6" />
@@ -179,7 +193,31 @@ export default function MealConsole() {
       </button>
       {foodOpen && (
         <div className="mt-2">
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="font-mono text-[9px] tracking-[0.14em] text-white/40">RECENTS</div>
+          <div className="mt-1 divide-y divide-[#1E356D] rounded-[10px] border border-[#1E356D] bg-[#0E1B38]">
+            {SAVED.map((f) => (
+              <div key={f.name} className="flex items-center gap-2 px-2.5 py-2">
+                <div className="min-w-0 flex-1">
+                  <div className="truncate text-[12px] font-medium text-white">
+                    {f.name} <span className="font-mono text-[8px] tracking-[0.1em] text-white/40">{f.kind}</span>
+                  </div>
+                  <div className="font-mono text-[9.5px] text-[#8E9EB5]">
+                    {f.serving} · <span className="text-[#7FB3FF]">P {f.p}</span> <span className="text-[#E8C46A]">C {f.c}</span> <span className="text-[#E58A8A]">F {f.f}</span> · {f.kcal} kcal
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => quickAdd(f.name)}
+                  aria-label={`Log ${f.name}`}
+                  className={`flex h-7 w-7 flex-none items-center justify-center rounded-full border text-[15px] ${added === f.name ? "border-[#4ADE80] text-[#86EFAC]" : "border-gold/50 text-gold"}`}
+                >
+                  {added === f.name ? "✓" : "+"}
+                </button>
+              </div>
+            ))}
+          </div>
+          <div className="mt-2.5 font-mono text-[9px] tracking-[0.14em] text-white/40">OR TYPE A FOOD&apos;S NUMBERS</div>
+          <div className="mt-1 grid grid-cols-4 gap-1.5">
             {FOOD_KEYS.map((k) => {
               const auto = food.auto === k && food.texts[k] !== "";
               return (

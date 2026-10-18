@@ -411,101 +411,94 @@ function BurnPreview() {
   );
 }
 
-// ── Weekly Directive: this week's mission, calorie target, and how to split the week's change ──
+// ── Weekly Directive: the weekly briefing, the new calorie target, and the DEFICIT ALLOCATION card ──
+// Matches the app as of 2026-10-18: the owner's plain weekly wording, the week's full change in gold, and Gemini's
+// "Compressed Cockpit" sliders (one UNLOCK / SAVE pill, values on the label lines, a BASELINE / TARGET footer).
 const WEEKLY_CUT = 150;
 const LAST_WEEK_TARGET = 2300;
 // The app counts a step as body weight in lb x 0.00015 kcal (the extra cost above resting); this example is a 180 lb person. Shown to the nearest 50.
 const KCAL_PER_STEP = 180 * 0.00015;
+// The usual steps: in the app, the average of the previous 7 days.
+const BASELINE_STEPS = 6500;
 
 function DirectivePreview() {
   const [food, setFood] = useState(95); // activity is always the other part of the 150
+  const [unlocked, setUnlocked] = useState(false);
   const activity = WEEKLY_CUT - food;
   const steps = Math.round(activity / KCAL_PER_STEP / 50) * 50;
   // Only the FOOD part comes off what you eat; the ACTIVITY part is walked.
   const target = LAST_WEEK_TARGET - food;
+  const lever = (label: string, value: number, onChange: (v: number) => void, aria: string) => (
+    <div className="mt-3">
+      <div className="flex items-baseline justify-between">
+        <span className="text-[12px] font-bold text-white">{label}</span>
+        <span className="font-mono text-[14px] tabular-nums text-gold">−{value} KCAL</span>
+      </div>
+      <input
+        type="range"
+        min={0}
+        max={WEEKLY_CUT}
+        step={5}
+        value={value}
+        disabled={!unlocked}
+        onChange={(e) => onChange(Number(e.target.value))}
+        aria-label={aria}
+        className="mt-1.5 w-full cursor-pointer accent-gold disabled:cursor-not-allowed"
+      />
+    </div>
+  );
   return (
     <div>
-      <div className="font-mono text-[10.5px] tracking-[0.16em] text-gold">THIS WEEK&apos;S MISSION</div>
+      <div className="font-mono text-[10.5px] tracking-[0.16em] text-gold">WEEKLY BRIEFING</div>
 
-      <div className="mt-3 flex gap-3 rounded-xl border border-gold/25 bg-gold/[0.05] p-3.5">
-        <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 flex-none text-gold" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-          <circle cx="12" cy="12" r="9" />
-          <path d="M12 7v5l3.5 2" />
-        </svg>
-        <p className="text-[12.5px] leading-relaxed text-white/75">
-          Textbook deficit: 6/7 days logged, net energy balance -3150 kcal for the week. Sustained deficit streak continues.{" "}
-          {food > 0 ? `Your calories come down this week: ${food} fewer a day.` : "Your calories stay the same this week."}
-        </p>
-      </div>
-
-      <div className="mt-3 flex items-center gap-2">
-        <span className="inline-flex items-center gap-1.5 rounded-full border border-gold/30 bg-gold/[0.08] px-2.5 py-1 font-mono text-[11px] text-champagne">
-          <svg viewBox="0 0 24 24" className="h-3 w-3" fill="none" stroke="currentColor" strokeWidth="2.4" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-            <path d="M12 5v14M5 12l7 7 7-7" />
-          </svg>
-          {food > 0 ? `−${food} kcal` : "no change"}
-        </span>
-        <span className="text-[11px] text-white/40">change from last week</span>
-      </div>
+      <p className="mt-3 text-[13px] leading-relaxed text-white/85">
+        You logged 6 of 7 days, ate 3,150 kcal less than your estimated burn, and your trend weight dropped 0.9 lb. Your deficit streak continues.
+      </p>
+      <p className="mt-2 text-[13px] leading-relaxed text-white/85">
+        Your calories come down this week by <span className="font-mono text-gold">{WEEKLY_CUT}</span> calories per day.
+      </p>
 
       <div className="mt-4 flex items-baseline justify-between">
-        <span className="font-mono text-[10px] tracking-[0.14em] text-white/45">CALORIE TARGET</span>
+        <span className="font-mono text-[10px] tracking-[0.14em] text-white/45">NEW CALORIE TARGET</span>
         <span className="font-mono text-[22px] tabular-nums text-white">
           {target.toLocaleString("en-US")}<span className="text-[11px] text-white/45"> kcal/day</span>
         </span>
       </div>
 
-      <div className="mt-4 rounded-xl border hairline bg-space/50 px-3.5 py-3">
-        <div className="flex items-baseline justify-between font-mono text-[10px] tracking-[0.16em] text-gold/80">
-          <span>DEFICIT ALLOCATION</span>
-          <span className="text-white/55">ADDED THIS WEEK −{WEEKLY_CUT}</span>
+      <div className="mt-4 rounded-xl border border-[#1E356D] bg-[#0C1938] px-3.5 py-3">
+        <div className="flex items-center justify-between">
+          <span className="font-mono text-[11px] font-bold tracking-[0.12em] text-steel">DEFICIT ALLOCATION</span>
+          <button
+            type="button"
+            onClick={() => setUnlocked((v) => !v)}
+            aria-label={unlocked ? "Save the allocation and lock the sliders" : "Unlock the deficit allocation sliders"}
+            className={`min-w-[92px] rounded-full border px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.1em] transition-colors ${
+              unlocked ? "border-gold bg-gold text-[#0A1128]" : "border-[#2A437E] bg-[#14244D] text-steel"
+            }`}
+          >
+            {unlocked ? "✓ SAVE" : "UNLOCK"}
+          </button>
+        </div>
+        <div className="mt-1 border-b border-[#1E356D] pb-2.5 font-mono text-[10px] font-bold tracking-[0.08em] text-gold">
+          ADDED THIS WEEK: −{WEEKLY_CUT} KCAL/DAY
         </div>
 
-        <div className="mt-3">
-          <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[10px] tracking-[0.14em] text-white/55">FOOD</span>
-            <span className="font-mono text-[15px] tabular-nums text-white">
-              −{food} <span className="text-[10px] text-white/45">kcal/day</span>
-            </span>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={WEEKLY_CUT}
-            step={5}
-            value={food}
-            onChange={(e) => setFood(Number(e.target.value))}
-            aria-label="Calories cut from food each day"
-            className="mt-1.5 w-full cursor-pointer accent-gold"
-          />
+        <div className={unlocked ? "" : "opacity-40"}>
+          {lever("FOOD", food, setFood, "Calories cut from food each day")}
+          {lever("ACTIVITY", activity, (v) => setFood(WEEKLY_CUT - v), "Calories burned through added daily steps")}
+          <div className="mt-1 text-[11.5px] text-champagne">+{steps.toLocaleString("en-US")} · Added daily steps above baseline</div>
         </div>
 
-        <div className="mt-3">
-          <div className="flex items-baseline justify-between">
-            <span className="font-mono text-[10px] tracking-[0.14em] text-white/55">ACTIVITY</span>
-            <span className="font-mono text-[15px] tabular-nums text-white">
-              −{activity} <span className="text-[10px] text-white/45">kcal/day</span>
-            </span>
-          </div>
-          <input
-            type="range"
-            min={0}
-            max={WEEKLY_CUT}
-            step={5}
-            value={activity}
-            onChange={(e) => setFood(WEEKLY_CUT - Number(e.target.value))}
-            aria-label="Calories burned through added daily steps"
-            className="mt-1.5 w-full cursor-pointer accent-gold"
-          />
-          <div className="mt-1 text-[11.5px] text-champagne">
-            +{steps.toLocaleString("en-US")} · Added daily steps above baseline
-          </div>
+        <div className="mt-3 flex items-center justify-between border-t border-[#1E356D] pt-3 font-mono text-[10px] font-bold tracking-[0.1em] text-steel">
+          <span>
+            BASELINE: <span className="text-[13px] font-normal tracking-normal text-white">{BASELINE_STEPS.toLocaleString("en-US")}</span>
+          </span>
+          <span>
+            TARGET: <span className="text-[13px] tracking-normal text-gold">{(BASELINE_STEPS + steps).toLocaleString("en-US")}</span>
+          </span>
         </div>
-
-        <div className="mt-2 text-[10px] text-white/35">Move either slider and the other adjusts. The sliders share out only what changed this week. Steps are estimated from body weight.</div>
       </div>
-
-      <p className="mt-3 text-center font-mono text-[9.5px] tracking-[0.12em] text-white/35">RECALIBRATED EVERY SUNDAY // FLIGHT AUDIT</p>
+      <div className="mt-2 text-[10px] text-white/35">Tap UNLOCK, then move either slider and the other adjusts. Steps are estimated from body weight.</div>
     </div>
   );
 }

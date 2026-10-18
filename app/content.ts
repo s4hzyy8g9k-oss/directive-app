@@ -65,7 +65,7 @@ export const traps = {
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: a food from its label, or one you make often, saved by name for next time.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: a food from its label, or one you make often, saved by name for next time, along with your own meals and recipes.",
     },
   ],
 };
@@ -134,7 +134,7 @@ export const stations = {
     {
       id: "fuel",
       name: "Fuel",
-      body: "Agnostic energy balancing. Hit your calorie target, hold your protein and fat floors, and plan an Event Allowance for the nights that matter. Log a meal in seconds by portion, or type in the numbers when you have them.",
+      body: "Agnostic energy balancing. Hit your calorie target, hold your protein and fat floors, and plan an Event Allowance for the nights that matter. Log a meal in seconds by portion, pick a food, meal or recipe you've saved, or type in the numbers when you have them.",
     },
     {
       id: "mission",
@@ -155,7 +155,7 @@ export const stations = {
     {
       id: "directive",
       name: "Weekly Directive",
-      body: "Every Sunday, an audit reviews your week, updates your maintenance estimate and tells you plainly whether your calories change. When they do, you choose how to take the change: eat a little less, walk a little more, or a mix.",
+      body: "Every Sunday, Directive reviews your week, updates its estimate of your daily burn and tells you plainly whether your calories change. When they do, you choose how to take the change: eat a little less, walk a little more, or a mix.",
     },
   ],
 };
