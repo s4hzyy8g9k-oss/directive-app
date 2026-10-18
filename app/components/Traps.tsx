@@ -1,28 +1,41 @@
 import { traps } from "@/app/content";
 import MealConsole from "./MealConsole";
 
+// Owner, 2026-10-18, 21:52 UTC: the same look as the app's MACRO RECONCILIATION (gold horizontal bars, ratios and amounts).
 function CaloriesViz() {
+  const row = (label: string, value: string, pct: number, fill: string, tone: string) => (
+    <div>
+      <div className="mb-1.5 flex items-baseline justify-between">
+        <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">{label}</span>
+        <span className={`whitespace-nowrap font-appnum text-[17px] font-semibold tabular-nums ${tone}`}>{value}</span>
+      </div>
+      <div className="app-mp-bar">
+        <div className={fill} style={{ width: `${pct}%`, height: "100%", borderRadius: 4 }} />
+      </div>
+    </div>
+  );
   return (
-    <div className="w-full space-y-3">
-      <div>
-        <div className="flex justify-between text-[12px] text-white/50">
-          <span>Gross estimate (your watch)</span>
-          <span className="font-mono text-white/70">420 kcal</span>
-        </div>
-        <div className="mt-1.5 h-2.5 rounded-full bg-white/[0.06]">
-          <div className="h-full w-full rounded-full bg-gradient-to-r from-steel/40 to-steel/80" />
-        </div>
+    <div className="app-panel w-full !border-[#d4af37]/40">
+      <div className="flex items-center justify-between">
+        <h4 className="app-panel-h">60-MINUTE LIFT</h4>
+        <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#f0d878]">MEDIUM</span>
       </div>
-      <div>
-        <div className="flex justify-between text-[12px] text-white/50">
-          <span>Net credited by Directive</span>
-          <span className="font-mono text-gold">225 kcal</span>
-        </div>
-        <div className="mt-1.5 h-2.5 rounded-full bg-white/[0.06]">
-          <div className="h-full w-[53.6%] rounded-full bg-gradient-to-r from-[#A8862A] to-champagne" />
-        </div>
+      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
+        <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
+          NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">54%</span>
+        </span>
+        <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#f0d878]">
+          225<span className="text-[15px] font-medium text-[#eaeef6]"> / 420 kcal</span>
+        </span>
       </div>
-      <div className="text-[12px] text-coral/80">195 kcal of resting burn removed in this example</div>
+      <div className="app-reserve-bar">
+        <div className="app-reserve-fill" style={{ width: "53.6%" }} />
+      </div>
+      <div className="mt-[18px] space-y-3">
+        {row("YOUR WATCH (GROSS)", "420 kcal", 100, "bg-gradient-to-r from-[#3b4560] to-[#93a6c6]", "text-[#eaeef6]")}
+        {row("RESTING BURN", "−195 kcal", 46.4, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+        {row("NET CREDITED", "225 kcal", 53.6, "app-mp-fill", "text-[#f0d878]")}
+      </div>
     </div>
   );
 }
