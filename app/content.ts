@@ -65,7 +65,7 @@ export const traps = {
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. And when you do have the numbers, type them in: a food from its label, or one you make often, saved by name for next time, along with your own meals and recipes.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. Save a meal you eat often, like your usual breakfast, and add the whole thing with one tap. Or just say it.",
     },
   ],
 };
@@ -139,7 +139,7 @@ export const stations = {
     {
       id: "mission",
       name: "Mission Control",
-      body: "Your daily instrument panel. Scale readings with likely water separated out show your underlying trend, alongside dials for velocity, adherence and energy balance, and your distance to target.",
+      body: "Your daily instrument panel. Scale readings with likely water separated out show your underlying trend, alongside your estimated daily burn, today's calorie target, dials for velocity, adherence and energy balance, and your distance to target.",
     },
     {
       id: "cruise",
@@ -150,7 +150,7 @@ export const stations = {
     {
       id: "burn",
       name: "Burn",
-      body: "Net energy expenditure, counted conservatively. Log resistance and cardio sessions and see your training volume for the week.",
+      body: "Log resistance and cardio sessions by length and intensity, and see your training volume for the week.",
     },
     {
       id: "directive",

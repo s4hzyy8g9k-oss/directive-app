@@ -54,6 +54,80 @@ body {
 
 :focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; border-radius: 2px; }
 
+
+/* ===== The app's own look, copied from the design mock-up (directive-horology-mission-control.html) ===== */
+/* The app's three typefaces (theme.ts: Jost, Roboto Mono, Space Grotesk), loaded in layout.tsx */
+.font-app { font-family: var(--font-app-sans), "Avenir Next", "Helvetica Neue", Arial, sans-serif; }
+.font-appmono { font-family: var(--font-app-mono), "SF Mono", monospace; }
+.font-appnum { font-family: var(--font-app-num), "Helvetica Neue", Arial, sans-serif; }
+
+/* .panel: the app's glass panel */
+.app-panel {
+  position: relative;
+  background:
+    radial-gradient(120% 80% at 10% -10%, rgba(50, 80, 170, 0.14) 0%, rgba(50, 80, 170, 0) 55%),
+    linear-gradient(170deg, rgba(8, 14, 38, 0.96) 0%, rgba(7, 12, 34, 0.98) 50%, rgba(6, 11, 32, 0.98) 100%);
+  border: 1px solid rgba(160, 190, 230, 0.16);
+  border-top-color: rgba(190, 215, 245, 0.28);
+  border-bottom-color: rgba(212, 175, 55, 0.3);
+  border-radius: 14px;
+  padding: 14px;
+  color: #eaeef6;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.09), 0 12px 26px rgba(0, 0, 0, 0.5), 0 2px 6px rgba(0, 0, 0, 0.35);
+}
+.app-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  background: linear-gradient(160deg, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.015) 26%, rgba(255, 255, 255, 0) 44%);
+}
+.app-panel > * { position: relative; z-index: 1; }
+.app-panel-h { margin: 0 0 8px; font-family: var(--font-app-sans), sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 0.26em; color: #aab5c6; }
+
+/* PaceSlider: a 4 px rail with a gold fill, 21 ticks, the knurled 34 px gold thumb */
+.app-slider { position: relative; height: 44px; touch-action: none; cursor: grab; outline: none; user-select: none; -webkit-user-select: none; }
+.app-slider:active { cursor: grabbing; }
+.app-slider:focus-visible { outline: none; }
+.app-slider:focus-visible .app-thumb { box-shadow: 0 0 0 3px #010309, 0 0 0 5px #f0d878; }
+.app-rail { position: absolute; left: 17px; right: 17px; top: 20px; height: 4px; border-radius: 2px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.06); }
+.app-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: linear-gradient(90deg, #7a5f22, #f0d878); }
+.app-ticks { position: absolute; left: 17px; right: 17px; top: 32px; height: 8px; }
+.app-ticks i { position: absolute; top: 0; width: 1px; height: 5px; background: #5d6a82; }
+.app-ticks i.m { height: 8px; background: #7a5f22; }
+.app-thumb {
+  position: absolute; top: 5px; width: 34px; height: 34px; border-radius: 50%;
+  border: 1px solid #f0d878;
+  background:
+    repeating-linear-gradient(45deg, rgba(20, 12, 0, 0.42) 0 1.4px, transparent 1.4px 4.2px),
+    repeating-linear-gradient(-45deg, rgba(20, 12, 0, 0.42) 0 1.4px, transparent 1.4px 4.2px),
+    linear-gradient(145deg, #f0d878 0%, #c39b4f 42%, #6b5419 100%);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.55), inset 0 -2px 3px rgba(0, 0, 0, 0.35);
+}
+.app-thumb::after { content: ""; position: absolute; inset: 8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbefc6, #a9843d 70%); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6); }
+.app-slider.locked { pointer-events: none; cursor: default; }
+.app-slider.locked .app-rail { background: linear-gradient(180deg, #171a24, #1c2030); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7); }
+.app-slider.locked .app-fill { background: #2b2f3d; }
+.app-slider.locked .app-thumb { opacity: 0.45; filter: grayscale(0.7) brightness(0.8); }
+.app-slider.unlocked .app-rail { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 12px rgba(212, 175, 55, 0.25); }
+
+/* MACRO RECONCILIATION bars */
+.app-reserve-bar { position: relative; height: 12px; border-radius: 6px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8); overflow: hidden; }
+.app-reserve-fill { height: 100%; border-radius: 6px; background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 9px), linear-gradient(90deg, #7a5f22, #f0d878); }
+.app-mp-bar { position: relative; height: 8px; border-radius: 4px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8); overflow: hidden; }
+.app-mp-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7a5f22, #f0d878); }
+
+/* The TDEE readout well */
+.app-tdee-well {
+  background: radial-gradient(120% 100% at 50% 0%, rgba(212, 175, 55, 0.06) 0%, rgba(0, 0, 0, 0) 60%), #060a16;
+  border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; padding: 16px; text-align: center;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.3);
+}
+
+/* Gold buttons and pill switches */
+.app-gold-pill { background: linear-gradient(150deg, #f0d878, #7a5f22); color: #2a1d05; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); }
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;

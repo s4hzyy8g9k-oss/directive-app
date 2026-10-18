@@ -1,138 +1,87 @@
 "use client";
 
-import { useMemo, useRef, useState, type ReactElement } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { useMemo, useState, type ReactElement } from "react";
+import { motion } from "framer-motion";
 import { stations } from "@/app/content";
 import { buildTelemetry, smooth, TODAY, DRY_TODAY, FLUID_TODAY, TARGET_END } from "@/lib/telemetry";
+import { AppDial, AppSlider, AppSwitchKnob, MicIcon } from "./AppUI";
 
-function Dial({ value, label, unit, pct, goal }: { value: number; label: string; unit: string; pct?: number; goal?: string }) {
-  const ref = useRef<SVGSVGElement>(null);
-  const inView = useInView(ref, { once: true, amount: 0.6 });
-  const reduce = useReducedMotion();
-  const frac = (pct ?? value) / 100;
-  const angle = -135 + frac * 270;
-  const r = 44;
-  const arcLen = 2 * Math.PI * r * 0.75;
-  const gradId = `face-${label.replace(/\s+/g, "-")}`;
+// Every preview below copies the app's own look from the design mock-up
+// (directive-app/project-docs/design-artifact/directive-horology-mission-control.html): colours, gradients, borders, sizes.
 
-  return (
-    <div className="flex flex-col items-center">
-      <svg ref={ref} viewBox="0 0 120 120" className="h-[84px] w-[84px] sm:h-24 sm:w-24" aria-label={`${label}: ${value}${unit}`}>
-        <defs>
-          <radialGradient id={gradId} cx="50%" cy="40%" r="60%">
-            <stop offset="0" stopColor="#13284A" />
-            <stop offset="1" stopColor="#050B1A" />
-          </radialGradient>
-        </defs>
-        <circle cx="60" cy="60" r="57" fill={`url(#${gradId})`} stroke="#D4AF37" strokeOpacity="0.55" />
-        <circle cx="60" cy="60" r="53" fill="none" stroke="#F1DC9A" strokeOpacity="0.12" />
-        {Array.from({ length: 41 }).map((_, i) => {
-          const a = -135 + i * (270 / 40);
-          const major = i % 5 === 0;
-          return (
-            <line key={i} x1="60" y1="9" x2="60" y2={major ? 16 : 13} stroke={major ? "#F1DC9A" : "#9FB1CC"} strokeOpacity={major ? 0.85 : 0.35} strokeWidth={major ? 1.3 : 0.7} transform={`rotate(${a} 60 60)`} />
-          );
-        })}
-        <circle cx="60" cy="60" r={r} fill="none" stroke="#1B3152" strokeWidth="3" strokeDasharray={`${arcLen} 999`} transform="rotate(135 60 60)" strokeLinecap="round" />
-        <motion.circle
-          cx="60"
-          cy="60"
-          r={r}
-          fill="none"
-          stroke="#D4AF37"
-          strokeWidth="3"
-          strokeLinecap="round"
-          transform="rotate(135 60 60)"
-          initial={{ strokeDasharray: `0 999` }}
-          animate={{ strokeDasharray: `${inView || reduce ? arcLen * frac : 0} 999` }}
-          transition={{ duration: 1.6, ease: [0.2, 0.7, 0.2, 1] }}
-        />
-        <motion.g initial={{ rotate: -135 }} animate={{ rotate: inView || reduce ? angle : -135 }} transition={{ duration: 1.6, ease: [0.2, 0.7, 0.2, 1] }}>
-          <circle cx="60" cy="60" r="57" fill="none" stroke="none" />
-          <line x1="60" y1="64" x2="60" y2="22" stroke="#F1DC9A" strokeWidth="1.8" strokeLinecap="round" />
-        </motion.g>
-        <circle cx="60" cy="60" r="3.5" fill="#D4AF37" />
-        <text x="60" y="88" textAnchor="middle" fontSize="15" className="font-mono" fill="#fff">
-          {value}
-          <tspan fontSize="9" fill="#9FB1CC">{unit}</tspan>
-        </text>
-      </svg>
-      <span className="mt-1.5 text-[11px] text-white/55 sm:text-[12px]">{label}</span>
-      {goal && <span className="mt-0.5 font-mono text-[9.5px] tracking-wide text-gold/70">{goal}</span>}
-    </div>
-  );
+// ── Fuel: MACRO RECONCILIATION (FuelScreen.tsx), the calorie bar and the three macro bars ──
+// Example: a 183 lb person on a Cut. Protein floor 0.85 g per lb, fat floor 0.3 g per lb; carbs take the rest of 2,150 kcal.
+const FUEL = { cal: 1640, calTarget: 2150, pro: 122, proTarget: 156, carb: 151, carbTarget: 247, fat: 41, fatTarget: 60 };
+
+function grow(pct: number, duration = 1.1) {
+  return {
+    initial: { width: 0 },
+    whileInView: { width: `${Math.min(100, pct)}%` },
+    viewport: { once: true, amount: 0.6 },
+    transition: { duration, ease: [0.2, 0.7, 0.2, 1] as [number, number, number, number] },
+  };
 }
 
-// ── Fuel: macro reconciliation + caloric reserve (from the app's Fuel tab) ──
-function MacroPill({ label, value, of, pct, sub }: { label: string; value: number; of: number; pct: number; sub: string }) {
+function MacroPill({ label, value, of }: { label: string; value: number; of: number }) {
   return (
     <div className="text-center">
-      <div className="font-mono text-[9.5px] tracking-[0.16em] text-white/45">{label}</div>
-      <div className="mt-1.5 h-2 overflow-hidden rounded-full bg-space">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-[#7A5F22] to-champagne"
-          initial={{ width: 0 }}
-          whileInView={{ width: `${pct}%` }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 1.1, ease: [0.2, 0.7, 0.2, 1] }}
-        />
+      <div className="mb-1.5 font-app text-[9.5px] tracking-[0.16em] text-[#93a6c6]">{label}</div>
+      <div className="app-mp-bar mb-1.5">
+        <motion.div className="app-mp-fill" {...grow((value / of) * 100)} />
       </div>
-      <div className="mt-1.5 font-mono text-[15px] tabular-nums text-white">
+      <div className="font-appnum text-[16px] font-semibold tabular-nums text-[#eaeef6]">
         {value}
-        <span className="text-[10.5px] text-white/45">/{of}g</span>
+        <span className="font-app text-[10.5px] font-light text-[#aab5c6]">/{of}g</span>
       </div>
-      <div className="mt-0.5 text-[9.5px] text-white/40">{sub}</div>
     </div>
   );
 }
 
 function FuelPreview() {
-  const [reserve, setReserve] = useState(false);
+  const [event, setEvent] = useState(false);
   return (
     <div>
-      <div className="font-mono text-[10.5px] tracking-[0.16em] text-gold">MACRO RECONCILIATION</div>
-      <div className="mt-3 flex items-baseline justify-between">
-        <span className="font-mono text-[10px] tracking-[0.14em] text-white/45">CALORIES</span>
-        <span className="font-mono text-[20px] tabular-nums text-white">
-          1,640<span className="text-[11px] text-white/45"> / 2,150 kcal</span>
-        </span>
-      </div>
-      <div className="mt-2 h-2 overflow-hidden rounded-full bg-space">
-        <motion.div
-          className="h-full rounded-full bg-gradient-to-r from-[#7A5F22] to-champagne"
-          initial={{ width: 0 }}
-          whileInView={{ width: "76%" }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 1.2, ease: [0.2, 0.7, 0.2, 1] }}
-        />
-      </div>
-
-      <div className="mt-5 grid grid-cols-3 gap-3">
-        <MacroPill label="PROTEIN" value={122} of={180} pct={68} sub="Protein floor 94%" />
-        <MacroPill label="CARBS" value={151} of={240} pct={63} sub="Discretionary intact" />
-        <MacroPill label="FAT" value={41} of={70} pct={59} sub="Fat floor 68%" />
-      </div>
-
-      <div className="mt-5 rounded-xl border hairline bg-space/50 px-3.5 py-3">
+      <div className="app-panel !border-[#d4af37]/40">
         <div className="flex items-center justify-between">
-          <span className="font-mono text-[10px] tracking-[0.16em] text-gold/80">EVENT ALLOWANCE</span>
-          <button
-            type="button"
-            role="switch"
-            aria-checked={reserve}
-            onClick={() => setReserve((v) => !v)}
-            className="flex items-center gap-2 text-[11.5px] text-white/60"
-          >
-            Plan an event
-            <span className={`relative h-[18px] w-8 rounded-full border transition-colors ${reserve ? "border-gold bg-gold/30" : "border-white/15 bg-white/[0.05]"}`}>
-              <span className={`absolute top-[2px] h-3 w-3 rounded-full transition-all ${reserve ? "left-[16px] bg-champagne" : "left-[2px] bg-white/50"}`} />
-            </span>
-          </button>
+          <h4 className="app-panel-h">MACRO RECONCILIATION</h4>
+          <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#f0d878]">TODAY</span>
         </div>
-        <div className="mt-2 min-h-[32px] text-[11.5px] leading-snug text-white/55">
-          {reserve ? (
+        <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
+          <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
+            CALORIES: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">CUT</span>
+          </span>
+          <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#f0d878] sm:text-[30px]">
+            1,640<span className="text-[15px] font-medium text-[#eaeef6] sm:text-[17px]"> / 2,150 kcal</span>
+          </span>
+        </div>
+        <div className="app-reserve-bar">
+          <motion.div className="app-reserve-fill" {...grow((FUEL.cal / FUEL.calTarget) * 100, 1.2)} />
+        </div>
+
+        <div className="mt-[18px] grid grid-cols-3 gap-2.5">
+          <MacroPill label="PROTEIN" value={FUEL.pro} of={FUEL.proTarget} />
+          <MacroPill label="CARBS" value={FUEL.carb} of={FUEL.carbTarget} />
+          <MacroPill label="FAT" value={FUEL.fat} of={FUEL.fatTarget} />
+        </div>
+        <div className="mt-3 font-appmono text-[10px] tracking-[0.03em] text-[#aab5c6] sm:text-[10.5px]">FLOORS: Protein ≥ 156 g · Fat ≥ 55 g</div>
+      </div>
+
+      <div className="app-panel mt-3">
+        <h4 className="app-panel-h">EVENT ALLOWANCE</h4>
+        <button
+          type="button"
+          role="switch"
+          aria-checked={event}
+          onClick={() => setEvent((v) => !v)}
+          className="flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-[#d4af37]/[0.18] bg-white/[0.03] p-3 text-left"
+        >
+          <span className="font-app text-[12.5px] text-[#eaeef6]">Plan an event</span>
+          <AppSwitchKnob on={event} />
+        </button>
+        <div className="mt-2 min-h-[32px] font-app text-[12px] leading-snug text-[#aab5c6]">
+          {event ? (
             <>
-              <span className="text-champagne">+1,000 kcal planned for your event.</span> Offset by 200 kcal a day over the 5 days before it. Your calorie floors always come first.
+              <span className="text-[#f0d878]">+1,000 kcal planned for your event.</span> Offset by 200 kcal a day over the 5 days before it. Your calorie floors always come first.
             </>
           ) : (
             "Plan extra calories for a dinner or celebration without breaking your week."
@@ -143,7 +92,39 @@ function FuelPreview() {
   );
 }
 
-// ── Mission Control: dials, weight chart with likely water separated out, plates, the water banner ──
+// ── Mission Control: the GAUGE CLUSTER (App.tsx, components/TdeeGauge.tsx + DialGauge.tsx) ──
+// Example figures: estimated burn 2,650 kcal a day, today's target 2,150, trend losing 1.2 lb a week against a goal of
+// 1.4 (0.75% of 183 lb), 86% of the last 7 days within 100 kcal of target, and an average of 480 kcal a day under the burn.
+function GaugeCluster() {
+  return (
+    <div className="app-panel mt-3">
+      <h4 className="app-panel-h">GAUGE CLUSTER</h4>
+      <div className="app-tdee-well mb-3.5">
+        <div className="mb-1.5 font-appmono text-[9.5px] tracking-[0.14em] text-[#f0d878]">EST. BASELINE TDEE</div>
+        <div className="font-appmono text-[26px] font-bold leading-none tracking-[-0.01em] text-white tabular-nums sm:text-[28px]">
+          2,650<small className="ml-1.5 text-[12px] font-normal tracking-[0.04em] text-[#aab5c6] sm:text-[13px]">KCAL/DAY</small>
+        </div>
+        <div className="mt-2 font-appmono text-[8px] tracking-[0.08em] text-[#aab5c6]">UPDATES AT THE SUNDAY AUDIT</div>
+        <div className="mt-2.5 inline-block rounded-full border border-[#8fe0b3]/30 bg-[#8fe0b3]/10 px-2.5 py-[3px] font-appmono text-[10px] tracking-[0.04em] text-[#8fe0b3]">
+          ▼ −30 KCAL AT LAST AUDIT
+        </div>
+      </div>
+      <div className="mb-2.5 flex items-baseline justify-between gap-2 px-1">
+        <span className="font-appmono text-[9.5px] tracking-[0.14em] text-[#f0d878]">CALORIE TARGET</span>
+        <span className="font-appmono text-[17px] font-bold tabular-nums text-[#f0d878] sm:text-[18px]">
+          2,150<small className="text-[12px] font-normal tracking-[0.04em] text-[#aab5c6] sm:text-[13px]"> KCAL/DAY</small>
+        </span>
+      </div>
+      <div className="grid grid-cols-3 gap-1.5" aria-label="Gauge dials">
+        <AppDial id="vel" label="VELOCITY" caption="Velocity" value={1.2} target={3} display="1.2" delta="Goal: 1.4 lbs/wk" />
+        <AppDial id="adh" label="ADHERENCE" caption="Adherence" value={86} target={100} display="86%" delta="Goal: 100%" />
+        <AppDial id="nrg" label="ENERGY" caption="Energy Balance" value={-480} min={-1000} target={1000} display="−480" delta="kcal/day" />
+      </div>
+    </div>
+  );
+}
+
+// ── Mission Control: weight chart with likely water separated out, plates, the water banner, then the GAUGE CLUSTER ──
 function MissionPreview() {
   const chart = useMemo(() => {
     const t = buildTelemetry();
@@ -209,12 +190,6 @@ function MissionPreview() {
         <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />Trend</span>
       </div>
 
-      <div className="mt-4 flex justify-center gap-3 sm:gap-7">
-        <Dial value={0.7} pct={(0.7 / 0.75) * 100} unit="%" label="Velocity" goal="Goal: 0.75% / wk" />
-        <Dial value={86} unit="%" label="Adherence" goal="Last 7 days" />
-        <Dial value={-480} pct={(480 / 520) * 100} unit="" label="Energy balance" goal="kcal today" />
-      </div>
-
       <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-xl border hairline bg-space/50">
         {plates.map((p, i) => (
           <div key={p.k} className={`px-3 py-2 ${i % 2 === 0 ? "border-r border-white/[0.06]" : ""} ${i < 2 ? "border-b border-white/[0.06]" : ""}`}>
@@ -231,6 +206,8 @@ function MissionPreview() {
       <div className="mt-3 rounded-full border border-cyan/30 bg-cyan/[0.06] px-3 py-1.5 text-center font-mono text-[9.5px] tracking-[0.12em] text-cyan/90">
         TEMPORARY WATER WEIGHT // LIKELY WATER SEPARATED FROM YOUR TREND
       </div>
+
+      <GaugeCluster />
     </div>
   );
 }
@@ -323,97 +300,132 @@ function CruisePreview() {
   );
 }
 
-// ── Burn ──
-const INTENSITY = [
-  { name: "Low", gross: 260, net: 140 },
-  { name: "Medium", gross: 420, net: 225 },
-  { name: "High", gross: 600, net: 340 },
-];
-const BASE_MIN = 60; // the per-hour figures above are for a 60-minute session
+// ── Burn: the LOG WORKOUT block (BurnScreen.tsx) ──
+// RESISTANCE / CARDIO, DURATION (MIN), INTENSITY and LOG WORKOUT. Intensity is stored and shown only; a logged workout
+// changes no calorie target, so there is no calorie readout here (the app no longer shows one on Burn).
+type Kind = "RESISTANCE" | "CARDIO";
+const LEVELS = ["LOW", "MEDIUM", "HIGH"] as const;
+type Level = (typeof LEVELS)[number];
 
 function BurnPreview() {
-  const [effort, setEffort] = useState(1);
-  const [minText, setMinText] = useState("60");
-  const minutes = Math.min(240, parseInt(minText || "0", 10) || 0);
-  const l = INTENSITY[effort];
-  const gross = Math.round((l.gross * minutes) / BASE_MIN);
-  const net = Math.round((l.net * minutes) / BASE_MIN);
-  const step = (d: number) => setMinText(String(Math.min(240, Math.max(0, minutes + d))));
+  const [kind, setKind] = useState<Kind>("RESISTANCE");
+  const [minText, setMinText] = useState("45");
+  const [level, setLevel] = useState<Level>("MEDIUM");
+  const [logged, setLogged] = useState<{ kind: Kind; min: number; level: Level }[]>([]);
+  const [justLogged, setJustLogged] = useState(false);
+  const minutes = Math.min(600, parseInt(minText || "0", 10) || 0);
+
+  const log = () => {
+    if (minutes <= 0) return;
+    setLogged((l) => [{ kind, min: minutes, level }, ...l].slice(0, 3));
+    setJustLogged(true);
+  };
+  const touch = () => setJustLogged(false);
 
   return (
     <div>
-      <div className="flex items-center justify-between gap-3">
-        <div className="text-[18px] font-medium text-white/85 sm:text-[20px]">Strength training</div>
-        <div className="flex items-center gap-1.5">
-          <button
-            type="button"
-            onClick={() => step(-5)}
-            aria-label="Subtract 5 minutes"
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-[16px] text-white/60 transition-colors hover:border-gold/40 hover:text-white"
-          >
-            −
-          </button>
-          <label className="flex items-center gap-1.5 rounded-xl border hairline bg-space/60 px-2.5 py-1.5 focus-within:border-gold/60">
-            <input
-              value={minText}
-              onChange={(e) => setMinText(e.target.value.replace(/\D/g, "").slice(0, 3))}
-              onBlur={() => setMinText(String(minutes))}
-              inputMode="numeric"
-              aria-label="Session length in minutes"
-              className="w-9 bg-transparent text-right font-mono text-[15px] tabular-nums text-white focus:outline-none"
-            />
-            <span className="font-mono text-[11px] text-white/45">min</span>
-          </label>
-          <button
-            type="button"
-            onClick={() => step(5)}
-            aria-label="Add 5 minutes"
-            className="flex h-8 w-8 items-center justify-center rounded-full border border-white/10 text-[16px] text-white/60 transition-colors hover:border-gold/40 hover:text-white"
-          >
-            +
-          </button>
+      <div className="app-panel">
+        <div className="flex items-center gap-2">
+          <h4 className="app-panel-h flex-1">LOG WORKOUT</h4>
+          <span aria-hidden className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-[10px] border-[0.5px] border-[#d4af37]/45 bg-white/[0.04]">
+            <MicIcon size={24} />
+          </span>
         </div>
+        <p className="mb-2 font-appmono text-[10.5px] text-[#aab5c6]">Say it: &quot;Cardio, 30 minutes, medium&quot;</p>
+
+        <div role="radiogroup" aria-label="Workout type" className="mb-3 flex gap-[2px] rounded-full border border-[#d4af37]/[0.22] bg-white/[0.04] p-[3px]">
+          {(["RESISTANCE", "CARDIO"] as const).map((k) => (
+            <button
+              key={k}
+              type="button"
+              role="radio"
+              aria-checked={kind === k}
+              onClick={() => {
+                setKind(k);
+                touch();
+              }}
+              className={`flex-1 rounded-full px-1 py-[9px] font-app text-[11px] tracking-[0.1em] transition-colors ${
+                kind === k ? "app-gold-pill font-medium" : "text-[#93a6c6] hover:text-[#eaeef6]"
+              }`}
+            >
+              {k}
+            </button>
+          ))}
+        </div>
+
+        <label className="mb-3 block">
+          <span className="mb-[5px] block font-app text-[9.5px] tracking-[0.14em] text-[#93a6c6]">DURATION (MIN)</span>
+          <input
+            value={minText}
+            onChange={(e) => {
+              setMinText(e.target.value.replace(/\D/g, "").slice(0, 3));
+              touch();
+            }}
+            onFocus={(e) => e.currentTarget.select()}
+            onBlur={() => setMinText(minutes ? String(minutes) : "")}
+            inputMode="numeric"
+            aria-label="Duration in minutes"
+            className="w-full rounded-lg border border-[#d4af37]/[0.22] bg-white/[0.03] px-[11px] py-[9px] font-appmono text-[15px] text-white tabular-nums outline-none focus:border-[#f0d878]"
+          />
+        </label>
+
+        <div className="mb-3">
+          <div className="mb-2 font-app text-[11.5px] tracking-[0.12em] text-[#93a6c6]">INTENSITY</div>
+          <div role="radiogroup" aria-label="Intensity" className="flex gap-1.5">
+            {LEVELS.map((lv) => (
+              <button
+                key={lv}
+                type="button"
+                role="radio"
+                aria-checked={level === lv}
+                onClick={() => {
+                  setLevel(lv);
+                  touch();
+                }}
+                className={`flex-1 rounded-lg border px-1 py-2.5 font-app text-[11px] font-medium tracking-[0.06em] transition-colors ${
+                  level === lv ? "border-[#f0d878] bg-[#d4af37] text-white" : "border-[#d4af37]/20 bg-[#1b3152] text-[#aab5c6] hover:text-white"
+                }`}
+              >
+                {lv}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {justLogged && <p className="mb-3 text-center font-appmono text-[12px] font-bold tracking-[0.1em] text-[#8fe0b3]">WORKOUT LOGGED</p>}
+        <button
+          type="button"
+          onClick={log}
+          disabled={minutes <= 0}
+          className="block w-full rounded-[10px] bg-[#d4af37] p-[13px] font-app text-[12.5px] font-bold tracking-[0.08em] text-[#0b0b0b] transition-colors active:bg-[#f0d878] disabled:cursor-not-allowed disabled:border disabled:border-[#3a4049] disabled:bg-[#2c313a] disabled:text-[#7a838e]"
+        >
+          LOG WORKOUT
+        </button>
       </div>
 
-      <div className="mt-4 font-mono text-[10px] tracking-[0.16em] text-white/40">INTENSITY</div>
-      <div className="mt-2 flex gap-2">
-        {INTENSITY.map((lv, i) => (
-          <button
-            key={lv.name}
-            aria-pressed={i === effort}
-            onClick={() => setEffort(i)}
-            className={`flex-1 rounded-full border py-2.5 text-[13px] transition-colors ${
-              i === effort ? "border-gold bg-gold/15 text-champagne" : "border-white/10 text-white/50 hover:text-white/80"
-            }`}
-          >
-            {lv.name}
-          </button>
-        ))}
-      </div>
-
-      <div className="mt-5 space-y-2 font-mono text-[13px] tabular-nums">
-        <div className="flex justify-between text-white/45">
-          <span>Gross estimate</span>
-          <span className="line-through decoration-coral/60">{gross} kcal</span>
+      {logged.length > 0 && (
+        <div className="app-panel mt-3">
+          <h4 className="app-panel-h">LOGGED WORKOUTS</h4>
+          <ul>
+            {logged.map((w, i) => (
+              <li key={i} className="flex items-center justify-between border-b border-[#d4af37]/[0.12] py-2.5 last:border-b-0">
+                <span className="font-app text-[13px] text-[#eaeef6]">{w.kind === "RESISTANCE" ? "Resistance training" : "Cardio"}</span>
+                <span className="font-appmono text-[12px] tabular-nums text-[#f0d878]">
+                  {w.min} min · {w.level.charAt(0) + w.level.slice(1).toLowerCase()}
+                </span>
+              </li>
+            ))}
+          </ul>
         </div>
-        <div className="flex justify-between text-white/45">
-          <span>Resting burn removed</span>
-          <span>−{gross - net} kcal</span>
-        </div>
-        <div className="flex justify-between border-t border-white/10 pt-2 text-[15px] text-gold">
-          <span>Net credited</span>
-          <motion.span key={net} initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }}>
-            +{net} kcal
-          </motion.span>
-        </div>
-      </div>
+      )}
     </div>
   );
 }
 
 // ── Weekly Directive: the weekly briefing, the new calorie target, and the DEFICIT ALLOCATION card ──
 // Matches the app as of 2026-10-18: the owner's plain weekly wording, the week's full change in gold, and Gemini's
-// "Compressed Cockpit" sliders (one UNLOCK / SAVE pill, values on the label lines, a BASELINE / TARGET footer).
+// "Compressed Cockpit" sliders (one UNLOCK / SAVE pill, values on the label lines, a BASELINE / TARGET footer), drawn
+// with the app's own slider (rail, fill, 21 ticks, knurled gold thumb).
 const WEEKLY_CUT = 150;
 const LAST_WEEK_TARGET = 2300;
 // The app counts a step as body weight in lb x 0.00015 kcal (the extra cost above resting); this example is a 180 lb person. Shown to the nearest 50.
@@ -428,23 +440,13 @@ function DirectivePreview() {
   const steps = Math.round(activity / KCAL_PER_STEP / 50) * 50;
   // Only the FOOD part comes off what you eat; the ACTIVITY part is walked.
   const target = LAST_WEEK_TARGET - food;
-  const lever = (label: string, value: number, onChange: (v: number) => void, aria: string) => (
-    <div className="mt-3">
-      <div className="flex items-baseline justify-between">
-        <span className="text-[12px] font-bold text-white">{label}</span>
-        <span className="font-mono text-[14px] tabular-nums text-gold">−{value} KCAL</span>
+  const lever = (label: string, value: number, onChange: (v: number) => void, aria: string, first: boolean) => (
+    <div className={first ? "pt-1" : "mt-4 border-t border-[#d4af37]/[0.14] pt-4"}>
+      <div className="mb-1 flex items-baseline justify-between">
+        <span className="font-app text-[12px] font-bold text-white">{label}</span>
+        <span className="font-appmono text-[14px] tabular-nums text-[#C5A059]">−{value} KCAL</span>
       </div>
-      <input
-        type="range"
-        min={0}
-        max={WEEKLY_CUT}
-        step={5}
-        value={value}
-        disabled={!unlocked}
-        onChange={(e) => onChange(Number(e.target.value))}
-        aria-label={aria}
-        className="mt-1.5 w-full cursor-pointer accent-gold disabled:cursor-not-allowed"
-      />
+      <AppSlider value={value} min={0} max={WEEKLY_CUT} step={5} disabled={!unlocked} onChange={onChange} label={aria} valueText={`${value} kcal a day`} />
     </div>
   );
   return (
@@ -465,36 +467,46 @@ function DirectivePreview() {
         </span>
       </div>
 
-      <div className="mt-4 rounded-xl border border-[#1E356D] bg-[#0C1938] px-3.5 py-3">
-        <div className="flex items-center justify-between">
-          <span className="font-mono text-[11px] font-bold tracking-[0.12em] text-steel">DEFICIT ALLOCATION</span>
+      <div className="app-panel mt-4">
+        <div className="mb-2 flex min-h-[28px] items-center justify-between gap-2">
+          <span className="font-appmono text-[10px] tracking-[0.16em] text-[#d4af37]">DEFICIT ALLOCATION</span>
           <button
             type="button"
             onClick={() => setUnlocked((v) => !v)}
             aria-label={unlocked ? "Save the allocation and lock the sliders" : "Unlock the deficit allocation sliders"}
-            className={`min-w-[92px] rounded-full border px-3 py-1.5 font-mono text-[10px] font-bold tracking-[0.1em] transition-colors ${
-              unlocked ? "border-gold bg-gold text-[#0A1128]" : "border-[#2A437E] bg-[#14244D] text-steel"
+            className={`inline-flex min-w-[92px] items-center justify-center gap-1.5 rounded-full border px-3 py-1.5 font-appmono text-[10px] font-bold tracking-[0.1em] transition-colors ${
+              unlocked ? "border-[#C5A059] bg-[#C5A059] text-[#0A1128]" : "border-[#2A437E] bg-[#14244D] text-[#8E9EB5]"
             }`}
           >
-            {unlocked ? "✓ SAVE" : "UNLOCK"}
+            {unlocked ? (
+              "✓ SAVE"
+            ) : (
+              <>
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#8E9EB5" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
+                  <rect x="5" y="11" width="14" height="9" rx="2" />
+                  <path d="M8 11V7a4 4 0 0 1 7.5-2" />
+                </svg>
+                UNLOCK
+              </>
+            )}
           </button>
         </div>
-        <div className="mt-1 border-b border-[#1E356D] pb-2.5 font-mono text-[10px] font-bold tracking-[0.08em] text-gold">
+        <div className="mb-3 border-b border-[#1E356D] pb-3 font-appmono text-[10px] font-bold tracking-[0.08em] text-[#C5A059]">
           ADDED THIS WEEK: −{WEEKLY_CUT} KCAL/DAY
         </div>
 
-        <div className={unlocked ? "" : "opacity-40"}>
-          {lever("FOOD", food, setFood, "Calories cut from food each day")}
-          {lever("ACTIVITY", activity, (v) => setFood(WEEKLY_CUT - v), "Calories burned through added daily steps")}
-          <div className="mt-1 text-[11.5px] text-champagne">+{steps.toLocaleString("en-US")} · Added daily steps above baseline</div>
+        <div className={`transition-opacity ${unlocked ? "" : "opacity-40"}`}>
+          {lever("FOOD", food, setFood, "Calories cut from food each day", true)}
+          {lever("ACTIVITY", activity, (v) => setFood(WEEKLY_CUT - v), "Calories burned through added daily steps", false)}
+          <p className="mt-2 font-app text-[12.5px] tracking-[0.02em] text-[#f0d878]">+{steps.toLocaleString("en-US")} · Added daily steps above baseline</p>
         </div>
 
-        <div className="mt-3 flex items-center justify-between border-t border-[#1E356D] pt-3 font-mono text-[10px] font-bold tracking-[0.1em] text-steel">
+        <div className="mt-3.5 flex items-center justify-between gap-2 border-t border-[#1E356D] pt-3.5 font-appmono text-[10px] font-bold tracking-[0.1em] text-[#8E9EB5]">
           <span>
-            BASELINE: <span className="text-[13px] font-normal tracking-normal text-white">{BASELINE_STEPS.toLocaleString("en-US")}</span>
+            BASELINE: <span className="text-[13px] font-normal tracking-normal text-white tabular-nums">{BASELINE_STEPS.toLocaleString("en-US")}</span>
           </span>
           <span>
-            TARGET: <span className="text-[13px] tracking-normal text-gold">{(BASELINE_STEPS + steps).toLocaleString("en-US")}</span>
+            TARGET: <span className="text-[13px] tracking-normal text-[#C5A059] tabular-nums">{(BASELINE_STEPS + steps).toLocaleString("en-US")}</span>
           </span>
         </div>
       </div>
