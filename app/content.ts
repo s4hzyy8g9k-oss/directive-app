@@ -55,7 +55,7 @@ export const traps = {
     {
       kind: "calories" as const,
       title: "Your watch can overestimate your burn",
-      body: "An example: a watch logs a 60-minute lift as 600 kcal. Take out what you would have burned at rest anyway, and the time between sets, and the extra is far smaller: about 225 kcal in this example. Eat back the difference and your deficit shrinks.",
+      body: "An example: a watch logs a 60-minute medium lift as 420 kcal. About 195 kcal of that you would have burned at rest anyway, so the workout itself added about 225 kcal. Eat back the full 420 and your deficit shrinks.",
     },
     {
       kind: "water" as const,

@@ -435,7 +435,8 @@ const BASELINE_STEPS = 6500;
 
 function DirectivePreview() {
   const [food, setFood] = useState(95); // activity is always the other part of the 150
-  const [unlocked, setUnlocked] = useState(false);
+  // Owner, 2026-10-18, 21:49 UTC: the demo opens UNLOCKED, so the gold sliders and their detail show.
+  const [unlocked, setUnlocked] = useState(true);
   const activity = WEEKLY_CUT - food;
   const steps = Math.round(activity / KCAL_PER_STEP / 50) * 50;
   // Only the FOOD part comes off what you eat; the ACTIVITY part is walked.
@@ -510,7 +511,7 @@ function DirectivePreview() {
           </span>
         </div>
       </div>
-      <div className="mt-2 text-[10px] text-white/35">Tap UNLOCK, then move either slider and the other adjusts. Steps are estimated from body weight.</div>
+      <div className="mt-2 text-[10px] text-white/35">Move either slider and the other adjusts. SAVE locks them. Steps are estimated from body weight.</div>
     </div>
   );
 }

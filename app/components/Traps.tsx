@@ -6,8 +6,8 @@ function CaloriesViz() {
     <div className="w-full space-y-3">
       <div>
         <div className="flex justify-between text-[12px] text-white/50">
-          <span>Your watch</span>
-          <span className="font-mono text-white/70">600 kcal</span>
+          <span>Gross estimate (your watch)</span>
+          <span className="font-mono text-white/70">420 kcal</span>
         </div>
         <div className="mt-1.5 h-2.5 rounded-full bg-white/[0.06]">
           <div className="h-full w-full rounded-full bg-gradient-to-r from-steel/40 to-steel/80" />
@@ -15,14 +15,14 @@ function CaloriesViz() {
       </div>
       <div>
         <div className="flex justify-between text-[12px] text-white/50">
-          <span>Directive, net of resting burn</span>
+          <span>Net credited by Directive</span>
           <span className="font-mono text-gold">225 kcal</span>
         </div>
         <div className="mt-1.5 h-2.5 rounded-full bg-white/[0.06]">
-          <div className="h-full w-[37.5%] rounded-full bg-gradient-to-r from-[#A8862A] to-champagne" />
+          <div className="h-full w-[53.6%] rounded-full bg-gradient-to-r from-[#A8862A] to-champagne" />
         </div>
       </div>
-      <div className="text-[12px] text-coral/80">375 kcal of difference in this example</div>
+      <div className="text-[12px] text-coral/80">195 kcal of resting burn removed in this example</div>
     </div>
   );
 }
