@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { EMAIL_RE, mailConfig, rateLimited, sendMail } from "@/lib/mail";
 import { saveCharterApplication, supabaseConfigured } from "@/lib/supabase";
+import { CHARTER_REPLY } from "@/lib/charterReply";
 
 export const runtime = "nodejs";
 
@@ -78,6 +79,15 @@ export async function POST(req: NextRequest) {
   if (emailed.status === "rejected") console.error("Charter email failed:", emailed.reason);
 
   if (saved.status === "fulfilled" || emailed.status === "fulfilled") {
+    // The automatic reply to the applicant (owner, 2026-10-18). Best effort: a failure never fails the application.
+    // Set CHARTER_AUTOREPLY=off in Vercel to stop it without a code change.
+    if (process.env.CHARTER_AUTOREPLY !== "off") {
+      try {
+        await sendMail({ to: email, subject: CHARTER_REPLY.subject, text: CHARTER_REPLY.text, replyTo: CHARTER_REPLY.replyTo() });
+      } catch (e) {
+        console.error("Charter auto-reply failed:", e);
+      }
+    }
     return NextResponse.json({ ok: true });
   }
   return NextResponse.json(
