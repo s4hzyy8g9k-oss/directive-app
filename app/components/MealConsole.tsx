@@ -344,7 +344,7 @@ export default function MealConsole() {
 
       {mode === "precision" && (
         <p className="mt-2.5 text-center font-app text-[11px] leading-snug text-[#93a6c6]">
-          Save a meal once, then add it with one tap. Or just say &quot;two eggs, toast and coffee&quot;, and it picks the toast you log most often.
+          Save a meal once, then add it with one tap. Or build it on the Meals tab by saying &quot;two eggs, toast and coffee&quot;, and it picks the toast you log most often.
         </p>
       )}
     </div>
