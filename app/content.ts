@@ -28,7 +28,7 @@ export const hero = {
 export const demoSteps = [
   {
     title: "Sixteen weeks of weigh-ins",
-    body: "Every morning reading, exactly as your scale reported it.",
+    body: "Every morning reading, exactly as your scale reported it, noise and all.",
   },
   {
     title: "Tuesday: up 2.8 lb overnight",
@@ -36,11 +36,11 @@ export const demoSteps = [
   },
   {
     title: "Directive flags it as likely water",
-    body: "Salt, a hard leg day or, for women, the menstrual cycle. The cyan band is the app's estimate of fluid, not fat.",
+    body: "Salt, a hard leg day or, for women, the menstrual cycle. A recursive mathematical algorithm, designed to remove measurement noise, reads the jump as fluid, not fat: the cyan band.",
   },
   {
     title: "Your real trend is intact",
-    body: "Estimated dry weight: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
+    body: "The algorithm's estimate of your actual weight, adjusted for restaurant meals and, if you track a cycle, the days before your period: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
   },
   {
     title: "Projected touchdown",
