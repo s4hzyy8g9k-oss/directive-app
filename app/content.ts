@@ -18,7 +18,7 @@ export const hero = {
   kicker: "2026 Charter intake",
   headline: "Most diets don't fail on willpower. They fail on bad math.",
   subhead:
-    "Three measurement errors can quietly undo months of good work. Directive separates likely water from your real trend, counts only the calories a workout adds beyond rest, and lets you log a meal in seconds.",
+    "Three measurement errors can quietly undo months of good work. Directive separates water weight from your real trend, counts only the calories a workout burns beyond your resting metabolic rate, and lets you log a meal in seconds.",
   primaryCta: "Apply for Charter access",
   secondaryCta: "See the app",
   sampleNote: "Illustration with sample data.",
@@ -50,22 +50,22 @@ export const demoSteps = [
 
 export const traps = {
   heading: "Three measurement errors. Every one of them fixable.",
-  intro: "None of these are willpower failures. They're bad inputs — and they compound against each other.",
+  intro: "None of these are willpower failures. They're bad inputs, and they compound.",
   items: [
     {
       kind: "calories" as const,
       title: "Your watch can overestimate your burn",
-      body: "An example: a watch logs a 60-minute medium lift as 420 kcal. About 195 kcal of that you would have burned at rest anyway, so the workout itself added about 225 kcal. Eat back the full 420 and your deficit shrinks.",
+      body: "An example: a watch logs a 60-minute medium lift as 420 kcal. About 80 kcal of that you would have burned at rest anyway, and the watch also counts the rest between sets as hard work, so the workout itself burned about 205 kcal beyond your resting metabolic rate. Eat back the full 420 and your deficit shrinks.",
     },
     {
       kind: "water" as const,
       title: "That overnight spike isn't fat",
-      body: "Salt, heavy training, or hormonal shifts can move the scale by several pounds overnight, and it is hard to tell water from fat by eye. Directive's trend filter separates likely water swings from your underlying trend, so you can see a spike for what it is before you cut food to fix it.",
+      body: "Salt, heavy training, or hormonal shifts can move the scale by several pounds overnight, and it is hard to distinguish water weight from fat by eye. Directive's trend filter separates likely water swings from your underlying trend, so you can see a spike for what it is before you cut calories to fix it.",
     },
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require a digital prison. Log a meal by hand, a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. Save a meal you eat often, like your usual breakfast, and add the whole thing with one tap. Or just say it.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require being locked in a digital prison. Log a meal by hand: a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. Save a meal you eat often, like your usual breakfast, and add the whole thing with one tap. Or just say it.",
     },
   ],
 };

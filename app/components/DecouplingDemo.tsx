@@ -16,7 +16,8 @@ import {
 } from "@/lib/telemetry";
 import { demoSteps } from "@/app/content";
 
-const DURATIONS = [4800, 2800, 3000, 3200, 4400];
+// Owner, 2026-10-19, 00:44 UTC: about half the speed, so people can watch the chart and read the text below.
+const DURATIONS = [9600, 5600, 6000, 6400, 8800];
 const Y_MIN = 166;
 const Y_MAX = 210;
 const MONTHS: [number, string][] = [
@@ -204,7 +205,7 @@ export default function DecouplingDemo() {
                 animate={{
                   width: reduce ? todayX + 12 : !started ? G.l : phase === 0 ? [G.l, todayX + 12] : todayX + 12,
                 }}
-                transition={{ duration: phase === 0 && started ? 4.2 : 0, ease: "easeInOut" }}
+                transition={{ duration: phase === 0 && started ? 8.4 : 0, ease: "easeInOut" }}
               />
             </clipPath>
           </defs>
@@ -232,7 +233,7 @@ export default function DecouplingDemo() {
           </text>
 
           {/* prescribed runway (phase 4) */}
-          <motion.g initial={false} animate={{ opacity: phase >= 4 ? 1 : 0 }} transition={{ duration: 0.8 }}>
+          <motion.g initial={false} animate={{ opacity: phase >= 4 ? 1 : 0 }} transition={{ duration: 1.6 }}>
             <path d={paths.corridor} fill="#D4AF37" fillOpacity="0.13" />
             <line
               x1={x(0)}
@@ -260,7 +261,7 @@ export default function DecouplingDemo() {
             fill="url(#dd-cyan)"
             initial={false}
             animate={{ opacity: phase >= 2 ? 1 : 0 }}
-            transition={{ duration: 0.9 }}
+            transition={{ duration: 1.8 }}
           />
 
           {/* raw scale dots */}
@@ -288,7 +289,7 @@ export default function DecouplingDemo() {
             filter="url(#dd-glow)"
             initial={false}
             animate={{ pathLength: phase >= 3 ? 1 : 0, opacity: phase >= 3 ? 1 : 0 }}
-            transition={{ duration: phase >= 3 ? 1.8 : 0.3, ease: "easeInOut" }}
+            transition={{ duration: phase >= 3 ? 3.6 : 0.3, ease: "easeInOut" }}
           />
           <motion.path
             d={paths.gold}
@@ -298,7 +299,7 @@ export default function DecouplingDemo() {
             strokeLinecap="round"
             initial={false}
             animate={{ pathLength: phase >= 3 ? 1 : 0, opacity: phase >= 3 ? 1 : 0 }}
-            transition={{ duration: phase >= 3 ? 1.8 : 0.3, ease: "easeInOut" }}
+            transition={{ duration: phase >= 3 ? 3.6 : 0.3, ease: "easeInOut" }}
           />
 
           {/* today's spike */}

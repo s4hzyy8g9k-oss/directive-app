@@ -22,19 +22,23 @@ function CaloriesViz() {
       </div>
       <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
-          NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">54%</span>
+          NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">49%</span>
         </span>
         <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#f0d878]">
-          225<span className="text-[15px] font-medium text-[#eaeef6]"> / 420 kcal</span>
+          205<span className="text-[15px] font-medium text-[#eaeef6]"> / 420 kcal</span>
         </span>
       </div>
       <div className="app-reserve-bar">
-        <div className="app-reserve-fill" style={{ width: "53.6%" }} />
+        <div className="app-reserve-fill" style={{ width: "48.8%" }} />
       </div>
       <div className="mt-[18px] space-y-3">
         {row("YOUR WATCH (GROSS)", "420 kcal", 100, "bg-gradient-to-r from-[#3b4560] to-[#93a6c6]", "text-[#eaeef6]")}
-        {row("RESTING BURN", "−195 kcal", 46.4, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
-        {row("NET CREDITED", "225 kcal", 53.6, "app-mp-fill", "text-[#f0d878]")}
+        {/* 2026-10-19 (owner: check the maths): the app's own figures for a 180 lb person, 60 min of weights at 3.5 METs:
+            resting 1 MET x 81.6 kg x 1 h = 82 kcal; net (3.5 - 1) x 81.6 = 204 kcal (src/utils/NetMet.ts); the rest of a
+            watch's 420 is time between sets counted as work. */}
+        {row("RESTING BURN", "−80 kcal", 19, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+        {row("REST BETWEEN SETS", "−135 kcal", 32.1, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+        {row("NET CREDITED", "205 kcal", 48.8, "app-mp-fill", "text-[#f0d878]")}
       </div>
     </div>
   );
