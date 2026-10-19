@@ -407,6 +407,22 @@ export default function DecouplingDemo() {
           </motion.div>
         </AnimatePresence>
       </div>
+      {/* constant Kalman note: lights up while the trend line is drawn (phase 3) */}
+      <div className="mt-2 border-t border-white/[0.06] px-2 pt-2 text-center text-[11.5px] leading-snug text-steel sm:text-[12.5px]">
+        <motion.span
+          className="font-medium text-gold"
+          initial={false}
+          animate={
+            phase === 3 && !reduce
+              ? { opacity: [0.55, 1, 0.55], textShadow: ["0 0 0px rgba(212,175,55,0)", "0 0 10px rgba(212,175,55,0.75)", "0 0 0px rgba(212,175,55,0)"] }
+              : { opacity: 0.85, textShadow: "0 0 0px rgba(212,175,55,0)" }
+          }
+          transition={phase === 3 && !reduce ? { duration: 1.8, repeat: Infinity, ease: "easeInOut" } : { duration: 0.6 }}
+        >
+          Kalman filter:
+        </motion.span>{" "}
+        a recursive mathematical algorithm designed to remove measurement noise and better estimate true body weight.
+      </div>
     </div>
   );
 }
