@@ -144,8 +144,9 @@ export const stations = {
     {
       id: "cruise",
       // Renamed 2026-10-12: "Cruising Altitude" is not a name the app shows. Cruise Control is the planned pause.
-      name: "Runway and Landing",
-      body: "Runway management. A pace you choose for your cut, planned pauses at maintenance with Cruise Control, and after touchdown a six-week reverse diet under a Rebound Shield designed to help keep the weight from climbing back.",
+      // Owner, 2026-10-19, 00:53 UTC: renamed (it was "Runway and Landing"), and the terms defined for the reader.
+      name: "Velocity, Touchdown and Beyond",
+      body: "Velocity is the rate of weight loss you choose for yourself. Touchdown is the day you reach your goal weight. Rebound, regaining weight after a diet, is what every dieter wants to avoid, so after touchdown Directive runs a six-week reverse diet that steps your calories back up, designed to help limit it. For the longer term, Cruise Control holds your calories at maintenance to help you keep the weight you have reached.",
     },
     {
       id: "burn",
