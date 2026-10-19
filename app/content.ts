@@ -156,7 +156,7 @@ export const stations = {
     {
       id: "directive",
       name: "Weekly Directive",
-      body: "Every Sunday, Directive reviews your week, updates its estimate of your daily burn and tells you plainly whether your calories change. When they do, you choose how to take the change: eat a little less, walk a little more, or a mix.",
+      body: "Every Sunday, an audit reviews your week, updates your maintenance estimate and tells you plainly whether or not your calories need to change. When they do, you choose how to make the change: eat a little less, walk a little more, or a mix that you determine.",
     },
   ],
 };
