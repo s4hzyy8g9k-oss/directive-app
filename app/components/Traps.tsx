@@ -83,7 +83,9 @@ export default function Traps() {
               <div key={t.title} className="glass grid items-center gap-6 rounded-[20px] p-6 sm:grid-cols-[1fr_340px] sm:gap-12 sm:p-9">
                 <div>
                   <h3 className="font-display text-[27px] leading-tight text-white sm:text-[32px]">{t.title}</h3>
-                  <p className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-white/60">{t.body}</p>
+                  {t.body.split("\n\n").map((para, pi) => (
+                    <p key={pi} className="mt-3 max-w-[60ch] text-[15px] leading-relaxed text-white/60">{para}</p>
+                  ))}
                 </div>
                 <div className="flex items-center rounded-2xl border border-white/[0.05] bg-space/40 p-5">
                   <Viz />

@@ -65,7 +65,7 @@ export const traps = {
     {
       kind: "scale" as const,
       title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require being locked in a digital prison. Log a meal by hand: a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch. Save a meal you eat often, like your usual breakfast, and add the whole thing with one tap. Or just say it.",
+      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require being locked in a digital prison. Log a meal by hand: a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch.\n\nOr try Precision tracking: save a meal you eat often and add it with one tap. Take a snapshot of a recipe, tweak it if you like, and Directive works out the macros for a serving, so you can eat it all week without complicated logging. Or just say what you ate.",
     },
   ],
 };
@@ -76,7 +76,7 @@ export const pillars = {
   items: [
     {
       title: "The Event Allowance",
-      body: "Real life happens. Instead of blowing your diet on a Saturday night and staring at a red failure screen, schedule an Event Allowance. Directive takes a small amount off the days before and adds it to your event day, so the week still adds up. Your calorie floors always come first.",
+      body: "Real life happens. Instead of blowing your diet on a Saturday night and staring at a red failure notice, schedule an Event Allowance. Directive takes a small amount off the days before and adds it to your event day, so the week still adds up. Your calorie floors always come first.",
     },
     {
       title: "The Rebound Shield",
@@ -89,7 +89,7 @@ export const pillars = {
     {
       title: "Built for adults, not for streaks",
       // Reworded 2026-10-12 (owner): the app has no late-evening badge and no standby mode. It sends no reminders at all.
-      body: "No guilt, no streaks, no mid-day nags asking if you drank water. Directive sends no reminders at all. Miss a day, or take a week off, and nothing scolds you. Log again and it picks up from where you are.",
+      body: "No guilt, no streaks, no mid-day nags asking if you drank water. Directive sends no reminders at all. Miss a day, or take a week off, and nothing scolds you. Log in again with your updated weight and it picks up from where you left off.",
     },
     {
       title: "Bring your numbers to your appointment",
@@ -97,7 +97,7 @@ export const pillars = {
     },
     {
       title: "The Afterburner Protocol",
-      body: "For deadline-driven targets: a photo shoot, an event, a hard calendar date. A temporary, aggressive deficit for a short push, capped at 14 days. Directive tells you what you are trading for the speed, then leaves the decision to you.",
+      body: "For deadline-driven targets, like a wedding, a beach vacation or another immovable date, when you need to be more aggressive to hit that target. A temporary, aggressive deficit for a short push, capped at 14 days. Directive tells you what you are trading for the speed, then leaves the decision to you.",
     },
   ],
 };
@@ -111,13 +111,13 @@ export const shields = {
     {
       name: "Scale Shield",
       when: "The first 10 days after touchdown",
-      body: "The first 10 days after touchdown, when water-weight swings are expected and the app reminds you to trust the trend line.",
+      body: "The first 10 days after touchdown, when you have reached your goal weight and water-weight swings are expected. The app reminds you to trust the trend line.",
     },
     {
       name: "Fluid Shield",
       // Owner, 2026-10-12: say plainly that this one is for women.
-      when: "For women: the week before a period",
-      body: "For women who track their menstrual cycle. In the week before a period is due, the app expects water retention and treats those weigh-ins as less reliable.",
+      when: "For women: the week before your period",
+      body: "For women who track their menstrual cycle. In the week before your period is due, the app expects water retention and treats those weigh-ins as less reliable.",
     },
     {
       name: "Rebound Shield",
@@ -139,7 +139,7 @@ export const stations = {
     {
       id: "mission",
       name: "Mission Control",
-      body: "Your daily instrument panel. Scale readings with likely water separated out show your underlying trend, alongside your estimated daily burn, today's calorie target, dials for velocity, adherence and energy balance, and your distance to target.",
+      body: "Your daily instrument panel. Scale readings with likely water weight separated out show your underlying trend, alongside your estimated daily burn, today's calorie target, dials for velocity, adherence and energy balance, and your distance to target.",
     },
     {
       id: "cruise",
