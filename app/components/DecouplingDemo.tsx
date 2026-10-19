@@ -253,7 +253,7 @@ export default function DecouplingDemo() {
             <line x1={endX - 16} x2={endX + 16} y1={endY} y2={endY} stroke="#D4AF37" strokeOpacity="0.6" />
             <line x1={endX} x2={endX} y1={endY - 16} y2={endY + 16} stroke="#D4AF37" strokeOpacity="0.6" />
             <text x={endX - 18} y={endY + (compact ? 38 : 30)} textAnchor="end" fontSize={G.fs} fill="#F1DC9A">
-              170.0 lb by Nov 15
+              170.0 lb · Nov 15
             </text>
           </motion.g>
 
