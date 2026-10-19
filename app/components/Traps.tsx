@@ -20,7 +20,16 @@ function CaloriesViz() {
         <h4 className="app-panel-h">60-MINUTE LIFT</h4>
         <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#f0d878]">MEDIUM</span>
       </div>
-      <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
+      {/* Owner, 2026-10-19, 00:57 UTC: the watch's gross on top, what is taken off under it, and the thick NET CREDITED
+          bar once, at the bottom. 2026-10-19 (owner: check the maths): the app's figures for a 180 lb person, 60 min of
+          weights at 3.5 METs: resting 1 MET x 81.6 kg x 1 h = 82 kcal; net (3.5 - 1) x 81.6 = 204 kcal
+          (src/utils/NetMet.ts); the rest of the watch's 420 is time between sets counted as work. */}
+      <div className="space-y-3">
+        {row("YOUR WATCH (GROSS)", "420 kcal", 100, "bg-gradient-to-r from-[#3b4560] to-[#93a6c6]", "text-[#eaeef6]")}
+        {row("RESTING BURN", "−80 kcal", 19, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+        {row("REST BETWEEN SETS", "−135 kcal", 32.1, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+      </div>
+      <div className="mt-[18px] mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
           NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">49%</span>
         </span>
@@ -30,15 +39,6 @@ function CaloriesViz() {
       </div>
       <div className="app-reserve-bar">
         <div className="app-reserve-fill" style={{ width: "48.8%" }} />
-      </div>
-      <div className="mt-[18px] space-y-3">
-        {row("YOUR WATCH (GROSS)", "420 kcal", 100, "bg-gradient-to-r from-[#3b4560] to-[#93a6c6]", "text-[#eaeef6]")}
-        {/* 2026-10-19 (owner: check the maths): the app's own figures for a 180 lb person, 60 min of weights at 3.5 METs:
-            resting 1 MET x 81.6 kg x 1 h = 82 kcal; net (3.5 - 1) x 81.6 = 204 kcal (src/utils/NetMet.ts); the rest of a
-            watch's 420 is time between sets counted as work. */}
-        {row("RESTING BURN", "−80 kcal", 19, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
-        {row("REST BETWEEN SETS", "−135 kcal", 32.1, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
-        {row("NET CREDITED", "205 kcal", 48.8, "app-mp-fill", "text-[#f0d878]")}
       </div>
     </div>
   );
