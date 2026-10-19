@@ -44,7 +44,7 @@ export const demoSteps = [
   },
   {
     title: "Projected touchdown",
-    body: "Example: at this pace, 170.0 lb around Nov 15. A projection, not a promise.",
+    body: "At this pace, touchdown at 170.0 lb is projected for November 15.",
   },
 ];
 

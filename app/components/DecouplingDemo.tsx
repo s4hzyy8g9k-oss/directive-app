@@ -17,7 +17,9 @@ import {
 import { demoSteps } from "@/app/content";
 
 // Owner, 2026-10-19, 00:44 UTC: about half the speed, so people can watch the chart and read the text below.
-const DURATIONS = [9600, 5600, 6000, 6400, 8800];
+// Owner, 2026-10-19, 03:03 UTC: steps 1 and 2 are right; steps 3 and 4 carry more to read, so they get time in
+// proportion to their words (about the pace of step 2); step 5 is shorter now.
+const DURATIONS = [9600, 5600, 11500, 12500, 7200];
 const Y_MIN = 166;
 const Y_MAX = 210;
 const MONTHS: [number, string][] = [
@@ -177,7 +179,7 @@ export default function DecouplingDemo() {
           viewBox={`0 0 ${G.vw} ${G.vh}`}
           className="block h-auto w-full touch-none"
           role="img"
-          aria-label="Animated illustration with sample data: raw scale readings spike 2.8 pounds overnight, Directive flags the spike as likely water, and shows a smooth trend with an example projection of 170 pounds around November 15."
+          aria-label="Animated illustration with sample data: raw scale readings spike 2.8 pounds overnight, Directive flags the spike as likely water, and shows a smooth trend with touchdown at 170 pounds projected for November 15."
         >
           <defs>
             <linearGradient id="dd-gold" x1="0" x2="1" y1="0" y2="0">
