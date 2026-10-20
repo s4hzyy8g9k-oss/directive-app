@@ -36,11 +36,11 @@ export const demoSteps = [
   },
   {
     title: "Directive flags it as likely water",
-    body: "Salt, a hard leg day or, for women, the menstrual cycle. A recursive mathematical algorithm, designed to remove measurement noise, reads the jump as fluid, not fat: the cyan band.",
+    body: "Salt, a hard leg day or your cycle. Our smoothing algorithm reads the jump as water, not fat.",
   },
   {
     title: "Your real trend is intact",
-    body: "The algorithm's estimate of your actual weight, adjusted for restaurant meals and, if you track a cycle, the days before your period: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
+    body: "Smoothed and predicted from every weigh-in: 183.1 lb, within 0.8 lb of plan. Nothing to fix.",
   },
   {
     title: "Projected touchdown",
