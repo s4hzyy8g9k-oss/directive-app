@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import Starfield from "./components/Starfield";
+import { OG_IMAGE, SITE_NAME, SITE_URL } from "./seo";
 
 // Fonts are served from app/fonts (the same Google Fonts files, latin subset) so the build doesn't need to reach
 // Google Fonts. Vercel builds were failing on "Failed to fetch font file" (2026-11-03 onward).
@@ -28,14 +29,15 @@ export const metadata: Metadata = {
     title: "Directive: Mission Control for your body",
     description: "The scale says you gained 2.8 pounds. Your body says you didn't.",
     type: "website",
-    siteName: "Directive",
-    images: [{ url: "/brand/banner.jpg", width: 1250, height: 378 }],
+    siteName: SITE_NAME,
+    locale: "en_US",
+    images: [OG_IMAGE],
   },
   twitter: {
     card: "summary_large_image",
     title: "Directive: Mission Control for your body",
     description: "The scale says you gained 2.8 pounds. Your body says you didn't.",
-    images: ["/brand/banner.jpg"],
+    images: [OG_IMAGE.url],
   },
   icons: {
     icon: [
@@ -46,6 +48,30 @@ export const metadata: Metadata = {
     apple: "/brand/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
+};
+
+// Tells search engines who publishes the site (structured data, schema.org). Public contact details only.
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${SITE_URL}/#organization`,
+      name: SITE_NAME,
+      legalName: "Directive LLC",
+      url: SITE_URL,
+      logo: `${SITE_URL}/brand/icon-512.png`,
+      email: "support@directivefitness.com",
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      inLanguage: "en-US",
+      publisher: { "@id": `${SITE_URL}/#organization` },
+    },
+  ],
 };
 
 export const viewport: Viewport = {
@@ -59,6 +85,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" data-scroll-behavior="smooth" className={`${display.variable} ${sans.variable} ${mono.variable} ${appSans.variable} ${appMono.variable} ${appNum.variable}`}>
       <body className="min-h-screen text-white antialiased">
+        <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }} />
         <Starfield />
         {children}
       </body>

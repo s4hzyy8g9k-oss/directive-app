@@ -1,0 +1,22 @@
+# Directive
+
+> Directive is a fitness app from Directive LLC (Kentucky, USA). It separates water weight from your real trend, counts only the calories a workout burns beyond your resting metabolic rate, and lets you log a meal in seconds. Applications for 2026 Charter access are open on the home page.
+
+Directive is built for adults. It sets a protein floor for every day, sends no reminders, and leaves each decision to you. The wording below is a summary of the website; the linked pages are the source.
+
+## Pages
+
+- [Home](https://directivefitness.com/): what Directive does, the three measurement errors it addresses, the three Shields, the five instruments (Fuel, Mission Control, Velocity Touchdown and Beyond, Burn, Weekly Directive), and the Charter application
+- [Support](https://directivefitness.com/support): contact the team about the app, a Charter application or a privacy request
+
+## Policies
+
+- [Privacy Policy](https://directivefitness.com/privacy): what information the Directive app and website handle, and what happens to it
+- [Consumer Health Data Privacy Policy](https://directivefitness.com/consumer-health-data-privacy-policy): the health data Directive collects, why, where it goes, and your rights over it
+- [Terms of Service](https://directivefitness.com/terms): the Terms of Service for the Directive app and website
+
+## Contact
+
+- support@directivefitness.com for help with the app
+- privacy@directivefitness.com for privacy and health data requests
+- legal@directivefitness.com for legal notices

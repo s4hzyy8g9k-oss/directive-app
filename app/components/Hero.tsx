@@ -22,7 +22,8 @@ export default function Hero({ onApply }: { onApply: () => void }) {
 
       {/* Earth banner: logo over Earth. Edges fade into the page so there is no visible box.
           On phones it is cropped tighter (5:4) so the logo stays large and the side taglines drop out. */}
-      <motion.div {...rise(0)} className="relative mx-auto w-full max-w-[1400px]">
+      {/* Shown straight away (no fade-in): this is the largest thing on screen, so search engines time page speed by it. */}
+      <div className="relative mx-auto w-full max-w-[1400px]">
         <div style={{ WebkitMaskImage: SIDE_FADE, maskImage: SIDE_FADE }}>
           <div
             className="relative aspect-[5/4] w-full sm:aspect-[16/9]"
@@ -38,7 +39,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
             />
           </div>
         </div>
-      </motion.div>
+      </div>
 
       <div className="relative mx-auto max-w-5xl px-5 pb-16 pt-0 sm:px-8">
         <div className="mx-auto -mt-6 max-w-3xl text-center sm:-mt-12">
