@@ -1,15 +1,23 @@
 import type { Metadata, Viewport } from "next";
-import { Instrument_Serif, Manrope, JetBrains_Mono, Jost, Roboto_Mono, Space_Grotesk } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
 import Starfield from "./components/Starfield";
 
-const display = Instrument_Serif({ subsets: ["latin"], weight: "400", style: ["normal", "italic"], variable: "--font-display" });
-const sans = Manrope({ subsets: ["latin"], variable: "--font-sans" });
-const mono = JetBrains_Mono({ subsets: ["latin"], variable: "--font-mono" });
+// Fonts are served from app/fonts (the same Google Fonts files, latin subset) so the build doesn't need to reach
+// Google Fonts. Vercel builds were failing on "Failed to fetch font file" (2026-11-03 onward).
+const display = localFont({
+  src: [
+    { path: "./fonts/instrument-serif-regular.woff2", weight: "400", style: "normal" },
+    { path: "./fonts/instrument-serif-italic.woff2", weight: "400", style: "italic" },
+  ],
+  variable: "--font-display",
+});
+const sans = localFont({ src: "./fonts/manrope.woff2", weight: "200 800", variable: "--font-sans" });
+const mono = localFont({ src: "./fonts/jetbrains-mono.woff2", weight: "100 800", variable: "--font-mono" });
 // The app's own three typefaces, used only inside the demos so they read like the app (theme.ts: Jost, Roboto Mono, Space Grotesk).
-const appSans = Jost({ subsets: ["latin"], weight: ["300", "400", "500", "700"], variable: "--font-app-sans" });
-const appMono = Roboto_Mono({ subsets: ["latin"], weight: ["400", "500", "700"], variable: "--font-app-mono" });
-const appNum = Space_Grotesk({ subsets: ["latin"], weight: ["600", "700"], variable: "--font-app-num" });
+const appSans = localFont({ src: "./fonts/jost.woff2", weight: "100 900", variable: "--font-app-sans" });
+const appMono = localFont({ src: "./fonts/roboto-mono.woff2", weight: "100 700", variable: "--font-app-mono" });
+const appNum = localFont({ src: "./fonts/space-grotesk.woff2", weight: "300 700", variable: "--font-app-num" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://directivefitness.com"),
