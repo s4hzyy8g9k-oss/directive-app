@@ -6,7 +6,7 @@ Directive is built for adults. It sets a protein floor for every day, sends no r
 
 ## Pages
 
-- [Home](https://directivefitness.com/): what Directive does, the three measurement errors it addresses, the three Shields, the five instruments (Fuel, Mission Control, Velocity Touchdown and Beyond, Burn, Weekly Directive), and the Charter application
+- [Home](https://directivefitness.com/): what Directive does, the measurement errors it addresses, the three Shields, the five instruments (Fuel, Mission Control, Velocity Touchdown and Beyond, Burn, Weekly Directive), and the Charter application
 - [Support](https://directivefitness.com/support): contact the team about the app, a Charter application or a privacy request
 
 ## Policies
