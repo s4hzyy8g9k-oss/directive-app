@@ -7,6 +7,7 @@ import Traps from "./components/Traps";
 import Pillars from "./components/Pillars";
 import Shields from "./components/Shields";
 import Stations from "./components/Stations";
+import EcosystemBridge from "./components/EcosystemBridge";
 import FinalCta from "./components/FinalCta";
 import DiagnosticModal from "./components/DiagnosticModal";
 import Footer from "./components/Footer";
@@ -25,6 +26,7 @@ export default function Home() {
           <Pillars />
           <Shields />
           <Stations />
+          <EcosystemBridge />
           <FinalCta onApply={apply} />
         </main>
         <Footer />
