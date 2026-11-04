@@ -66,9 +66,8 @@ export const traps = {
 };
 
 // Flexible Telemetry Engine (Gemini spec relayed by Ray, 2026-11-04), replacing the "Weighing almonds" card.
-// Reworded against the app: no promise or absolute wording, no dashes. The menu scan gives one best guess per dish,
-// the restaurant adjustment adds 20% as fat and carbs (Cruise and Pro, utils/FoodPortion.ts restaurantBuffer), and
-// Ray allowed naming the Kalman filter (2026-11-04) as a name only.
+// Reworded against the app: no promise or absolute wording, no dashes. Owner allowed naming the Kalman filter
+// (2026-11-04) as a name only.
 export const telemetry = {
   eyebrow: "FLEXIBLE TELEMETRY ENGINE",
   heading: "Track at the speed of your life.",

@@ -3,9 +3,8 @@
 // Flexible Telemetry Engine (Gemini spec relayed by Ray, 2026-11-04). Three tabs beside a phone frame; switching
 // cross-fades the screen. The OPTICAL tab plays the 6 second loop (menu scan, calibration, fuel log). With
 // reduced motion the loop stops on the calibration screen and the tabs switch without movement.
-// Drawn from the app's screens (FuelScreen.tsx, the LOG FUEL cockpit): the macro colours, ALL | CUSTOM tabs and
-// the BACK / SCAN / VOICE dock are the app's. The restaurant numbers follow utils/FoodPortion.ts restaurantBuffer:
-// +20% of calories, 70% of it as fat and 30% as carbs, protein unchanged.
+// Drawn from the app's LOG FUEL cockpit: the macro colours, ALL | CUSTOM tabs and the BACK / SCAN / VOICE dock.
+// The restaurant numbers add 20% as fat and carbs, protein unchanged, as the app does.
 
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
@@ -23,8 +22,7 @@ const P = "#FF6B6B";
 const C = "#4EA8DE";
 const F = "#52B788";
 
-// A 14 oz ribeye (raw menu weight, about 10.5 oz cooked): 855 kcal, P 72, C 0, F 63. The restaurant adjustment adds
-// 171 kcal: fat +13.3 g, carbs +12.8 g.
+// A 14 oz ribeye with the restaurant adjustment.
 const RIBEYE = { kcal: 1026, p: 72, c: 13, f: 76 };
 const BEFORE = { kcal: 1184, p: 98, c: 121, f: 33 };
 const AFTER = { kcal: BEFORE.kcal + RIBEYE.kcal, p: BEFORE.p + RIBEYE.p, c: BEFORE.c + RIBEYE.c, f: BEFORE.f + RIBEYE.f };
