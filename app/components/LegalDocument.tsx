@@ -18,7 +18,7 @@ function Text({ spans }: { spans: Span[] }) {
         const parts = s.t.split(URL_RE);
         const body = parts.map((part, j) =>
           j % 2 === 1 ? (
-            <a key={j} href={href(part.replace(/[.,;]$/, ""))} className="text-champagne underline decoration-gold/40 underline-offset-2 hover:text-white">
+            <a key={j} href={href(part.replace(/[.,;]$/, ""))} className="break-words text-champagne underline decoration-gold/40 underline-offset-2 [overflow-wrap:anywhere] hover:text-white">
               {part}
             </a>
           ) : (

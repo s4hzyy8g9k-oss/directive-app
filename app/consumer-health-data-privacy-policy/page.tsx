@@ -1,13 +1,15 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/app/seo";
 import LegalDocument from "@/app/components/LegalDocument";
 import { LEGAL, LEGAL_EFFECTIVE, LEGAL_PREVIOUS } from "@/app/legal/documents";
 
 // The page the app's consent screen links to. Its link is always titled exactly
 // "Consumer Health Data Privacy Policy" and is always separate from the Privacy Policy link.
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
+  path: "/consumer-health-data-privacy-policy",
   title: "Consumer Health Data Privacy Policy | Directive",
   description: "The health data Directive collects, why, where it goes, and your rights over it.",
-};
+});
 
 export default function ConsumerHealthDataPrivacyPolicyPage() {
   // While a change is pending, this page shows the new version and links to the one still in force.
