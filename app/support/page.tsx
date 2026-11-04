@@ -1,11 +1,13 @@
 import type { Metadata } from "next";
+import { pageMetadata } from "@/app/seo";
 import Link from "next/link";
 import SupportForm from "./SupportForm";
 
-export const metadata: Metadata = {
-  title: "Support — Directive",
+export const metadata: Metadata = pageMetadata({
+  path: "/support",
+  title: "Support | Directive",
   description: "Flight Operations support portal for Directive members.",
-};
+});
 
 export default function SupportPage() {
   return (

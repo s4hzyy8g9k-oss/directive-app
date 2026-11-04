@@ -1,37 +1,17 @@
-"use client";
+import type { Metadata } from "next";
+import HomePage from "./HomePage";
+import { OG_IMAGE, SITE_NAME } from "./seo";
 
-import { useState } from "react";
-import Nav from "./components/Nav";
-import Hero from "./components/Hero";
-import Traps from "./components/Traps";
-import Pillars from "./components/Pillars";
-import Shields from "./components/Shields";
-import Stations from "./components/Stations";
-import EcosystemBridge from "./components/EcosystemBridge";
-import FinalCta from "./components/FinalCta";
-import DiagnosticModal from "./components/DiagnosticModal";
-import Footer from "./components/Footer";
+// The home page's canonical link and share card (the same wording as before). The page itself is in HomePage.tsx.
+const SHARE_TITLE = "Directive: Mission Control for your body";
+const SHARE_DESCRIPTION = "The scale says you gained 2.8 pounds. Your body says you didn't.";
 
-export default function Home() {
-  const [open, setOpen] = useState(false);
-  const apply = () => setOpen(true);
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+  openGraph: { title: SHARE_TITLE, description: SHARE_DESCRIPTION, url: "/", type: "website", siteName: SITE_NAME, locale: "en_US", images: [OG_IMAGE] },
+  twitter: { card: "summary_large_image", title: SHARE_TITLE, description: SHARE_DESCRIPTION, images: [OG_IMAGE.url] },
+};
 
-  return (
-    <>
-      <div className="relative z-10">
-        <Nav onApply={apply} />
-        <main>
-          <Hero onApply={apply} />
-          <Traps />
-          <Pillars />
-          <Shields />
-          <Stations />
-          <EcosystemBridge />
-          <FinalCta onApply={apply} />
-        </main>
-        <Footer />
-      </div>
-      <DiagnosticModal open={open} onClose={() => setOpen(false)} />
-    </>
-  );
+export default function Page() {
+  return <HomePage />;
 }
