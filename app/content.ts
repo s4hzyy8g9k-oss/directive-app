@@ -49,7 +49,7 @@ export const demoSteps = [
 ];
 
 export const traps = {
-  heading: "Three measurement errors. Every one of them fixable.",
+  heading: "Two measurement errors. Both of them fixable.",
   intro: "None of these are willpower failures. They're bad inputs, and they compound.",
   items: [
     {
@@ -62,12 +62,41 @@ export const traps = {
       title: "That overnight spike isn't fat",
       body: "Salt, heavy training, or hormonal shifts can move the scale by several pounds overnight, and it is hard to distinguish water weight from fat by eye. Directive's trend filter separates likely water swings from your underlying trend, so you can see a spike for what it is before you cut calories to fix it.",
     },
+  ],
+};
+
+// Flexible Telemetry Engine (Gemini spec relayed by Ray, 2026-11-04), replacing the "Weighing almonds" card.
+// Reworded against the app: no promise or absolute wording, no dashes. The menu scan gives one best guess per dish,
+// the restaurant adjustment adds 20% as fat and carbs (Cruise and Pro, utils/FoodPortion.ts restaurantBuffer), and
+// Ray allowed naming the Kalman filter (2026-11-04) as a name only.
+export const telemetry = {
+  eyebrow: "FLEXIBLE TELEMETRY ENGINE",
+  heading: "Track at the speed of your life.",
+  intro: [
+    "Precision when you want it. Velocity when you need it. We build the math around your life, not the other way around.",
+    "Most trackers assume every meal happens next to a kitchen scale. Directive gives you exact tools when you are meal prepping at home, and a quick estimate when you are dining out with clients.",
+  ],
+  tabs: [
     {
-      kind: "scale" as const,
-      title: "Weighing almonds is not a plan",
-      body: "Measuring 14 grams at a time works for a few weeks, then the cognitive drag sets in and people quit. Precision doesn't require being locked in a digital prison. Log a meal by hand: a palm of protein, a fist of carbohydrate, a thumb of fat, in seconds. Flag a restaurant meal with one switch.\n\nOr try Precision tracking: save a meal you eat often and add it with one tap. Take a snapshot of a recipe, tweak it if you like, and Directive works out the macros for a serving, so you can eat it all week without complicated logging. Or just say what you ate.",
+      id: "optical" as const,
+      label: "01 / OPTICAL MENU LENS",
+      title: "The restaurant menu scanner",
+      body: "Dining out shouldn't feel like a math test. Point your camera at a printed menu and pick your dish. Directive finds its closest match among more than 1,000 restaurant dishes, gives you one best guess for the plate, and adds 20% to fat and carbs for restaurant cooking. It is an estimate, so you can adjust any part of it before you log.",
+    },
+    {
+      id: "precision" as const,
+      label: "02 / PRECISION LOGGING",
+      title: "Gram level intake",
+      body: "For home cooking, batch prep and packaged foods. Scan a barcode, take a photo of a recipe and get the macros for one serving, or just say what you ate. Foods log to the gram, with nothing extra on the screen.",
+    },
+    {
+      id: "tactical" as const,
+      label: "03 / TACTICAL ESTIMATION",
+      title: "Hand and portion estimates",
+      body: "No scale? No barcode? Tap portions on the Solids and Liquids grid in seconds: a palm of protein, a fist of carbs, a glass of wine. Your trend line comes from your weigh-ins, smoothed by a Kalman filter, so it keeps working when a meal is a rough estimate.",
     },
   ],
+  note: "The restaurant adjustment is part of Cruise and Pro.",
 };
 
 export const pillars = {

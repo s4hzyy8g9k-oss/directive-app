@@ -1,5 +1,4 @@
 import { traps } from "@/app/content";
-import MealConsole from "./MealConsole";
 
 // Owner, 2026-10-18, 21:52 UTC: the same look as the app's MACRO RECONCILIATION (gold horizontal bars, ratios and amounts).
 function CaloriesViz() {
@@ -61,11 +60,7 @@ function WaterViz() {
   );
 }
 
-function ScaleViz() {
-  return <MealConsole />;
-}
-
-const VIZ = { calories: CaloriesViz, water: WaterViz, scale: ScaleViz };
+const VIZ = { calories: CaloriesViz, water: WaterViz };
 
 export default function Traps() {
   return (

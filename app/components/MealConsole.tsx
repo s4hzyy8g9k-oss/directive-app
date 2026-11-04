@@ -55,7 +55,7 @@ function Macros({ p, c, f }: { p: number; c: number; f: number }) {
   );
 }
 
-function VisualLog() {
+export function VisualLog() {
   const [texts, setTexts] = useState<Record<string, string>>({});
   const [restaurant, setRestaurant] = useState(false);
   const [logged, setLogged] = useState(false);

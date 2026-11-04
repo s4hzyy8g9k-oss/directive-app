@@ -4,6 +4,7 @@ import { useState } from "react";
 import Nav from "./components/Nav";
 import Hero from "./components/Hero";
 import Traps from "./components/Traps";
+import TelemetryEngine from "./components/TelemetryEngine";
 import Pillars from "./components/Pillars";
 import Shields from "./components/Shields";
 import Stations from "./components/Stations";
@@ -23,6 +24,7 @@ export default function Home() {
         <main>
           <Hero onApply={apply} />
           <Traps />
+          <TelemetryEngine />
           <Pillars />
           <Shields />
           <Stations />
