@@ -1,0 +1,175 @@
+/* Ecosystem bridge section: shared by directivefitness.com and stratummetrics.com.
+   Claude, 2026-11-04, from Gemini Web's dual-site spec. Plain CSS, no framework needed. */
+
+.eb {
+  --eb-bg: #0b0f17;
+  --eb-edge: #1e293b;
+  --eb-text: #e2e8f0;
+  --eb-dim: #64748b;
+  --eb-steel: #38bdf8;
+  --eb-amber: #f59e0b;
+  --eb-mono: "JetBrains Mono", "SF Mono", ui-monospace, monospace;
+  scroll-margin-top: 24px;
+}
+
+/* "Arrived from the partner site" pill, hidden until the script shows it */
+.eb-arrival {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  max-width: 100%;
+  margin: 0 auto 16px;
+  padding: 8px 16px;
+  border: 1px solid var(--eb-edge);
+  border-radius: 999px;
+  background: #0a0e16;
+  color: var(--eb-text);
+  font: 500 13px/1.4 var(--eb-mono);
+  letter-spacing: 0.04em;
+}
+.eb-arrival.is-visible { display: flex; }
+.eb-arrival::before {
+  content: "";
+  flex: none;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+/* Video frame. The video is 1920x1080; the port is placed over a phone by percentages of that frame. */
+.eb-stage {
+  position: relative;
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  aspect-ratio: 16 / 9;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--eb-bg);
+}
+.eb-video { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* The interactive "telemetry port" over the partner phone, where the phones rest at the end of the video.
+   Stratum Metrics phone (left): x 269-741, y 52-972 of 1920x1080.
+   Directive phone (right):      x 1179-1651, same y.
+   The "dock" video ends with each phone 60 px nearer the centre: add data-variant="dock" to the section. */
+.eb-port {
+  --eb-accent: var(--eb-steel);
+  position: absolute;
+  top: 4.815%;
+  height: 85.185%;
+  width: 24.583%;
+  border-radius: 9% / 4.4%;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+.eb-port[data-card="stratum"] { left: 14.010%; --eb-accent: var(--eb-steel); }
+.eb-port[data-card="directive"] { left: 61.406%; --eb-accent: var(--eb-amber); }
+.eb[data-variant="dock"] .eb-port[data-card="stratum"] { left: 17.135%; }
+.eb[data-variant="dock"] .eb-port[data-card="directive"] { left: 58.281%; }
+/* The story video (15 s, Ray's storyboard): phones at x 425-815 and 1105-1495, y 36-856 */
+.eb[data-variant="story"] .eb-port { top: 3.333%; height: 75.926%; width: 20.313%; border-radius: 11.8% / 5.6%; }
+.eb[data-variant="story"] .eb-port[data-card="stratum"] { left: 22.135%; --eb-accent: #8db8e0; } /* Stratum Metrics ice blue */
+.eb[data-variant="story"] .eb-port[data-card="directive"] { left: 57.552%; --eb-accent: #d4af37; } /* Directive gold */
+.eb[data-variant="story"] .eb-cta[data-card="stratum"],
+.eb[data-variant="story"] .eb-port-alt[data-card="stratum"] { --eb-accent: #8db8e0; }
+.eb[data-variant="story"] .eb-cta[data-card="directive"],
+.eb[data-variant="story"] .eb-port-alt[data-card="directive"] { --eb-accent: #d4af37; }
+
+/* Edge-lit border sweep: a bright arc runs round the card's 1px border */
+@property --eb-sweep { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.eb-port::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  padding: 1.5px;
+  border-radius: inherit;
+  background: conic-gradient(from var(--eb-sweep), transparent 0deg, var(--eb-accent) 70deg, transparent 140deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  opacity: 0;
+  transition: opacity 160ms linear;
+}
+.eb-port:hover::before,
+.eb-port:focus-visible::before {
+  opacity: 1;
+  animation: eb-sweep 1.6s linear infinite;
+}
+.eb-port:hover,
+.eb-port:focus-visible { box-shadow: 0 0 0 1px var(--eb-accent), 0 0 32px color-mix(in srgb, var(--eb-accent) 30%, transparent); }
+@keyframes eb-sweep { to { --eb-sweep: 360deg; } }
+
+/* Terminal prompt over the card */
+.eb-prompt {
+  position: absolute;
+  left: 50%;
+  bottom: 13%;
+  transform: translate(-50%, 6px);
+  max-width: 92%;
+  padding: 7px 10px;
+  border: 1px solid var(--eb-accent);
+  border-radius: 6px;
+  background: rgba(10, 14, 22, 0.94);
+  color: var(--eb-accent);
+  width: max-content;
+  font: 600 clamp(9px, 0.95vw, 12px)/1.35 var(--eb-mono);
+  letter-spacing: 0.02em;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 160ms linear, transform 200ms cubic-bezier(0.2, 0, 0, 1);
+  pointer-events: none;
+}
+.eb-port:hover .eb-prompt,
+.eb-port:focus-visible .eb-prompt { opacity: 1; transform: translate(-50%, 0); }
+
+/* Touch screens have no hover: keep a faint border and the prompt showing so people know it's tappable */
+@media (hover: none) {
+  .eb-port { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--eb-accent) 45%, transparent); }
+  .eb-prompt { opacity: 0.92; transform: translate(-50%, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .eb-port:hover::before,
+  .eb-port:focus-visible::before { animation: none; --eb-sweep: 0deg; }
+  .eb-prompt { transition: none; }
+}
+
+/* Narrow screens: the card is too small for the prompt, so show it as a plain link under the video instead.
+   The card itself stays tappable. */
+.eb-port-alt { display: none; }
+@media (max-width: 640px) {
+  .eb-prompt { display: none; }
+  .eb-port-alt {
+    display: block;
+    margin-top: 10px;
+    color: var(--eb-accent, var(--eb-steel));
+    font: 600 12px/1.4 var(--eb-mono);
+    text-align: center;
+    text-decoration: none;
+  }
+  .eb-port-alt[data-card="directive"] { --eb-accent: var(--eb-amber); }
+  .eb-port-alt[data-card="stratum"] { --eb-accent: var(--eb-steel); }
+}
+
+/* Button under the video linking to the partner site */
+.eb-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 20px;
+  padding: 12px 20px;
+  border: 1px solid var(--eb-accent, var(--eb-steel));
+  border-radius: 10px;
+  color: var(--eb-accent, var(--eb-steel));
+  font: 600 15px/1 Inter, system-ui, sans-serif;
+  text-decoration: none;
+  transition: background 160ms linear;
+}
+.eb-cta[data-card="stratum"] { --eb-accent: var(--eb-steel); }
+.eb-cta[data-card="directive"] { --eb-accent: var(--eb-amber); }
+.eb-cta:hover,
+.eb-cta:focus-visible { background: color-mix(in srgb, var(--eb-accent) 12%, transparent); }
