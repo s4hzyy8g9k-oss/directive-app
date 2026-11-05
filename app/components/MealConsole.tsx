@@ -49,8 +49,8 @@ function parseCount(text: string) {
 function Macros({ p, c, f }: { p: number; c: number; f: number }) {
   return (
     <>
-      <span className="font-bold text-[#FF6B6B]">P {one(r1(p))}</span> · <span className="font-bold text-[#4EA8DE]">C {one(r1(c))}</span> ·{" "}
-      <span className="font-bold text-[#52B788]">F {one(r1(f))}</span>
+      <span className="font-bold text-macro-protein">P {one(r1(p))}</span> · <span className="font-bold text-macro-carbs">C {one(r1(c))}</span> ·{" "}
+      <span className="font-bold text-macro-fat">F {one(r1(f))}</span>
     </>
   );
 }
@@ -104,7 +104,7 @@ export function VisualLog() {
         return (
           <div key={it.key} className="flex items-center justify-between gap-1 border-b border-[#1E356D] py-2 last:border-b-0">
             <button type="button" onClick={() => add(it.key)} aria-label={`Add a portion of ${it.label}`} className="flex min-w-0 flex-1 items-center gap-1 text-left active:scale-[0.98]">
-              <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] flex-none" fill="none" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] flex-none" fill="none" stroke={it.key === "lean" || it.key === "fatty" ? "#34D399" : "#d4af37"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {it.circle && <circle cx="12" cy="12" r="7" />}
                 {it.d.map((d) => (
                   <path key={d} d={d} />

@@ -15,6 +15,7 @@ const config: Config = {
         cyan: "#38BDF8",
         steel: "#9FB1CC",
         coral: "#F87171",
+        macro: { protein: "#34D399", carbs: "#38BDF8", fat: "#F59E0B" },
       },
       fontFamily: {
         display: ["var(--font-display)", "Georgia", "serif"],
