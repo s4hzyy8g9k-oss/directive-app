@@ -25,8 +25,8 @@ function CaloriesViz() {
           (src/utils/NetMet.ts); the rest of the watch's 420 is time between sets counted as work. */}
       <div className="space-y-3">
         {row("YOUR WATCH (GROSS)", "420 kcal", 100, "bg-gradient-to-r from-[#3b4560] to-[#93a6c6]", "text-[#eaeef6]")}
-        {row("RESTING BURN", "−80 kcal", 19, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
-        {row("REST BETWEEN SETS", "−135 kcal", 32.1, "bg-gradient-to-r from-[#5a2a2a] to-[#e58a8a]", "text-[#e58a8a]")}
+        {row("RESTING BURN", "−80 kcal", 19, "bg-gradient-to-r from-[#4a2414] to-[#E06A3B]", "text-[#E06A3B]")}
+        {row("REST BETWEEN SETS", "−135 kcal", 32.1, "bg-gradient-to-r from-[#4a2414] to-[#E06A3B]", "text-[#E06A3B]")}
       </div>
       <div className="mt-[18px] mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
@@ -43,20 +43,68 @@ function CaloriesViz() {
   );
 }
 
+// The overnight spike (Gemini web refinement pass, 2026-11-05): scale readings on the left with a 3 lb jump on Tuesday,
+// and a ledger on the right setting the scale against the Kalman trend for Monday to Wednesday. Sample numbers.
+const READINGS = [
+  { d: "W", scale: 184.9, trend: 184.5 },
+  { d: "T", scale: 184.2, trend: 184.4 },
+  { d: "F", scale: 184.6, trend: 184.3 },
+  { d: "S", scale: 184.5, trend: 184.2 },
+  { d: "S", scale: 183.7, trend: 184.1 },
+  { d: "M", scale: 184.2, trend: 184.0 },
+  { d: "T", scale: 187.2, trend: 183.9 },
+  { d: "W", scale: 185.6, trend: 183.8 },
+];
+const LEDGER = [
+  { day: "Mon", i: 5 },
+  { day: "Tue", i: 6 },
+  { day: "Wed", i: 7 },
+];
+
 function WaterViz() {
-  // Dry weight drops along the same angle as the Cruise control cut. Water weight rides above it in
-  // three waves and ends back on the dry weight line.
-  const trend = "M0.0,60.0 L2.0,60.1 L4.0,60.2 L6.0,60.3 L8.0,60.5 L10.0,60.6 L12.0,60.8 L14.0,60.9 L16.0,61.1 L18.0,61.3 L20.0,61.5 L22.0,61.7 L24.0,62.0 L26.0,62.2 L28.0,62.5 L30.0,62.7 L32.0,63.0 L34.0,63.3 L36.0,63.6 L38.0,64.0 L40.0,64.3 L42.0,64.6 L44.0,65.0 L46.0,65.4 L48.0,65.7 L50.0,66.1 L52.0,66.5 L54.0,66.9 L56.0,67.4 L58.0,67.8 L60.0,68.3 L62.0,68.7 L64.0,69.2 L66.0,69.7 L68.0,70.2 L70.0,70.7 L72.0,71.2 L74.0,71.7 L76.0,72.3 L78.0,72.8 L80.0,73.4 L82.0,74.0 L84.0,74.6 L86.0,75.2 L88.0,75.8 L90.0,76.4 L92.0,77.0 L94.0,77.7 L96.0,78.3 L98.0,79.0 L100.0,79.7 L102.0,80.3 L104.0,81.0 L106.0,81.7 L108.0,82.5 L110.0,83.2 L112.0,83.9 L114.0,84.7 L116.0,85.4 L118.0,86.2 L120.0,87.0 L122.0,87.7 L124.0,88.5 L126.0,89.3 L128.0,90.1 L130.0,91.0 L132.0,91.8 L134.0,92.6 L136.0,93.5 L138.0,94.4 L140.0,95.2 L142.0,96.1 L144.0,97.0 L146.0,97.9 L148.0,98.8 L150.0,99.7 L152.0,100.6 L154.0,101.5 L156.0,102.5 L158.0,103.4 L160.0,104.4 L162.0,105.3 L164.0,106.3 L166.0,107.3 L168.0,108.3 L170.0,109.3 L172.0,110.3 L174.0,111.3 L176.0,112.3 L178.0,113.3 L180.0,114.3 L182.0,115.4 L184.0,116.4 L186.0,117.5 L188.0,118.5 L190.0,119.6 L192.0,120.7 L194.0,121.7 L196.0,122.8 L198.0,123.9 L200.0,125.0 L202.0,126.1 L204.0,127.2 L206.0,128.3 L208.0,129.4 L210.0,130.6 L212.0,131.7 L214.0,132.8 L216.0,134.0 L218.0,135.1 L220.0,136.3 L222.0,137.4 L224.0,138.6 L226.0,139.7 L228.0,140.9 L230.0,142.1 L232.0,143.2 L234.0,144.4 L236.0,145.6 L238.0,146.8 L240.0,148.0 L242.0,149.2 L244.0,150.3 L246.0,151.5 L248.0,152.7 L250.0,153.9 L252.0,155.2 L254.0,156.4 L256.0,157.6 L258.0,158.8 L260.0,160.0";
-  const top = "M0.0,52.8 L2.0,51.5 L4.0,50.1 L6.0,48.6 L8.0,47.1 L10.0,45.5 L12.0,43.9 L14.0,42.3 L16.0,40.7 L18.0,39.1 L20.0,37.6 L22.0,36.1 L24.0,34.7 L26.0,33.4 L28.0,32.3 L30.0,31.2 L32.0,30.3 L34.0,29.6 L36.0,29.0 L38.0,28.7 L40.0,28.6 L42.0,28.7 L44.0,29.0 L46.0,29.7 L48.0,30.7 L50.0,31.9 L52.0,33.4 L54.0,35.1 L56.0,37.0 L58.0,39.1 L60.0,41.3 L62.0,43.6 L64.0,46.0 L66.0,48.4 L68.0,50.9 L70.0,53.4 L72.0,55.8 L74.0,58.2 L76.0,60.6 L78.0,62.8 L80.0,64.9 L82.0,66.9 L84.0,68.7 L86.0,70.2 L88.0,71.6 L90.0,72.6 L92.0,73.4 L94.0,73.9 L96.0,74.1 L98.0,74.1 L100.0,73.8 L102.0,73.3 L104.0,72.7 L106.0,71.9 L108.0,70.9 L110.0,69.9 L112.0,68.8 L114.0,67.7 L116.0,66.5 L118.0,65.4 L120.0,64.3 L122.0,63.2 L124.0,62.3 L126.0,61.4 L128.0,60.7 L130.0,60.2 L132.0,59.9 L134.0,59.8 L136.0,59.9 L138.0,60.3 L140.0,61.0 L142.0,62.9 L144.0,66.5 L146.0,71.1 L148.0,76.1 L150.0,80.9 L152.0,85.1 L154.0,89.8 L156.0,94.7 L158.0,99.3 L160.0,103.0 L162.0,105.3 L164.0,106.0 L166.0,105.7 L168.0,104.7 L170.0,103.3 L172.0,101.6 L174.0,100.0 L176.0,98.6 L178.0,97.5 L180.0,96.1 L182.0,94.5 L184.0,93.2 L186.0,92.3 L188.0,92.1 L190.0,92.8 L192.0,94.5 L194.0,97.0 L196.0,99.9 L198.0,103.2 L200.0,106.6 L202.0,110.1 L204.0,113.3 L206.0,116.1 L208.0,118.8 L210.0,121.6 L212.0,124.2 L214.0,126.8 L216.0,129.2 L218.0,131.4 L220.0,133.6 L222.0,135.8 L224.0,137.9 L226.0,139.6 L228.0,140.9 L230.0,142.1 L232.0,143.2 L234.0,144.4 L236.0,145.6 L238.0,146.8 L240.0,148.0 L242.0,149.2 L244.0,150.3 L246.0,151.5 L248.0,152.7 L250.0,153.9 L252.0,155.2 L254.0,156.4 L256.0,157.6 L258.0,158.8 L260.0,160.0";
-  const fill = "M0.0,52.8 L2.0,51.5 L4.0,50.1 L6.0,48.6 L8.0,47.1 L10.0,45.5 L12.0,43.9 L14.0,42.3 L16.0,40.7 L18.0,39.1 L20.0,37.6 L22.0,36.1 L24.0,34.7 L26.0,33.4 L28.0,32.3 L30.0,31.2 L32.0,30.3 L34.0,29.6 L36.0,29.0 L38.0,28.7 L40.0,28.6 L42.0,28.7 L44.0,29.0 L46.0,29.7 L48.0,30.7 L50.0,31.9 L52.0,33.4 L54.0,35.1 L56.0,37.0 L58.0,39.1 L60.0,41.3 L62.0,43.6 L64.0,46.0 L66.0,48.4 L68.0,50.9 L70.0,53.4 L72.0,55.8 L74.0,58.2 L76.0,60.6 L78.0,62.8 L80.0,64.9 L82.0,66.9 L84.0,68.7 L86.0,70.2 L88.0,71.6 L90.0,72.6 L92.0,73.4 L94.0,73.9 L96.0,74.1 L98.0,74.1 L100.0,73.8 L102.0,73.3 L104.0,72.7 L106.0,71.9 L108.0,70.9 L110.0,69.9 L112.0,68.8 L114.0,67.7 L116.0,66.5 L118.0,65.4 L120.0,64.3 L122.0,63.2 L124.0,62.3 L126.0,61.4 L128.0,60.7 L130.0,60.2 L132.0,59.9 L134.0,59.8 L136.0,59.9 L138.0,60.3 L140.0,61.0 L142.0,62.9 L144.0,66.5 L146.0,71.1 L148.0,76.1 L150.0,80.9 L152.0,85.1 L154.0,89.8 L156.0,94.7 L158.0,99.3 L160.0,103.0 L162.0,105.3 L164.0,106.0 L166.0,105.7 L168.0,104.7 L170.0,103.3 L172.0,101.6 L174.0,100.0 L176.0,98.6 L178.0,97.5 L180.0,96.1 L182.0,94.5 L184.0,93.2 L186.0,92.3 L188.0,92.1 L190.0,92.8 L192.0,94.5 L194.0,97.0 L196.0,99.9 L198.0,103.2 L200.0,106.6 L202.0,110.1 L204.0,113.3 L206.0,116.1 L208.0,118.8 L210.0,121.6 L212.0,124.2 L214.0,126.8 L216.0,129.2 L218.0,131.4 L220.0,133.6 L222.0,135.8 L224.0,137.9 L226.0,139.6 L228.0,140.9 L230.0,142.1 L232.0,143.2 L234.0,144.4 L236.0,145.6 L238.0,146.8 L240.0,148.0 L242.0,149.2 L244.0,150.3 L246.0,151.5 L248.0,152.7 L250.0,153.9 L252.0,155.2 L254.0,156.4 L256.0,157.6 L258.0,158.8 L260.0,160.0 L260.0,160.0 L258.0,158.8 L256.0,157.6 L254.0,156.4 L252.0,155.2 L250.0,153.9 L248.0,152.7 L246.0,151.5 L244.0,150.3 L242.0,149.2 L240.0,148.0 L238.0,146.8 L236.0,145.6 L234.0,144.4 L232.0,143.2 L230.0,142.1 L228.0,140.9 L226.0,139.7 L224.0,138.6 L222.0,137.4 L220.0,136.3 L218.0,135.1 L216.0,134.0 L214.0,132.8 L212.0,131.7 L210.0,130.6 L208.0,129.4 L206.0,128.3 L204.0,127.2 L202.0,126.1 L200.0,125.0 L198.0,123.9 L196.0,122.8 L194.0,121.7 L192.0,120.7 L190.0,119.6 L188.0,118.5 L186.0,117.5 L184.0,116.4 L182.0,115.4 L180.0,114.3 L178.0,113.3 L176.0,112.3 L174.0,111.3 L172.0,110.3 L170.0,109.3 L168.0,108.3 L166.0,107.3 L164.0,106.3 L162.0,105.3 L160.0,104.4 L158.0,103.4 L156.0,102.5 L154.0,101.5 L152.0,100.6 L150.0,99.7 L148.0,98.8 L146.0,97.9 L144.0,97.0 L142.0,96.1 L140.0,95.2 L138.0,94.4 L136.0,93.5 L134.0,92.6 L132.0,91.8 L130.0,91.0 L128.0,90.1 L126.0,89.3 L124.0,88.5 L122.0,87.7 L120.0,87.0 L118.0,86.2 L116.0,85.4 L114.0,84.7 L112.0,83.9 L110.0,83.2 L108.0,82.5 L106.0,81.7 L104.0,81.0 L102.0,80.3 L100.0,79.7 L98.0,79.0 L96.0,78.3 L94.0,77.7 L92.0,77.0 L90.0,76.4 L88.0,75.8 L86.0,75.2 L84.0,74.6 L82.0,74.0 L80.0,73.4 L78.0,72.8 L76.0,72.3 L74.0,71.7 L72.0,71.2 L70.0,70.7 L68.0,70.2 L66.0,69.7 L64.0,69.2 L62.0,68.7 L60.0,68.3 L58.0,67.8 L56.0,67.4 L54.0,66.9 L52.0,66.5 L50.0,66.1 L48.0,65.7 L46.0,65.4 L44.0,65.0 L42.0,64.6 L40.0,64.3 L38.0,64.0 L36.0,63.6 L34.0,63.3 L32.0,63.0 L30.0,62.7 L28.0,62.5 L26.0,62.2 L24.0,62.0 L22.0,61.7 L20.0,61.5 L18.0,61.3 L16.0,61.1 L14.0,60.9 L12.0,60.8 L10.0,60.6 L8.0,60.5 L6.0,60.3 L4.0,60.2 L2.0,60.1 L0.0,60.0 Z";
+  const W = 200;
+  const H = 150;
+  const lo = 183;
+  const hi = 188;
+  const x = (i: number) => 22 + (i / (READINGS.length - 1)) * (W - 32);
+  const y = (v: number) => 10 + ((hi - v) / (hi - lo)) * (H - 34);
+  const trend = READINGS.map((r, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(r.trend).toFixed(1)}`).join(" ");
+  const spike = READINGS[6];
   return (
-    <svg viewBox="0 0 260 176" className="w-full" aria-hidden>
-      <path d={fill} fill="#38BDF8" fillOpacity="0.22" />
-      <path d={top} fill="none" stroke="#9FB1CC" strokeOpacity="0.6" strokeDasharray="2 4" />
-      <path d={trend} fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
-      <text x="62" y="12" fontSize="11" fill="#7DD3FC">Water weight</text>
-      <text x="14" y="91" fontSize="11" fill="#F1DC9A">Dry weight</text>
-    </svg>
+    <div className="grid w-full gap-4 sm:grid-cols-[1fr_auto] sm:items-center">
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full" role="img" aria-label="Sample scale readings: a 3 lb jump on Tuesday while the trend line keeps falling">
+        {[184, 186, 188].map((v) => (
+          <g key={v}>
+            <line x1="22" x2={W - 10} y1={y(v)} y2={y(v)} stroke="#1B3152" strokeOpacity="0.8" />
+            <text x="0" y={y(v) + 3} fontSize="9" fill="#5d6a82">{v}</text>
+          </g>
+        ))}
+        <line x1={x(6)} x2={x(6)} y1={y(spike.scale)} y2={y(spike.trend)} stroke="#38BDF8" strokeOpacity="0.6" strokeDasharray="2 3" />
+        <text x={x(6) - 4} y={y(spike.scale) - 7} fontSize="10" fill="#7DD3FC" textAnchor="end">+3.0 lb overnight</text>
+        <path d={trend} fill="none" stroke="#D4AF37" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        {READINGS.map((r, i) => (
+          <circle key={i} cx={x(i)} cy={y(r.scale)} r={i === 6 ? 3.6 : 2.4} fill={i === 6 ? "#38BDF8" : "#AAB5C6"} fillOpacity={i === 6 ? 1 : 0.8} />
+        ))}
+        {READINGS.map((r, i) => (
+          <text key={`d${i}`} x={x(i)} y={H - 8} fontSize="9" fill="#5d6a82" textAnchor="middle">{r.d}</text>
+        ))}
+      </svg>
+      <div className="rounded-xl border border-[#1E356D] bg-[#0C1730] px-3 py-2.5 font-appmono text-[11px] tabular-nums">
+        <div className="grid grid-cols-[auto_auto_auto] gap-x-4 gap-y-1.5">
+          <span className="text-[9px] tracking-[0.14em] text-[#8E9EB5]">DAY</span>
+          <span className="text-right text-[9px] tracking-[0.14em] text-[#8E9EB5]">SCALE</span>
+          <span className="text-right text-[9px] tracking-[0.14em] text-[#f0d878]">TREND</span>
+          {LEDGER.map(({ day, i }) => (
+            <div key={day} className="contents">
+              <span className="text-[#eaeef6]">{day}</span>
+              <span className={`text-right ${i === 6 ? "font-bold text-[#7DD3FC]" : "text-[#eaeef6]"}`}>{READINGS[i].scale.toFixed(1)}</span>
+              <span className="text-right text-[#f0d878]">{READINGS[i].trend.toFixed(1)}</span>
+            </div>
+          ))}
+        </div>
+        <div className="mt-2 border-t border-[#1E356D] pt-1.5 text-[9px] leading-snug text-[#aab5c6]">Kalman trend, lb. Sample numbers.</div>
+      </div>
+    </div>
   );
 }
 
@@ -75,7 +123,7 @@ export default function Traps() {
           {traps.items.map((t) => {
             const Viz = VIZ[t.kind];
             return (
-              <div key={t.title} className="glass grid items-center gap-6 rounded-[20px] p-6 sm:grid-cols-[1fr_340px] sm:gap-12 sm:p-9">
+              <div key={t.title} className={`glass grid items-center gap-6 rounded-[20px] p-6 sm:gap-12 sm:p-9 ${t.kind === "water" ? "lg:grid-cols-[1fr_460px]" : "sm:grid-cols-[1fr_340px]"}`}>
                 <div className="min-w-0">
                   <h3 className="font-display text-[27px] leading-tight text-white sm:text-[32px]">{t.title}</h3>
                   {t.body.split("\n\n").map((para, pi) => (

@@ -44,7 +44,7 @@ export default function EcosystemBridge() {
             {"[ INSPECT MECHANICAL SUBSTRATE: stratummetrics.com ↗ ]"}
           </a>
           <a className="eb-cta" data-card="stratum" href={LINK}>
-            Explore Stratum Metrics →
+            EXPLORE STRATUM METRICS ➔
           </a>
           <p className="small mt-5 text-[13px] leading-relaxed text-white/60">
             {"Sample numbers. Your data stays on your phone; the apps don't use a server to talk to each other."}

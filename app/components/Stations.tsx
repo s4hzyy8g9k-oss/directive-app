@@ -1,9 +1,9 @@
 "use client";
 
-import { useMemo, useState, type ReactElement } from "react";
+import { useState, type ReactElement } from "react";
 import { motion } from "framer-motion";
 import { stations } from "@/app/content";
-import { buildTelemetry, smooth, TODAY, DRY_TODAY, FLUID_TODAY, TARGET_END } from "@/lib/telemetry";
+import { DRY_TODAY, FLUID_TODAY, TARGET_END } from "@/lib/telemetry";
 import { AppDial, AppSlider, AppSwitchKnob, MicIcon } from "./AppUI";
 
 // Every preview below copies the app's own look from the design mock-up
@@ -124,34 +124,9 @@ function GaugeCluster() {
   );
 }
 
-// ── Mission Control: weight chart with likely water separated out, plates, the water banner, then the GAUGE CLUSTER ──
+// ── Mission Control: the weight plates and the GAUGE CLUSTER. The scale-reading chart was removed (Gemini web refinement
+// pass, 2026-11-05) because the hero already shows one; the dials are explained beside the preview (content.ts). ──
 function MissionPreview() {
-  const chart = useMemo(() => {
-    const t = buildTelemetry();
-    const from = 46;
-    const W = 320;
-    const H = 92;
-    const pad = 6;
-    const rawS = smooth(t.raw, 0.5).filter((p) => p.d >= from && p.d <= TODAY);
-    const dry = t.dry.filter((p) => p.d >= from && p.d <= TODAY);
-    const dots = t.raw.filter((p) => p.d >= from && p.d <= TODAY);
-    const all = [...rawS.map((p) => p.v), ...dry.map((p) => p.v), ...dots.map((p) => p.v)];
-    const lo = Math.min(...all);
-    const hi = Math.max(...all);
-    const x = (d: number) => pad + ((d - from) / (TODAY - from)) * (W - 2 * pad);
-    const y = (v: number) => pad + ((hi - v) / (hi - lo)) * (H - 2 * pad);
-    const pt = (d: number, v: number) => `${x(d).toFixed(1)},${y(v).toFixed(1)}`;
-    const upper = rawS.map((p) => pt(p.d, p.v));
-    const lower = dry.map((p) => pt(p.d, p.v)).reverse();
-    return {
-      W,
-      H,
-      band: `M${upper.join(" L")} L${lower.join(" L")} Z`,
-      gold: `M${dry.map((p) => pt(p.d, p.v)).join(" L")}`,
-      dots: dots.map((p) => ({ cx: x(p.d), cy: y(p.v), d: p.d })),
-    };
-  }, []);
-
   const current = DRY_TODAY + FLUID_TODAY;
   const remaining = DRY_TODAY - TARGET_END;
   const plates = [
@@ -163,34 +138,7 @@ function MissionPreview() {
 
   return (
     <div>
-      <svg viewBox={`0 0 ${chart.W} ${chart.H}`} className="w-full" role="img" aria-label="Sample scale readings with the likely-water zone separated from a smooth trend">
-        {[0.25, 0.55, 0.85].map((f) => (
-          <line key={f} x1="0" x2={chart.W} y1={chart.H * f} y2={chart.H * f} stroke="#1B3152" strokeOpacity="0.7" />
-        ))}
-        <path d={chart.band} fill="#38BDF8" fillOpacity="0.16" />
-        {chart.dots.map((p) => (
-          <circle key={p.d} cx={p.cx} cy={p.cy} r="1.7" fill="#AAB5C6" fillOpacity="0.75" />
-        ))}
-        <motion.path
-          d={chart.gold}
-          fill="none"
-          stroke="#D4AF37"
-          strokeWidth="2.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          initial={{ pathLength: 0 }}
-          whileInView={{ pathLength: 1 }}
-          viewport={{ once: true, amount: 0.6 }}
-          transition={{ duration: 1.6, ease: "easeInOut" }}
-        />
-      </svg>
-      <div className="mt-1 flex justify-center gap-4 text-[10px] text-white/45">
-        <span className="flex items-center gap-1.5"><span className="h-1.5 w-1.5 rounded-full bg-steel/80" />Scale reading</span>
-        <span className="flex items-center gap-1.5"><span className="h-1.5 w-3 rounded-sm bg-cyan/30" />Likely water</span>
-        <span className="flex items-center gap-1.5"><span className="h-[2px] w-3 bg-gold" />Trend</span>
-      </div>
-
-      <div className="mt-3 grid grid-cols-2 overflow-hidden rounded-xl border hairline bg-space/50">
+      <div className="grid grid-cols-2 overflow-hidden rounded-xl border hairline bg-space/50">
         {plates.map((p, i) => (
           <div key={p.k} className={`px-3 py-2 ${i % 2 === 0 ? "border-r border-white/[0.06]" : ""} ${i < 2 ? "border-b border-white/[0.06]" : ""}`}>
             <div className="font-mono text-[9px] tracking-[0.1em] text-white/45">{p.k}</div>
@@ -201,10 +149,6 @@ function MissionPreview() {
             </div>
           </div>
         ))}
-      </div>
-
-      <div className="mt-3 rounded-full border border-cyan/30 bg-cyan/[0.06] px-3 py-1.5 text-center font-mono text-[9.5px] tracking-[0.12em] text-cyan/90">
-        TEMPORARY WATER WEIGHT // LIKELY WATER SEPARATED FROM YOUR TREND
       </div>
 
       <GaugeCluster />
@@ -541,6 +485,16 @@ export default function Stations() {
                 <div>
                   <h3 className="font-display text-[34px] leading-tight text-white sm:text-[44px]">{s.name}</h3>
                   <p className="mt-4 max-w-[46ch] text-[15.5px] leading-relaxed text-white/60">{s.body}</p>
+                  {"metrics" in s && s.metrics && (
+                    <dl className="mt-6 max-w-[46ch] divide-y divide-white/[0.07] border-y border-white/[0.07]">
+                      {s.metrics.map((m) => (
+                        <div key={m.name} className="grid grid-cols-[132px_1fr] gap-4 py-3">
+                          <dt className="font-mono text-[10.5px] uppercase tracking-[0.14em] text-gold">{m.name}</dt>
+                          <dd className="text-[14px] leading-relaxed text-white/65">{m.body}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                  )}
                 </div>
                 <div className="bezel no-select rounded-[22px] p-6 sm:p-8">
                   <Preview />

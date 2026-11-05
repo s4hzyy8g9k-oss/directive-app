@@ -168,6 +168,14 @@ export const stations = {
       id: "mission",
       name: "Mission Control",
       body: "Your daily instrument panel. Scale readings with likely water weight separated out show your underlying trend, alongside your estimated daily burn, today's calorie target, dials for velocity, adherence and energy balance, and your distance to target.",
+      // Gemini web refinement pass (2026-11-05): the gauges explained beside the preview.
+      metrics: [
+        { name: "Baseline TDEE", body: "Your estimated daily burn, learned from your weigh-ins and what you log. It updates at the Sunday audit." },
+        { name: "Calorie target", body: "What to eat today to hold the pace you chose. Protein and fat floors come first." },
+        { name: "Velocity", body: "How fast your trend weight is moving, in pounds a week, against your goal pace." },
+        { name: "Adherence", body: "How many of the last 7 days landed within 100 kcal of your target." },
+        { name: "Energy balance", body: "Your average daily gap between what you ate and your estimated burn." },
+      ],
     },
     {
       id: "cruise",

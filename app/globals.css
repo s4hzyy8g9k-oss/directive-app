@@ -139,3 +139,15 @@ body {
 /* Ecosystem bridge (public/media/ecosystem-bridge.css is copied as is from the directive-ecosystem repo).
    The site's nav is fixed, so arriving with ?from=stratum stops below it and the arrival pill shows. */
 #ecosystem-bridge { scroll-margin-top: 88px; }
+
+/* Explore Stratum Metrics button in Stratum's brand language (Gemini web refinement pass, 2026-11-05). Overrides the
+   copied ecosystem-bridge.css on this site only; that file stays as it came from the directive-ecosystem repo. */
+#ecosystem-bridge .eb-cta {
+  background: #0F1B2F;
+  border: 1px solid #38BDF8;
+  color: #38BDF8;
+  font: 600 13px/1 var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.12em;
+}
+#ecosystem-bridge .eb-cta:hover,
+#ecosystem-bridge .eb-cta:focus-visible { background: #13253f; }
