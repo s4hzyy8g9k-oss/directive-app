@@ -96,21 +96,21 @@ export function VisualLog() {
   };
 
   const column = (title: string, items: Item[], first: boolean) => (
-    <div className={`min-w-0 flex-1 ${first ? "" : "border-l border-[#1E356D] pl-2.5 sm:pl-3.5"}`}>
+    <div className={`min-w-0 ${first ? "" : "-ml-2 border-l border-[#1E356D] pl-2"}`}>
       <div className="mb-[5px] border-b border-[#d4af37]/[0.18] pb-1.5 font-appmono text-[10.5px] tracking-[0.16em] text-[#f0d878] sm:text-[11px]">{title}</div>
       {items.map((it) => {
         const v = texts[it.key] ?? "";
         const on = count(it.key) > 0;
         return (
-          <div key={it.key} className="flex items-center justify-between gap-1.5 border-b border-[#1E356D] py-2 last:border-b-0">
-            <button type="button" onClick={() => add(it.key)} aria-label={`Add a portion of ${it.label}`} className="flex min-w-0 flex-1 items-center gap-[7px] text-left active:scale-[0.98]">
-              <svg viewBox="0 0 24 24" className="h-[17px] w-[17px] flex-none sm:h-[18px] sm:w-[18px]" fill="none" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+          <div key={it.key} className="flex items-center justify-between gap-1 border-b border-[#1E356D] py-2 last:border-b-0">
+            <button type="button" onClick={() => add(it.key)} aria-label={`Add a portion of ${it.label}`} className="flex min-w-0 flex-1 items-center gap-1 text-left active:scale-[0.98]">
+              <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] flex-none" fill="none" stroke="#d4af37" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {it.circle && <circle cx="12" cy="12" r="7" />}
                 {it.d.map((d) => (
                   <path key={d} d={d} />
                 ))}
               </svg>
-              <span className={`truncate font-app text-[12px] font-medium sm:text-[13px] ${on ? "text-[#eaeef6]" : "text-[#aab5c6]"}`}>{it.label}</span>
+              <span className={`whitespace-nowrap font-app text-[0.875rem] font-medium leading-tight ${on ? "text-[#eaeef6]" : "text-[#aab5c6]"}`}>{it.label}</span>
             </button>
             <input
               value={v}
@@ -135,7 +135,7 @@ export function VisualLog() {
   return (
     <div>
       <div className="mb-1.5 font-app text-[13px] font-light tracking-[0.12em] text-white">QUICK LOG</div>
-      <div className="flex rounded-xl border border-[#1E356D] bg-[#0C1938] p-3 sm:p-4">
+      <div className="grid grid-cols-2 gap-x-4 rounded-xl border border-[#1E356D] bg-[#162238] px-2.5 py-3">
         {column("SOLIDS", SOLIDS, true)}
         {column("LIQUIDS", LIQUIDS, false)}
       </div>

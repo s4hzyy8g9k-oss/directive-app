@@ -29,9 +29,9 @@ const AFTER = { kcal: BEFORE.kcal + RIBEYE.kcal, p: BEFORE.p + RIBEYE.p, c: BEFO
 const TARGET = 2414;
 
 // ── small parts ──────────────────────────────────────────────────────────────
-function Phone({ children }: { children: React.ReactNode }) {
+export function Phone({ children }: { children: React.ReactNode }) {
   return (
-    <div className="relative mx-auto w-full max-w-[318px] rounded-[42px] border border-[#2A3B5C] bg-[#05070f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]">
+    <div className="relative mx-auto w-full max-w-[360px] rounded-[42px] border border-[#2A3B5C] bg-[#05070f] p-[9px] shadow-[0_30px_60px_rgba(0,0,0,0.55),inset_0_1px_0_rgba(255,255,255,0.08)]">
       <div className="relative h-[600px] overflow-hidden rounded-[34px] bg-[#0A1128]">{children}</div>
     </div>
   );
@@ -117,12 +117,12 @@ function MenuScanMockup({ active }: { active: boolean }) {
         {stage === 0 && (
           <motion.div key="scan" className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0, scale: 0.94 }} transition={fade}>
             <div className="absolute inset-0 bg-[#05070f]" />
-            <div className="absolute inset-x-5 top-14 rounded-md bg-[#1b1a17] px-5 py-6 font-display text-[#e9e0cc] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
-              <div className="text-center text-[11px] tracking-[0.3em] text-[#b8aa8a]">FROM THE GRILL</div>
+            <div className="absolute inset-x-5 top-14 rounded-md border border-white/[0.06] bg-[#0F1B2F] px-5 py-6 font-display text-[#F8FAFC] shadow-[0_10px_30px_rgba(0,0,0,0.6)]">
+              <div className="text-center text-[11px] tracking-[0.3em] text-[#93a6c6]">FROM THE GRILL</div>
               <div className="mt-5 space-y-4 text-[14px]">
                 <div className="flex justify-between opacity-50"><span>Half Roast Chicken</span><span>24</span></div>
                 <div className="relative flex justify-between">
-                  <span>Pan Seared Ribeye <span className="text-[#b8aa8a]">(14 oz)</span></span>
+                  <span>Pan Seared Ribeye <span className="text-[#93a6c6]">(14 oz)</span></span>
                   <span>46</span>
                   <motion.span
                     className="absolute -inset-x-2 -inset-y-1.5 rounded border-2"
@@ -157,35 +157,29 @@ function MenuScanMockup({ active }: { active: boolean }) {
         {stage === 1 && (
           <motion.div key="cal" className="absolute inset-0 px-4 pt-12" initial={{ opacity: 0, scale: 1.04 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0 }} transition={fade}>
             <div className="font-appmono text-[10px] tracking-[0.2em] text-[#8E9EB5]">CUSTOM · NEW MEAL</div>
-            <div className="mt-3 rounded-xl border border-[#1E356D] bg-[#162238] p-4">
-              <div className="font-app text-[16px] font-medium text-white">Ribeye steak</div>
-              <div className="mt-0.5 font-appmono text-[10.5px] text-[#8E9EB5]">14 oz · best guess from the menu</div>
+            {/* The Custom Meal Card (Gemini web refinement pass, 2026-11-05). Numbers as the app works them out: a 855 kcal
+                estimate plus the 20% restaurant adjustment, added as fat and carbs with protein unchanged. */}
+            <div className="mt-3 rounded-xl border bg-[#162238] p-4" style={{ borderColor: "rgba(212,175,55,0.25)" }}>
+              <div className="font-app text-[15px] font-medium leading-snug text-[#F8FAFC]">
+                Ribeye Steak <span className="text-[#aab5c6]">(14 oz cut detected)</span>
+              </div>
               <div className="mt-4 font-appnum text-[34px] font-semibold leading-none tabular-nums text-[#f0d878]">
                 <Counter to={RIBEYE.kcal} run={!reduce && active} />
                 <span className="ml-1.5 font-appmono text-[12px] font-normal tracking-[0.14em] text-[#aab5c6]">KCAL</span>
               </div>
-              <div className="mt-3 grid grid-cols-3 gap-2 font-appmono text-[12px]">
-                {(
-                  [
-                    ["P", RIBEYE.p, P],
-                    ["C", RIBEYE.c, C],
-                    ["F", RIBEYE.f, F],
-                  ] as const
-                ).map(([l, n, col]) => (
-                  <div key={l} className="rounded-md border border-[#1E356D] bg-[#0C1730] py-1.5 text-center">
-                    <span className="font-bold" style={{ color: col }}>{l}</span> <Counter to={n} run={!reduce && active} className="text-white" />g
-                  </div>
-                ))}
+              <div className="mt-3 font-appmono text-[12.5px] text-[#F8FAFC]">
+                <span className="text-[#aab5c6]">{RIBEYE.kcal.toLocaleString("en-US")} kcal |</span> <span className="font-bold" style={{ color: P }}>P</span> {RIBEYE.p}g ·{" "}
+                <span className="font-bold" style={{ color: C }}>C</span> {RIBEYE.c}g · <span className="font-bold" style={{ color: F }}>F</span> {RIBEYE.f}g
               </div>
-              <div className="mt-4 rounded-lg border border-[#d4af37]/25 bg-white/[0.03] p-3">
-                <div className="flex items-center justify-between">
-                  <span className="font-app text-[12px] text-[#eaeef6]">Restaurant adjustment</span>
-                  <motion.span className="font-appmono text-[11px] font-bold text-[#f0d878]" animate={reduce ? undefined : { opacity: [1, 0.45, 1] }} transition={{ duration: 0.8, delay: 0.5 }}>
-                    +20%
-                  </motion.span>
-                </div>
-                <div className="mt-1 font-app text-[10.5px] font-light text-[#aab5c6]">Added as fat and carbs. Protein stays the same.</div>
-              </div>
+              <motion.div
+                className="mt-4 flex items-center gap-2 rounded-lg border px-3 py-2 font-app text-[11px] leading-snug text-[#F8FAFC]"
+                style={{ borderColor: "rgba(212,175,55,0.35)", background: "rgba(212,175,55,0.08)" }}
+                animate={reduce ? undefined : { opacity: [0.4, 1] }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+              >
+                <span className="h-1.5 w-1.5 flex-none rounded-full" style={{ background: GOLD }} />
+                Restaurant adjustment applied (+20% as fat and carbs)
+              </motion.div>
               <div className="mt-3 font-app text-[10.5px] text-[#93a6c6]">Tap any part to adjust it.</div>
             </div>
             <motion.div
@@ -291,7 +285,7 @@ function PrecisionLedgerMockup() {
 // ── 03 / TACTICAL: the app's QUICK LOG (interactive) ─────────────────────────
 function QuickLogMockup() {
   return (
-    <div className="absolute inset-0 overflow-y-auto px-3 pb-4 pt-11 [scrollbar-width:none]">
+    <div className="absolute inset-0 overflow-y-auto px-2.5 pb-4 pt-11 [scrollbar-width:none]">
       <VisualLog />
     </div>
   );
