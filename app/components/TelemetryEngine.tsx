@@ -159,25 +159,26 @@ function MenuScanMockup({ active }: { active: boolean }) {
             <div className="font-appmono text-[10px] tracking-[0.2em] text-[#8E9EB5]">CUSTOM · NEW MEAL</div>
             {/* The Custom Meal Card (Gemini web refinement pass, 2026-11-05). Numbers as the app works them out: a 855 kcal
                 estimate plus the 20% restaurant adjustment, added as fat and carbs with protein unchanged. */}
-            <div className="mt-3 rounded-xl border bg-[#162238] p-4" style={{ borderColor: "rgba(212,175,55,0.25)" }}>
-              <div className="font-app text-[15px] font-medium leading-snug text-[#F8FAFC]">
-                Ribeye Steak <span className="text-[#aab5c6]">(14 oz cut detected)</span>
-              </div>
-              <div className="mt-4 font-appnum text-[34px] font-semibold leading-none tabular-nums text-[#f0d878]">
-                <Counter to={RIBEYE.kcal} run={!reduce && active} />
-                <span className="ml-1.5 font-appmono text-[12px] font-normal tracking-[0.14em] text-[#aab5c6]">KCAL</span>
-              </div>
-              <div className="mt-3 font-appmono text-[12.5px] text-[#F8FAFC]">
-                <span className="text-[#aab5c6]">{RIBEYE.kcal.toLocaleString("en-US")} kcal |</span> <span className="font-bold" style={{ color: P }}>P</span> {RIBEYE.p}g ·{" "}
-                <span className="font-bold" style={{ color: C }}>C</span> {RIBEYE.c}g · <span className="font-bold" style={{ color: F }}>F</span> {RIBEYE.f}g
+            <div className="mt-3 rounded-lg border bg-[#162238] p-4 text-left shadow-lg" style={{ borderColor: "rgba(212,175,55,0.25)" }}>
+              <div className="font-app text-base font-semibold leading-snug text-[#F8FAFC]">Ribeye Steak (14 oz cut detected)</div>
+              <div className="mt-2 flex items-center justify-between gap-2">
+                <div className="flex items-center gap-1.5 font-appmono text-xs tabular-nums text-[#94A3B8]">
+                  <span style={{ color: P }}>P {RIBEYE.p}g</span>
+                  <span>·</span>
+                  <span style={{ color: C }}>C {RIBEYE.c}g</span>
+                  <span>·</span>
+                  <span style={{ color: F }}>F {RIBEYE.f}g</span>
+                </div>
+                <div className="font-appnum text-sm font-bold tabular-nums" style={{ color: GOLD }}>
+                  <Counter to={RIBEYE.kcal} run={!reduce && active} /> kcal
+                </div>
               </div>
               <motion.div
-                className="mt-4 flex items-center gap-2 rounded-lg border px-3 py-2 font-app text-[11px] leading-snug text-[#F8FAFC]"
-                style={{ borderColor: "rgba(212,175,55,0.35)", background: "rgba(212,175,55,0.08)" }}
+                className="mt-3 inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 font-app text-[10.5px] font-medium leading-snug tracking-[-0.01em]"
+                style={{ background: "rgba(212,175,55,0.12)", color: GOLD }}
                 animate={reduce ? undefined : { opacity: [0.4, 1] }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >
-                <span className="h-1.5 w-1.5 flex-none rounded-full" style={{ background: GOLD }} />
                 Restaurant adjustment applied (+20% as fat and carbs)
               </motion.div>
               <div className="mt-3 font-app text-[10.5px] text-[#93a6c6]">Tap any part to adjust it.</div>
