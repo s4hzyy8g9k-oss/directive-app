@@ -6,6 +6,7 @@
 // Drawn from the app's LOG FUEL cockpit: the macro colours, ALL | CUSTOM tabs and the BACK / SCAN / VOICE dock.
 // The restaurant numbers add 20% as fat and carbs, protein unchanged, as the app does.
 
+import { MACRO } from "./macroColors";
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "framer-motion";
 import { useRef } from "react";
@@ -18,9 +19,9 @@ export const TRANSITION_CONFIG = { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [n
 type TabId = (typeof telemetry.tabs)[number]["id"];
 
 const GOLD = "#D4AF37";
-const P = "#FF6B6B";
-const C = "#4EA8DE";
-const F = "#52B788";
+const P = MACRO.protein;
+const C = MACRO.carbs;
+const F = MACRO.fat;
 
 // A 14 oz ribeye with the restaurant adjustment.
 const RIBEYE = { kcal: 1026, p: 72, c: 13, f: 76 };

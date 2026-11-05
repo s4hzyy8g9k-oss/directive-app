@@ -1,5 +1,6 @@
 "use client";
 
+import { MACRO } from "./macroColors";
 import { useState, type ReactElement } from "react";
 import { motion } from "framer-motion";
 import { stations } from "@/app/content";
@@ -22,14 +23,14 @@ function grow(pct: number, duration = 1.1) {
   };
 }
 
-function MacroPill({ label, value, of }: { label: string; value: number; of: number }) {
+function MacroPill({ label, value, of, color }: { label: string; value: number; of: number; color: string }) {
   return (
     <div className="text-center">
-      <div className="mb-1.5 font-app text-[9.5px] tracking-[0.16em] text-[#93a6c6]">{label}</div>
+      <div className="mb-1.5 font-app text-[9.5px] tracking-[0.16em]" style={{ color }}>{label}</div>
       <div className="app-mp-bar mb-1.5">
-        <motion.div className="app-mp-fill" {...grow((value / of) * 100)} />
+        <motion.div className="app-mp-fill" style={{ background: color }} {...grow((value / of) * 100)} />
       </div>
-      <div className="font-appnum text-[16px] font-semibold tabular-nums text-[#eaeef6]">
+      <div className="font-appnum text-[16px] font-semibold tabular-nums" style={{ color }}>
         {value}
         <span className="font-app text-[10.5px] font-light text-[#aab5c6]">/{of}g</span>
       </div>
@@ -59,9 +60,9 @@ function FuelPreview() {
         </div>
 
         <div className="mt-[18px] grid grid-cols-3 gap-2.5">
-          <MacroPill label="PROTEIN" value={FUEL.pro} of={FUEL.proTarget} />
-          <MacroPill label="CARBS" value={FUEL.carb} of={FUEL.carbTarget} />
-          <MacroPill label="FAT" value={FUEL.fat} of={FUEL.fatTarget} />
+          <MacroPill label="PROTEIN" value={FUEL.pro} of={FUEL.proTarget} color={MACRO.protein} />
+          <MacroPill label="CARBS" value={FUEL.carb} of={FUEL.carbTarget} color={MACRO.carbs} />
+          <MacroPill label="FAT" value={FUEL.fat} of={FUEL.fatTarget} color={MACRO.fat} />
         </div>
         <div className="mt-3 font-appmono text-[10px] tracking-[0.03em] text-[#aab5c6] sm:text-[10.5px]">FLOORS: Protein ≥ 156 g · Fat ≥ 55 g</div>
       </div>

@@ -3,9 +3,11 @@
 // Phone screens for "Built around how bodies actually behave" (Gemini web refinement pass, 2026-11-05).
 // Sample numbers for a 183 lb person on a cut: target 2,150 kcal, protein floor 156 g, estimated maintenance 2,650.
 
-const P = "#FF6B6B";
-const C = "#4EA8DE";
-const F = "#52B788";
+import { MACRO } from "./macroColors";
+
+const P = MACRO.protein;
+const C = MACRO.carbs;
+const F = MACRO.fat;
 
 function Header({ title, sub }: { title: string; sub: string }) {
   return (
@@ -131,10 +133,10 @@ export function ReboundShieldScreen() {
 // Protein comes first: the macro HUD with the protein floor held.
 export function ProteinFloorScreen() {
   const bar = (label: string, v: number, of: number, col: string, floor?: string) => (
-    <div className={`rounded-lg p-2.5 ${floor ? "border" : ""}`} style={floor ? { borderColor: "rgba(212,175,55,0.45)", background: "rgba(212,175,55,0.06)" } : undefined}>
+    <div className={`rounded-lg p-2.5 ${floor ? "border" : ""}`} style={floor ? { borderColor: "rgba(52,211,153,0.45)", background: "rgba(52,211,153,0.06)" } : undefined}>
       <div className="flex items-baseline justify-between font-appmono">
         <span className="text-[10px] font-bold tracking-[0.14em]" style={{ color: col }}>{label}</span>
-        <span className="text-[13px] tabular-nums text-white">
+        <span className="text-[13px] tabular-nums" style={{ color: col }}>
           {v}
           <span className="text-[10px] text-[#aab5c6]">/{of} g</span>
         </span>
@@ -142,7 +144,7 @@ export function ProteinFloorScreen() {
       <div className="mt-1.5 h-[6px] overflow-hidden rounded-full bg-[#1E356D]">
         <div className="h-full rounded-full" style={{ width: `${Math.min(100, (v / of) * 100)}%`, background: col }} />
       </div>
-      {floor && <div className="mt-1.5 font-appmono text-[9.5px] tracking-[0.08em] text-[#f0d878]">{floor}</div>}
+      {floor && <div className="mt-1.5 font-appmono text-[9.5px] tracking-[0.08em]" style={{ color: col }}>{floor}</div>}
     </div>
   );
   return (
