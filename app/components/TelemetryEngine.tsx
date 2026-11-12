@@ -3,7 +3,7 @@
 // Flexible Telemetry Engine (Gemini spec relayed by Ray, 2026-11-04). Three tabs beside a phone frame; switching
 // cross-fades the screen. The OPTICAL tab plays the 6 second loop (menu scan, calibration, fuel log). With
 // reduced motion the loop stops on the calibration screen and the tabs switch without movement.
-// Drawn from the app's LOG FUEL cockpit: the macro colours, ALL | CUSTOM tabs and the BACK / SCAN / VOICE dock.
+// Drawn from the app's LOG FUEL screen (mock-up of build 171/172): RECENTS | FAVORITES | MEALS | RECIPES, the serving\n// sheet with the portion slider, and the BACK / LENS / VOICE dock.
 // The restaurant numbers add 20% as fat and carbs, protein unchanged, as the app does.
 
 import { MACRO } from "./macroColors";
@@ -227,59 +227,201 @@ function HudBar() {
   return <DayBar t={t} />;
 }
 
-// ── 02 / PRECISION: the LOG FUEL cockpit ─────────────────────────────────────
+// ── 02 / PRECISION: the LOG FUEL screen as the app has it now (mock-up of build 171/172, 2026-11-12) ────────
+type Food = { name: string; brand?: string; serving: string; unit: string; kcal: number; p: number; c: number; f: number; custom?: boolean };
+const RECENTS: Food[] = [
+  { name: "Overnight oats", serving: "1 serving", unit: "serving", kcal: 420, p: 24, c: 58, f: 10, custom: true },
+  { name: "Chicken breast, grilled", serving: "6 oz", unit: "serving (6 oz)", kcal: 281, p: 53, c: 0, f: 6 },
+  { name: "Jasmine rice, cooked", serving: "1 cup", unit: "cup", kcal: 205, p: 4, c: 45, f: 0 },
+  { name: "Greek yogurt, plain nonfat", serving: "1 cup", unit: "cup", kcal: 130, p: 23, c: 9, f: 0 },
+  { name: "Protein bar", brand: "Quest", serving: "1 bar", unit: "bar", kcal: 190, p: 21, c: 22, f: 8 },
+];
+const DAY = { kcal: 1176, p: 107, c: 137, f: 22 };
+const STEPS = [0, 0.5, 1, 1.5, 2, 2.5, 3];
+const fmt = (n: number) => n.toLocaleString("en-US");
+
+function FoodRow({ x, onOpen }: { x: Food; onOpen: () => void }) {
+  return (
+    <button
+      type="button"
+      onClick={onOpen}
+      aria-label={`Open ${x.name}`}
+      className="flex w-full items-center gap-2 rounded-lg border border-white/[0.08] bg-[#1A2844] px-2.5 py-2 text-left active:scale-[0.99]"
+    >
+      <span className="min-w-0 flex-1">
+        <span className="flex items-center gap-1.5 truncate font-appmono text-[12.5px] font-medium text-[#F1F5F9]">
+          <span className="truncate">{x.brand ? `${x.brand} ${x.name}` : x.name}</span>
+          {x.custom && <span className="flex-none rounded-lg border border-[#1E356D] bg-[#0E1B38] px-1.5 py-px text-[9.5px] font-bold tracking-[0.06em] text-[#aab5c6]">CUSTOM</span>}
+        </span>
+        <span className="mt-1 flex justify-between gap-2 font-appmono text-[10px] text-[#94A3B8]">
+          <span className="truncate">{x.serving}</span>
+          <span className="flex-none">
+            <b style={{ color: P }}>P {x.p}</b> · <b style={{ color: C }}>C {x.c}</b> · <b style={{ color: F }}>F {x.f}</b> · <b className="text-[11px] text-[#C5A059]">{x.kcal} kcal</b>
+          </span>
+        </span>
+      </span>
+      <span aria-hidden className="flex h-6 w-6 flex-none items-center justify-center rounded-full border border-[#C5A059] text-[13px] leading-none text-[#C5A059]">+</span>
+    </button>
+  );
+}
+
+function ServingSheet({ x, onClose, onQueue, onLog }: { x: Food; onClose: () => void; onQueue: (m: number) => void; onLog: (m: number) => void }) {
+  const [amt, setAmt] = useState(1);
+  const k = (n: number) => Math.round(n * amt);
+  return (
+    <motion.div className="absolute inset-0 z-20 bg-[#02040d]/70 px-3 pt-24" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }}>
+      <motion.div
+        className="rounded-2xl border border-[#1E356D] bg-[#0E1B38] p-3.5 shadow-[0_20px_40px_rgba(0,0,0,0.5)]"
+        initial={{ y: 16 }}
+        animate={{ y: 0 }}
+        transition={TRANSITION_CONFIG}
+      >
+        <div className="flex justify-end">
+          <button type="button" onClick={onClose} className="font-appmono text-[10px] font-bold tracking-[0.1em] text-[#aab5c6]">CANCEL</button>
+        </div>
+        <div className="mt-1.5 border-b border-[#1E356D] pb-2 font-appmono text-[13px] font-bold text-white">{x.brand ? `${x.brand} ${x.name}` : x.name}</div>
+        <div className="mt-2.5 font-appmono text-[9px] tracking-[0.12em] text-[#8E9EB5]">SERVING</div>
+        <div className="mt-1.5 grid grid-cols-2 gap-2">
+          <div className="rounded-lg border border-[#2A437E] bg-[#14244D] py-2 text-center font-appmono text-[15px] font-bold tabular-nums text-white">{amt}</div>
+          <div className="rounded-lg border border-[#2A437E] bg-[#14244D] py-2 text-center font-app text-[14px] text-white">{x.unit} ▾</div>
+        </div>
+        <div className="relative mt-3">
+          <div className="pointer-events-none absolute inset-x-[7px] top-1/2 flex -translate-y-1/2 justify-between">
+            {STEPS.map((s) => (
+              <span key={s} className="h-2.5 w-px bg-[#C5A059]/50" />
+            ))}
+          </div>
+          <input
+            type="range"
+            min={0}
+            max={3}
+            step={0.5}
+            value={amt}
+            onChange={(e) => setAmt(Number(e.target.value))}
+            aria-label="Portion slider"
+            className="relative w-full accent-[#C5A059]"
+          />
+        </div>
+        <div className="mt-2 flex items-center justify-between font-appmono text-[9px] tracking-[0.12em] text-[#8E9EB5]">
+          <span>FUEL TELEMETRY</span>
+        </div>
+        <div className="mt-1.5 font-appmono text-[12px] font-bold tabular-nums">
+          <span className="text-[#C5A059]">{fmt(k(x.kcal))} KCAL</span> · <span style={{ color: P }}>P {k(x.p)}</span> · <span style={{ color: C }}>C {k(x.c)}</span> ·{" "}
+          <span style={{ color: F }}>F {k(x.f)}</span>
+        </div>
+        <div className="mt-3.5 grid grid-cols-2 gap-2 font-appmono text-[11px] font-bold tracking-[0.06em]">
+          <button type="button" onClick={() => onQueue(amt)} disabled={amt === 0} className="rounded-lg border border-white/70 py-2.5 text-white disabled:opacity-40">+ QUEUE &amp; NEXT</button>
+          <button type="button" onClick={() => onLog(amt)} disabled={amt === 0} className="rounded-lg bg-[#C5A059] py-2.5 text-[#0A1128] disabled:opacity-40">LOG ALL</button>
+        </div>
+      </motion.div>
+    </motion.div>
+  );
+}
+
 function PrecisionLedgerMockup() {
+  const [day, setDay] = useState(DAY);
+  const [queue, setQueue] = useState<{ x: Food; m: number }[]>([]);
+  const [open, setOpen] = useState<Food | null>(null);
+  const add = (t: typeof DAY, x: Food, m: number) => ({ kcal: t.kcal + Math.round(x.kcal * m), p: t.p + Math.round(x.p * m), c: t.c + Math.round(x.c * m), f: t.f + Math.round(x.f * m) });
   return (
     <div className="absolute inset-0 flex flex-col">
-      <div className="flex items-center justify-between gap-2 px-3 pt-12">
-        <span className="font-app text-[22px] leading-none text-[#C5A059]">‹</span>
-        <span className="rounded-full border-[1.5px] border-[#C5A059] px-3 py-1.5 font-appmono text-[11px] font-bold tracking-[0.08em] text-white">DINNER ▾</span>
-        <span className="flex items-center gap-1.5 rounded-full border-[1.5px] border-[#C5A059] bg-[#14244D] py-1 pl-3 pr-1 font-appmono text-[11px] font-bold text-[#aab5c6]">
-          QUEUE: 2 <span className="rounded-full bg-[#C5A059] px-2 py-0.5 text-[#0A1128]">✓ LOG</span>
-        </span>
-      </div>
-      <div className="mt-3 px-3">
-        <DayBar t={{ kcal: 1462, p: 128, c: 141, f: 39 }} />
-      </div>
-      <div className="mx-3 mt-2.5 flex rounded-md border border-[#1E356D] bg-[#081024] p-[2px] font-appmono text-[10.5px] font-bold tracking-[0.06em]">
-        <span className="flex-1 rounded border border-[#C5A059] bg-[#14244D] py-1.5 text-center text-white">ALL</span>
-        <span className="flex-1 py-1.5 text-center text-[#6B7C8E]">CUSTOM</span>
-      </div>
-      <div className="mt-3 flex-1 border-t border-[#1E356D] bg-[#14244D]/60 px-3 pt-2">
-        <div className="font-appmono text-[10px] tracking-[0.18em] text-[#8E9EB5]">WAITING TO LOG</div>
-        <div className="mt-1 rounded-xl border border-[#1E356D] bg-[#0E1B38] px-3">
-          <Row name="Chicken breast, raw" serving="170 g" kcal={204} p={38} c={0} f={4} />
-          <Row name="Turkey chili (recipe photo)" serving="1 of 6 servings" kcal={386} p={34} c={31} f={13} />
+      <div className="bg-[#0A1128] px-3 pb-3 pt-11">
+        <div className="flex items-center justify-between gap-1.5">
+          <span className="font-app text-[22px] leading-none text-[#aab5c6]">‹</span>
+          <span className="rounded-2xl border border-[#C5A059] bg-[#0E1B38] px-3 py-1 font-app text-[13px] font-medium text-[#F8FAFC]">Dinner ▾</span>
+          <span className="flex h-[30px] items-center rounded-2xl border-[1.5px] border-[#C5A059] bg-[#0C1630] p-[1.5px]" aria-label="Precision mode on">
+            <span className="flex h-full items-center rounded-[13px] bg-[#C5A059] px-1.5 text-[#0A1128]">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <path d="M12 3v18M7 21h10M4.5 6h15" />
+                <path d="M4.5 6 1.5 13.5a3 3 0 0 0 6 0L4.5 6zM19.5 6l-3 7.5a3 3 0 0 0 6 0L19.5 6z" />
+              </svg>
+            </span>
+            <span className="flex h-full items-center px-1.5 text-white">
+              <svg width="25" height="17" viewBox="0 0 36 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+                <circle cx="18" cy="12" r="7" />
+                <path d="M3.5 3v5.5M1.5 3v3.5a2 2 0 0 0 4 0V3M3.5 8.5V21" />
+                <path d="M32.5 21V3c-1.8 1.5-2.5 4-2.5 8.5h2.5" />
+              </svg>
+            </span>
+          </span>
+          <span className={`rounded-2xl border px-2.5 py-1 font-appmono text-[10.5px] font-bold tracking-[0.08em] ${queue.length ? "border-[#C5A059] bg-[#C5A059] text-[#0A1128]" : "border-[#C5A059]/60 bg-[#1E305C] text-[#aab5c6]"}`}>
+            QUEUE ({queue.length})
+          </span>
         </div>
-        <div className="mt-3 font-appmono text-[10px] tracking-[0.18em] text-[#8E9EB5]">LOGGED TODAY</div>
-        <div className="mt-1 rounded-xl border border-[#1E356D] bg-[#0E1B38] px-3">
-          <Row name="Protein bar (barcode)" serving="1 bar · 60 g" kcal={210} p={20} c={23} f={7} />
-          <Row name="Jasmine rice, cooked" serving="185 g" kcal={240} p={4} c={53} f={0} />
+        <div className="mt-3 rounded-[10px] border border-[#1E356D] bg-[#0C1630] px-3 py-2">
+          <div className="mb-1.5 flex items-baseline justify-between font-appmono">
+            <span className="text-[14px] font-extrabold tracking-[0.03em] text-[#C5A059]">
+              {fmt(day.kcal)} <span className="text-[9px] font-bold tracking-[0.1em] text-[#A0B0C0]">KCAL</span>
+            </span>
+            <span className="flex gap-2.5 text-[11.5px] font-bold text-white">
+              <span><span style={{ color: P }}>P </span>{day.p}g</span>
+              <span><span style={{ color: F }}>F </span>{day.f}g</span>
+              <span><span style={{ color: C }}>C </span>{day.c}g</span>
+            </span>
+          </div>
+          <div className="h-[3px] overflow-hidden rounded-full bg-[#1E305C]">
+            <motion.div className="h-full bg-[#C5A059]" initial={false} animate={{ width: `${Math.min(100, (day.kcal / 2150) * 100)}%` }} transition={TRANSITION_CONFIG} />
+          </div>
+        </div>
+        <div className="mt-2.5 grid grid-cols-4 gap-0.5 rounded-md border border-[#1E356D] bg-[#081024] p-[2px] font-appmono text-[9.5px] font-bold tracking-[0.05em]">
+          {["RECENTS", "FAVORITES", "MEALS", "RECIPES"].map((t, i) => (
+            <span key={t} className={`rounded py-2 text-center ${i === 0 ? "border border-[#C5A059] bg-[#1E305C] text-white" : "border border-transparent text-[#A0B0C0]"}`}>
+              {t}
+            </span>
+          ))}
         </div>
       </div>
-      <div className="bg-[#0A1128] px-3 pb-4 pt-2.5">
+      <div className="flex-1 space-y-1.5 overflow-hidden border-t border-[#1E356D] bg-[#1E305C] px-3 pt-2.5">
+        <div className="font-appmono text-[9px] tracking-[0.14em] text-[#aab5c6]">TODAY</div>
+        {RECENTS.map((x) => (
+          <FoodRow key={x.name} x={x} onOpen={() => setOpen(x)} />
+        ))}
+      </div>
+      <div className="bg-[#0A1128] px-3 pb-3.5 pt-2.5">
         <div className="flex h-10 items-center gap-2 rounded-full bg-[#E6ECF5] px-3.5">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4A5D78" strokeWidth="1.8" strokeLinecap="round" aria-hidden>
             <path d="M10.5 4a6.5 6.5 0 1 1 0 13a6.5 6.5 0 0 1 0-13zM15.5 15.5L20 20" />
           </svg>
           <span className="font-app text-[13px] text-[#5d6a82]">Search all foods...</span>
         </div>
-        <div className="mt-2 grid grid-cols-[1fr_2fr_1fr] gap-2">
-          {["BACK", "SCAN", "VOICE"].map((k) => (
-            <div key={k} className="flex h-[58px] flex-col items-center justify-center gap-1 rounded-xl border border-[#1E356D] bg-[#0C1730] font-appmono text-[9.5px] tracking-[0.12em] text-[#aab5c6]">
-              {k === "BACK" && <span className="text-[18px] leading-none text-[#C5A059]">↩</span>}
-              {k === "SCAN" && (
-                <svg width="26" height="20" viewBox="0 0 26 20" fill="none" stroke="#fff" strokeWidth="1.6" aria-hidden>
-                  <path d="M1 6V1h5M20 1h5v5M25 14v5h-5M6 19H1v-5" />
-                  <path d="M7 5v10M10 5v10M12.5 5v10M15 5v10M18 5v10" />
-                </svg>
-              )}
-              {k === "VOICE" && <MicIcon size={20} color="#C5A059" />}
-              {k}
-            </div>
-          ))}
+        <div className="mt-2 grid grid-cols-[22fr_52fr_22fr] gap-2">
+          <div className="flex h-[60px] flex-col items-center justify-center gap-0.5 rounded-xl border border-[#1E356D] bg-[#0C1938]">
+            <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#C5A059" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <path d="M9 7l-5 5 5 5M4 12h11a5 5 0 0 0 5-5V5" />
+            </svg>
+            <span className="font-appmono text-[8.5px] font-bold tracking-[0.08em] text-[#A0B0C0]">BACK</span>
+          </div>
+          <div className="flex h-[60px] flex-col items-center justify-center gap-0.5 rounded-xl border-[1.5px] border-[#1E356D] bg-[#0C1938]">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" aria-hidden>
+              <path d="M3 7V4h3M18 4h3v3M21 17v3h-3M6 20H3v-3" />
+              <path d="M7 8v8M10 8v8M14 8v8M17 8v8" />
+            </svg>
+            <span className="font-appmono text-[8.5px] font-bold tracking-[0.08em] text-[#A0B0C0]">LENS</span>
+          </div>
+          <div className="flex h-[60px] flex-col items-center justify-center gap-0.5 rounded-xl border border-[#1E356D] bg-[#0C1938]">
+            <MicIcon size={24} color="#C5A059" />
+            <span className="font-appmono text-[8.5px] font-bold tracking-[0.08em] text-[#A0B0C0]">VOICE</span>
+          </div>
         </div>
       </div>
+      <AnimatePresence>
+        {open && (
+          <ServingSheet
+            key={open.name}
+            x={open}
+            onClose={() => setOpen(null)}
+            onQueue={(m) => {
+              setQueue((q) => [...q, { x: open, m }]);
+              setOpen(null);
+            }}
+            onLog={(m) => {
+              setDay((d) => queue.reduce((t, it) => add(t, it.x, it.m), add(d, open, m)));
+              setQueue([]);
+              setOpen(null);
+            }}
+          />
+        )}
+      </AnimatePresence>
     </div>
   );
 }
