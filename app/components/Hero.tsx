@@ -18,7 +18,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
   return (
     <section id="how-it-works" className="relative">
       {/* horizon glow behind the instrument */}
-      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[38%] h-[520px] bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,rgba(212,175,55,0.14),rgba(56,189,248,0.05)_45%,transparent_70%)]" />
+      <div aria-hidden className="pointer-events-none absolute inset-x-0 top-[38%] h-[520px] bg-[radial-gradient(ellipse_55%_45%_at_50%_50%,rgba(197, 160, 89,0.14),rgba(56,189,248,0.05)_45%,transparent_70%)]" />
 
       {/* Earth banner: logo over Earth. Edges fade into the page so there is no visible box.
           On phones it is cropped tighter (5:4) so the logo stays large and the side taglines drop out. */}
@@ -44,7 +44,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
       <div className="relative mx-auto max-w-5xl px-5 pb-16 pt-0 sm:px-8">
         <div className="mx-auto -mt-6 max-w-3xl text-center sm:-mt-12">
           <motion.div {...rise(0.06)} className="mx-auto mt-6 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/[0.06] px-3.5 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_#D4AF37]" />
+            <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_10px_#C5A059]" />
             <span className="text-[12.5px] text-champagne/90">{hero.kicker}</span>
           </motion.div>
 
@@ -62,7 +62,7 @@ export default function Hero({ onApply }: { onApply: () => void }) {
           <motion.div {...rise(0.4)} className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <button
               onClick={onApply}
-              className="w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] px-7 py-3.5 text-[14.5px] font-semibold text-obsidian shadow-[0_10px_40px_-10px_rgba(212,175,55,0.7)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
+              className="w-full rounded-full bg-gold px-7 py-3.5 text-[14.5px] font-semibold text-obsidian shadow-[0_10px_40px_-10px_rgba(197, 160, 89,0.7)] transition-transform hover:scale-[1.02] active:scale-[0.98] sm:w-auto"
             >
               {hero.primaryCta}
             </button>

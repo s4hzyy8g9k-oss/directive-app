@@ -189,9 +189,9 @@ export function AppDial({
             <stop offset="1" stopColor="#8C6D32" />
           </linearGradient>
           <linearGradient id={`${clip}-hub`} x1="0" y1="0" x2="1" y2="1">
-            <stop offset="0" stopColor="#f0d878" />
+            <stop offset="0" stopColor="#C5A059" />
             <stop offset="0.35" stopColor="#a3812e" />
-            <stop offset="0.65" stopColor="#f0d878" />
+            <stop offset="0.65" stopColor="#C5A059" />
             <stop offset="1" stopColor="#6b5419" />
           </linearGradient>
           <linearGradient id={`${clip}-hand`} x1="0" y1="0" x2="1" y2="0">
@@ -224,7 +224,7 @@ export function AppDial({
               y1={(CY - 46.5 * Math.cos(rad(ang))).toFixed(2)}
               x2={(CX + r2 * Math.sin(rad(ang))).toFixed(2)}
               y2={(CY - r2 * Math.cos(rad(ang))).toFixed(2)}
-              stroke={on ? "#f0d878" : major ? "#CBD5E1" : "#6B7C8E"}
+              stroke={on ? "#C5A059" : major ? "#CBD5E1" : "#6B7C8E"}
               strokeOpacity={on ? 1 : major ? 0.9 : 0.6}
               strokeWidth={major ? 1.5 : 1}
               strokeLinecap="round"
@@ -239,7 +239,7 @@ export function AppDial({
         <text x="60" y="76" textAnchor="middle" fontSize="6" letterSpacing="1" fill="#9fb0cc" style={{ fontFamily: "var(--font-app-sans), sans-serif" }}>
           {label}
         </text>
-        <text x="60" y="103" textAnchor="middle" fontWeight="700" fontSize={big ? 17 : 20} fill="#f0d878" style={{ fontFamily: "var(--font-app-num), sans-serif" }}>
+        <text x="60" y="103" textAnchor="middle" fontWeight="700" fontSize={big ? 17 : 20} fill="#C5A059" style={{ fontFamily: "var(--font-app-num), sans-serif" }}>
           {display}
         </text>
         <g transform={`rotate(${(-135 + p * 270).toFixed(2)} 60 60)`}>
@@ -264,14 +264,14 @@ export function AppSwitchKnob({ on }: { on: boolean }) {
   return (
     <span
       aria-hidden
-      className={`relative h-[22px] w-10 flex-none rounded-full border transition-colors ${on ? "border-[#f0d878] bg-[#d4af37]/25" : "border-[#d4af37]/25 bg-[#1c2030]"}`}
+      className={`relative h-[22px] w-10 flex-none rounded-full border transition-colors ${on ? "border-[#C5A059] bg-[#C5A059]/25" : "border-[#C5A059]/25 bg-[#1c2030]"}`}
     >
-      <span className={`absolute left-[2px] top-[2px] h-4 w-4 rounded-full transition-transform duration-200 ${on ? "translate-x-[18px] bg-[#f0d878]" : "bg-[#aab5c6]"}`} />
+      <span className={`absolute left-[2px] top-[2px] h-4 w-4 rounded-full transition-transform duration-200 ${on ? "translate-x-[18px] bg-[#C5A059]" : "bg-[#aab5c6]"}`} />
     </span>
   );
 }
 
-export function MicIcon({ size = 22, color = "#d4af37" }: { size?: number; color?: string }) {
+export function MicIcon({ size = 22, color = "#C5A059" }: { size?: number; color?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="1.5" strokeLinecap="round" aria-hidden>
       <path d="M12 3a3 3 0 0 1 3 3v5a3 3 0 0 1-6 0V6a3 3 0 0 1 3-3z" />

@@ -18,7 +18,7 @@ export const TRANSITION_CONFIG = { duration: 0.45, ease: [0.16, 1, 0.3, 1] as [n
 
 type TabId = (typeof telemetry.tabs)[number]["id"];
 
-const GOLD = "#D4AF37";
+const GOLD = "#C5A059";
 const P = MACRO.protein;
 const C = MACRO.carbs;
 const F = MACRO.fat;
@@ -71,7 +71,7 @@ function DayBar({ t }: { t: typeof BEFORE }) {
         </span>
       </div>
       <div className="mt-2 h-[5px] overflow-hidden rounded-full bg-[#1E356D]">
-        <motion.div className="h-full rounded-full bg-gradient-to-r from-[#7a5f22] to-[#f0d878]" initial={false} animate={{ width: `${(t.kcal / TARGET) * 100}%` }} transition={{ duration: 0.9, ease: TRANSITION_CONFIG.ease }} />
+        <motion.div className="h-full rounded-full bg-gradient-to-r from-[#7a5f22] to-[#C5A059]" initial={false} animate={{ width: `${(t.kcal / TARGET) * 100}%` }} transition={{ duration: 0.9, ease: TRANSITION_CONFIG.ease }} />
       </div>
     </div>
   );
@@ -127,7 +127,7 @@ function MenuScanMockup({ active }: { active: boolean }) {
                   <span>46</span>
                   <motion.span
                     className="absolute -inset-x-2 -inset-y-1.5 rounded border-2"
-                    style={{ borderColor: GOLD, background: "rgba(212,175,55,0.12)" }}
+                    style={{ borderColor: GOLD, background: "rgba(197, 160, 89,0.12)" }}
                     initial={{ opacity: 0, scale: 1.15 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 1.1, duration: 0.35, ease: TRANSITION_CONFIG.ease }}
@@ -150,7 +150,7 @@ function MenuScanMockup({ active }: { active: boolean }) {
             {["left-3 top-10 border-l-2 border-t-2", "right-3 top-10 border-r-2 border-t-2", "left-3 top-[340px] border-b-2 border-l-2", "right-3 top-[340px] border-b-2 border-r-2"].map((c) => (
               <span key={c} className={`absolute h-6 w-6 ${c}`} style={{ borderColor: GOLD }} />
             ))}
-            <div className="absolute inset-x-0 bottom-24 text-center font-appmono text-[11px] tracking-[0.18em] text-[#f0d878]">READING MENU</div>
+            <div className="absolute inset-x-0 bottom-24 text-center font-appmono text-[11px] tracking-[0.18em] text-[#C5A059]">READING MENU</div>
             <div className="absolute bottom-8 left-1/2 h-14 w-14 -translate-x-1/2 rounded-full border-[3px] border-white/80" />
           </motion.div>
         )}
@@ -160,7 +160,7 @@ function MenuScanMockup({ active }: { active: boolean }) {
             <div className="font-appmono text-[10px] tracking-[0.2em] text-[#8E9EB5]">CUSTOM · NEW MEAL</div>
             {/* The Custom Meal Card (Gemini web refinement pass, 2026-11-05). Numbers as the app works them out: a 855 kcal
                 estimate plus the 20% restaurant adjustment, added as fat and carbs with protein unchanged. */}
-            <div className="mt-3 rounded-lg border bg-[#162238] p-4 text-left shadow-lg" style={{ borderColor: "rgba(212,175,55,0.25)" }}>
+            <div className="mt-3 rounded-lg border bg-[#162238] p-4 text-left shadow-lg" style={{ borderColor: "rgba(197, 160, 89,0.25)" }}>
               <div className="font-app text-base font-semibold leading-snug text-[#F8FAFC]">Ribeye Steak (14 oz cut detected)</div>
               <div className="mt-2 flex items-center justify-between gap-2">
                 <div className="flex items-center gap-1.5 font-appmono text-xs tabular-nums text-[#94A3B8]">
@@ -176,7 +176,7 @@ function MenuScanMockup({ active }: { active: boolean }) {
               </div>
               <motion.div
                 className="mt-3 inline-flex items-center whitespace-nowrap rounded-full px-2.5 py-1 font-app text-[10.5px] font-medium leading-snug tracking-[-0.01em]"
-                style={{ background: "rgba(212,175,55,0.12)", color: GOLD }}
+                style={{ background: "rgba(197, 160, 89,0.12)", color: GOLD }}
                 animate={reduce ? undefined : { opacity: [0.4, 1] }}
                 transition={{ duration: 0.5, delay: 0.6 }}
               >

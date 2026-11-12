@@ -92,8 +92,8 @@ export default function HeroChart() {
         >
           <defs>
             <linearGradient id="futureShade" x1="0" y1="0" x2="1" y2="0">
-              <stop offset="0%" stopColor="#D4AF37" stopOpacity="0.05" />
-              <stop offset="100%" stopColor="#D4AF37" stopOpacity="0" />
+              <stop offset="0%" stopColor="#C5A059" stopOpacity="0.05" />
+              <stop offset="100%" stopColor="#C5A059" stopOpacity="0" />
             </linearGradient>
             <linearGradient id="cyanBand" x1="0" y1="0" x2="0" y2="1">
               <stop offset="0%" stopColor="#38BDF8" stopOpacity="0.32" />
@@ -138,8 +138,8 @@ export default function HeroChart() {
           />
 
           {/* solid gold dry-mass line: history + future */}
-          <path d={GOLD_HISTORY} fill="none" stroke="#D4AF37" strokeWidth="3" className="gold-glow" />
-          <path d={GOLD_FUTURE} fill="none" stroke="#D4AF37" strokeWidth="3" strokeOpacity="0.9" className="gold-glow" />
+          <path d={GOLD_HISTORY} fill="none" stroke="#C5A059" strokeWidth="3" className="gold-glow" />
+          <path d={GOLD_FUTURE} fill="none" stroke="#C5A059" strokeWidth="3" strokeOpacity="0.9" className="gold-glow" />
 
           {/* TODAY line */}
           <line x1="430" y1="30" x2="430" y2="350" stroke="#FFFFFF" strokeOpacity="0.3" strokeWidth="1" strokeDasharray="2 4" />
@@ -149,16 +149,16 @@ export default function HeroChart() {
 
           {/* variance badge near current point */}
           <g transform="translate(430,222)">
-            <circle r="4" fill="#D4AF37" />
+            <circle r="4" fill="#C5A059" />
             <rect x="10" y="-11" width="52" height="18" rx="2" fill="#0B1528" stroke="#2A3B5C" />
-            <text x="16" y="2" className="font-mono" fontSize="9" fill="#D4AF37">
+            <text x="16" y="2" className="font-mono" fontSize="9" fill="#C5A059">
               +0.8 LBS
             </text>
           </g>
 
           {/* target waypoint */}
           <g transform="translate(800,316)">
-            <text fontSize="15" fill="#D4AF37" x="-6" y="5">
+            <text fontSize="15" fill="#C5A059" x="-6" y="5">
               ⌖
             </text>
           </g>
@@ -177,7 +177,7 @@ export default function HeroChart() {
                 y1={callout.y}
                 x2={callout.x}
                 y2={callout.y - 28}
-                stroke="#D4AF37"
+                stroke="#C5A059"
                 strokeOpacity="0.6"
                 strokeWidth="1"
               />

@@ -11,7 +11,7 @@ body {
   background-color: #02040c;
   background-image:
     radial-gradient(ellipse 80% 50% at 15% -5%, rgba(27, 49, 82, 0.55), transparent 60%),
-    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(212, 175, 55, 0.07), transparent 60%),
+    radial-gradient(ellipse 60% 40% at 90% 20%, rgba(197, 160, 89, 0.07), transparent 60%),
     radial-gradient(ellipse 70% 50% at 50% 110%, rgba(56, 189, 248, 0.06), transparent 60%);
   background-attachment: fixed;
 }
@@ -31,7 +31,7 @@ body {
 .bezel {
   background:
     linear-gradient(180deg, rgba(19, 40, 74, 0.72), rgba(6, 12, 28, 0.88)) padding-box,
-    linear-gradient(160deg, rgba(241, 220, 154, 0.55), rgba(42, 59, 92, 0.5) 30%, rgba(42, 59, 92, 0.25) 70%, rgba(212, 175, 55, 0.4)) border-box;
+    linear-gradient(160deg, rgba(197, 160, 89, 0.55), rgba(42, 59, 92, 0.5) 30%, rgba(42, 59, 92, 0.25) 70%, rgba(197, 160, 89, 0.4)) border-box;
   border: 1px solid transparent;
   box-shadow: 0 40px 90px -30px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(6px);
@@ -43,16 +43,11 @@ body {
   backdrop-filter: blur(6px);
 }
 
-.gold-text {
-  background: linear-gradient(180deg, #f6e7b4 0%, #d4af37 55%, #a8862a 100%);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-}
+.gold-text { color: #C5A059; }
 
-::selection { background: #d4af37; color: #030612; }
+::selection { background: #C5A059; color: #030612; }
 
-:focus-visible { outline: 2px solid #d4af37; outline-offset: 3px; border-radius: 2px; }
+:focus-visible { outline: 2px solid #C5A059; outline-offset: 3px; border-radius: 2px; }
 
 
 /* ===== The app's own look, copied from the design mock-up (directive-horology-mission-control.html) ===== */
@@ -69,7 +64,7 @@ body {
     linear-gradient(170deg, rgba(8, 14, 38, 0.96) 0%, rgba(7, 12, 34, 0.98) 50%, rgba(6, 11, 32, 0.98) 100%);
   border: 1px solid rgba(160, 190, 230, 0.16);
   border-top-color: rgba(190, 215, 245, 0.28);
-  border-bottom-color: rgba(212, 175, 55, 0.3);
+  border-bottom-color: rgba(197, 160, 89, 0.3);
   border-radius: 14px;
   padding: 14px;
   color: #eaeef6;
@@ -90,19 +85,19 @@ body {
 .app-slider { position: relative; height: 44px; touch-action: none; cursor: grab; outline: none; user-select: none; -webkit-user-select: none; }
 .app-slider:active { cursor: grabbing; }
 .app-slider:focus-visible { outline: none; }
-.app-slider:focus-visible .app-thumb { box-shadow: 0 0 0 3px #010309, 0 0 0 5px #f0d878; }
+.app-slider:focus-visible .app-thumb { box-shadow: 0 0 0 3px #010309, 0 0 0 5px #C5A059; }
 .app-rail { position: absolute; left: 17px; right: 17px; top: 20px; height: 4px; border-radius: 2px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 1px 0 rgba(255, 255, 255, 0.06); }
-.app-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: linear-gradient(90deg, #7a5f22, #f0d878); }
+.app-fill { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 2px; background: linear-gradient(90deg, #7a5f22, #C5A059); }
 .app-ticks { position: absolute; left: 17px; right: 17px; top: 32px; height: 8px; }
 .app-ticks i { position: absolute; top: 0; width: 1px; height: 5px; background: #5d6a82; }
 .app-ticks i.m { height: 8px; background: #7a5f22; }
 .app-thumb {
   position: absolute; top: 5px; width: 34px; height: 34px; border-radius: 50%;
-  border: 1px solid #f0d878;
+  border: 1px solid #C5A059;
   background:
     repeating-linear-gradient(45deg, rgba(20, 12, 0, 0.42) 0 1.4px, transparent 1.4px 4.2px),
     repeating-linear-gradient(-45deg, rgba(20, 12, 0, 0.42) 0 1.4px, transparent 1.4px 4.2px),
-    linear-gradient(145deg, #f0d878 0%, #c39b4f 42%, #6b5419 100%);
+    linear-gradient(145deg, #C5A059 0%, #c39b4f 42%, #6b5419 100%);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.55), inset 0 1px 1px rgba(255, 255, 255, 0.55), inset 0 -2px 3px rgba(0, 0, 0, 0.35);
 }
 .app-thumb::after { content: ""; position: absolute; inset: 8px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #fbefc6, #a9843d 70%); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.6); }
@@ -110,23 +105,23 @@ body {
 .app-slider.locked .app-rail { background: linear-gradient(180deg, #171a24, #1c2030); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.7); }
 .app-slider.locked .app-fill { background: #2b2f3d; }
 .app-slider.locked .app-thumb { opacity: 0.45; filter: grayscale(0.7) brightness(0.8); }
-.app-slider.unlocked .app-rail { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 12px rgba(212, 175, 55, 0.25); }
+.app-slider.unlocked .app-rail { box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8), 0 0 12px rgba(197, 160, 89, 0.25); }
 
 /* MACRO RECONCILIATION bars */
 .app-reserve-bar { position: relative; height: 12px; border-radius: 6px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8); overflow: hidden; }
-.app-reserve-fill { height: 100%; border-radius: 6px; background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 9px), linear-gradient(90deg, #7a5f22, #f0d878); }
+.app-reserve-fill { height: 100%; border-radius: 6px; background: repeating-linear-gradient(90deg, rgba(0, 0, 0, 0.25) 0 1px, transparent 1px 9px), linear-gradient(90deg, #7a5f22, #C5A059); }
 .app-mp-bar { position: relative; height: 8px; border-radius: 4px; background: linear-gradient(180deg, #010207, #030612); box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.8); overflow: hidden; }
-.app-mp-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7a5f22, #f0d878); }
+.app-mp-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, #7a5f22, #C5A059); }
 
 /* The TDEE readout well */
 .app-tdee-well {
-  background: radial-gradient(120% 100% at 50% 0%, rgba(212, 175, 55, 0.06) 0%, rgba(0, 0, 0, 0) 60%), #060a16;
-  border: 1px solid rgba(212, 175, 55, 0.4); border-radius: 12px; padding: 16px; text-align: center;
+  background: radial-gradient(120% 100% at 50% 0%, rgba(197, 160, 89, 0.06) 0%, rgba(0, 0, 0, 0) 60%), #060a16;
+  border: 1px solid rgba(197, 160, 89, 0.4); border-radius: 12px; padding: 16px; text-align: center;
   box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(0, 0, 0, 0.3);
 }
 
 /* Gold buttons and pill switches */
-.app-gold-pill { background: linear-gradient(150deg, #f0d878, #7a5f22); color: #2a1d05; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); }
+.app-gold-pill { background: linear-gradient(150deg, #C5A059, #7a5f22); color: #2a1d05; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.35); }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -151,3 +146,9 @@ body {
 }
 #ecosystem-bridge .eb-cta:hover,
 #ecosystem-bridge .eb-cta:focus-visible { background: #13253f; }
+
+/* Site gold matches the app's single gold #C5A059 (Ray, 2026-11-12). public/media/ecosystem-bridge.css stays byte for byte,
+   so its Directive accent is set here. */
+#ecosystem-bridge .eb[data-variant="story"] .eb-port[data-card="directive"],
+#ecosystem-bridge .eb[data-variant="story"] .eb-cta[data-card="directive"],
+#ecosystem-bridge .eb[data-variant="story"] .eb-port-alt[data-card="directive"] { --eb-accent: #C5A059; }
