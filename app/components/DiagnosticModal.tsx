@@ -171,7 +171,7 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                       <button
                         onClick={() => setStep(3)}
                         disabled={disruptors.length === 0}
-                        className="rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] px-6 py-2.5 text-[13px] font-semibold text-obsidian disabled:opacity-30"
+                        className="rounded-full bg-gold px-6 py-2.5 text-[13px] font-semibold text-obsidian disabled:opacity-30"
                       >
                         Continue
                       </button>
@@ -239,12 +239,12 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                             setAdult(e.target.checked);
                             setError("");
                           }}
-                          className="h-5 w-5 shrink-0 accent-[#D4AF37]"
+                          className="h-5 w-5 shrink-0 accent-[#C5A059]"
                         />
                         <span className="text-[14px] text-white/80">{modal.step4.adultCheck}</span>
                       </label>
                       {error && <p className="mt-2 text-[13px] text-coral">{error}</p>}
-                      <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] py-3.5 text-[15px] font-semibold text-obsidian disabled:opacity-60">
+                      <button type="submit" disabled={sending} className="mt-4 w-full rounded-full bg-gold py-3.5 text-[15px] font-semibold text-obsidian disabled:opacity-60">
                         {sending ? "Sending..." : modal.step4.button}
                       </button>
                     </form>
@@ -257,11 +257,11 @@ export default function DiagnosticModal({ open, onClose }: { open: boolean; onCl
                 {done && (
                   <motion.div key="done" initial={{ opacity: 0, scale: 0.97 }} animate={{ opacity: 1, scale: 1 }} className="py-2 text-center">
                     <svg viewBox="0 0 64 64" className="mx-auto h-16 w-16" aria-hidden>
-                      <circle cx="32" cy="32" r="30" fill="none" stroke="#D4AF37" strokeOpacity="0.5" />
+                      <circle cx="32" cy="32" r="30" fill="none" stroke="#C5A059" strokeOpacity="0.5" />
                       <motion.path
                         d="M20 33 l8 8 l16 -18"
                         fill="none"
-                        stroke="#D4AF37"
+                        stroke="#C5A059"
                         strokeWidth="3"
                         strokeLinecap="round"
                         strokeLinejoin="round"

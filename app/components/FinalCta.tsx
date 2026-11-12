@@ -12,7 +12,7 @@ export default function FinalCta({ onApply }: { onApply: () => void }) {
         <p className="mx-auto mt-6 max-w-[48ch] text-[16.5px] leading-relaxed text-white/65">{finalCta.body}</p>
         <button
           onClick={onApply}
-          className="mt-10 rounded-full bg-gradient-to-b from-[#F1DC9A] via-gold to-[#B8932C] px-9 py-4 text-[15px] font-semibold text-obsidian shadow-[0_12px_50px_-10px_rgba(212,175,55,0.8)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
+          className="mt-10 rounded-full bg-gold px-9 py-4 text-[15px] font-semibold text-obsidian shadow-[0_12px_50px_-10px_rgba(197, 160, 89,0.8)] transition-transform hover:scale-[1.02] active:scale-[0.98]"
         >
           {finalCta.cta}
         </button>

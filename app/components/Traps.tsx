@@ -14,10 +14,10 @@ function CaloriesViz() {
     </div>
   );
   return (
-    <div className="app-panel w-full !border-[#d4af37]/40">
+    <div className="app-panel w-full !border-[#C5A059]/40">
       <div className="flex items-center justify-between">
         <h4 className="app-panel-h">60-MINUTE LIFT</h4>
-        <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#f0d878]">MEDIUM</span>
+        <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#C5A059]">MEDIUM</span>
       </div>
       {/* Owner, 2026-10-19, 00:57 UTC: the watch's gross on top, what is taken off under it, and the thick NET CREDITED
           bar once, at the bottom. 2026-10-19 (owner: check the maths): the app's figures for a 180 lb person, 60 min of
@@ -30,9 +30,9 @@ function CaloriesViz() {
       </div>
       <div className="mt-[18px] mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
         <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
-          NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">49%</span>
+          NET CREDITED: <span className="font-appmono font-bold tracking-[0.12em] text-[#C5A059]">49%</span>
         </span>
-        <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#f0d878]">
+        <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#C5A059]">
           205<span className="text-[15px] font-medium text-[#eaeef6]"> / 420 kcal</span>
         </span>
       </div>
@@ -81,7 +81,7 @@ function WaterViz() {
         ))}
         <line x1={x(6)} x2={x(6)} y1={y(spike.scale)} y2={y(spike.trend)} stroke="#38BDF8" strokeOpacity="0.6" strokeDasharray="2 3" />
         <text x={x(6) - 4} y={y(spike.scale) - 7} fontSize="10" fill="#7DD3FC" textAnchor="end">+3.0 lb overnight</text>
-        <path d={trend} fill="none" stroke="#D4AF37" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+        <path d={trend} fill="none" stroke="#C5A059" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
         {READINGS.map((r, i) => (
           <circle key={i} cx={x(i)} cy={y(r.scale)} r={i === 6 ? 3.6 : 2.4} fill={i === 6 ? "#38BDF8" : "#AAB5C6"} fillOpacity={i === 6 ? 1 : 0.8} />
         ))}
@@ -93,12 +93,12 @@ function WaterViz() {
         <div className="grid grid-cols-[auto_auto_auto] gap-x-4 gap-y-1.5">
           <span className="text-[9px] tracking-[0.14em] text-[#8E9EB5]">DAY</span>
           <span className="text-right text-[9px] tracking-[0.14em] text-[#8E9EB5]">SCALE</span>
-          <span className="text-right text-[9px] tracking-[0.14em] text-[#f0d878]">TREND</span>
+          <span className="text-right text-[9px] tracking-[0.14em] text-[#C5A059]">TREND</span>
           {LEDGER.map(({ day, i }) => (
             <div key={day} className="contents">
               <span className="text-[#eaeef6]">{day}</span>
               <span className={`text-right ${i === 6 ? "font-bold text-[#7DD3FC]" : "text-[#eaeef6]"}`}>{READINGS[i].scale.toFixed(1)}</span>
-              <span className="text-right text-[#f0d878]">{READINGS[i].trend.toFixed(1)}</span>
+              <span className="text-right text-[#C5A059]">{READINGS[i].trend.toFixed(1)}</span>
             </div>
           ))}
         </div>

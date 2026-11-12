@@ -42,16 +42,16 @@ function FuelPreview() {
   const [event, setEvent] = useState(false);
   return (
     <div>
-      <div className="app-panel !border-[#d4af37]/40">
+      <div className="app-panel !border-[#C5A059]/40">
         <div className="flex items-center justify-between">
           <h4 className="app-panel-h">MACRO RECONCILIATION</h4>
-          <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#f0d878]">TODAY</span>
+          <span className="mb-2 font-appmono text-[10px] tracking-[0.14em] text-[#C5A059]">TODAY</span>
         </div>
         <div className="mb-2 flex flex-wrap items-baseline justify-between gap-x-2">
           <span className="font-app text-[10.5px] tracking-[0.22em] text-[#93a6c6]">
-            CALORIES: <span className="font-appmono font-bold tracking-[0.12em] text-[#d4af37]">CUT</span>
+            CALORIES: <span className="font-appmono font-bold tracking-[0.12em] text-[#C5A059]">CUT</span>
           </span>
-          <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#f0d878] sm:text-[30px]">
+          <span className="font-appnum text-[26px] font-semibold leading-none tabular-nums text-[#C5A059] sm:text-[30px]">
             1,640<span className="text-[15px] font-medium text-[#eaeef6] sm:text-[17px]"> / 2,150 kcal</span>
           </span>
         </div>
@@ -74,7 +74,7 @@ function FuelPreview() {
           role="switch"
           aria-checked={event}
           onClick={() => setEvent((v) => !v)}
-          className="flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-[#d4af37]/[0.18] bg-white/[0.03] p-3 text-left"
+          className="flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-[#C5A059]/[0.18] bg-white/[0.03] p-3 text-left"
         >
           <span className="font-app text-[12.5px] text-[#eaeef6]">Plan an event</span>
           <AppSwitchKnob on={event} />
@@ -82,7 +82,7 @@ function FuelPreview() {
         <div className="mt-2 min-h-[32px] font-app text-[12px] leading-snug text-[#aab5c6]">
           {event ? (
             <>
-              <span className="text-[#f0d878]">+1,000 kcal planned for your event.</span> Offset by 200 kcal a day over the 5 days before it. Your calorie floors always come first.
+              <span className="text-[#C5A059]">+1,000 kcal planned for your event.</span> Offset by 200 kcal a day over the 5 days before it. Your calorie floors always come first.
             </>
           ) : (
             "Plan extra calories for a dinner or celebration without breaking your week."
@@ -101,7 +101,7 @@ function GaugeCluster() {
     <div className="app-panel mt-3">
       <h4 className="app-panel-h">GAUGE CLUSTER</h4>
       <div className="app-tdee-well mb-3.5">
-        <div className="mb-1.5 font-appmono text-[9.5px] tracking-[0.14em] text-[#f0d878]">EST. BASELINE TDEE</div>
+        <div className="mb-1.5 font-appmono text-[9.5px] tracking-[0.14em] text-[#C5A059]">EST. BASELINE TDEE</div>
         <div className="font-appmono text-[26px] font-bold leading-none tracking-[-0.01em] text-white tabular-nums sm:text-[28px]">
           2,650<small className="ml-1.5 text-[12px] font-normal tracking-[0.04em] text-[#aab5c6] sm:text-[13px]">KCAL/DAY</small>
         </div>
@@ -111,8 +111,8 @@ function GaugeCluster() {
         </div>
       </div>
       <div className="mb-2.5 flex items-baseline justify-between gap-2 px-1">
-        <span className="font-appmono text-[9.5px] tracking-[0.14em] text-[#f0d878]">CALORIE TARGET</span>
-        <span className="font-appmono text-[17px] font-bold tabular-nums text-[#f0d878] sm:text-[18px]">
+        <span className="font-appmono text-[9.5px] tracking-[0.14em] text-[#C5A059]">CALORIE TARGET</span>
+        <span className="font-appmono text-[17px] font-bold tabular-nums text-[#C5A059] sm:text-[18px]">
           2,150<small className="text-[12px] font-normal tracking-[0.04em] text-[#aab5c6] sm:text-[13px]"> KCAL/DAY</small>
         </span>
       </div>
@@ -172,20 +172,20 @@ function CruisePreview() {
         role="img"
         aria-label="Illustration: body weight drops during the cut to touchdown. Scale Shield covers the first 10 days after touchdown. Rebound Shield covers the six-week reverse diet, while calories step back up toward maintenance. After that, the weight is watched against a corridor of 3 pounds either side of the target."
       >
-        <text x="14" y="10" fontSize="9" letterSpacing="1.2" fill="#D4AF37" fillOpacity="0.85">BODY WEIGHT</text>
+        <text x="14" y="10" fontSize="9" letterSpacing="1.2" fill="#C5A059" fillOpacity="0.85">BODY WEIGHT</text>
 
         {/* maintenance corridor: 3 lb either side of the target, from touchdown on */}
-        <rect x="172" y="104" width="158" height="20" fill="#F1DC9A" fillOpacity="0.06" />
-        <line x1="172" y1="104" x2="330" y2="104" stroke="#F1DC9A" strokeOpacity="0.55" strokeDasharray="5 5" />
-        <line x1="172" y1="124" x2="330" y2="124" stroke="#F1DC9A" strokeOpacity="0.55" strokeDasharray="5 5" />
-        <text x="330" y="134" textAnchor="end" fontSize="8.5" fill="#F1DC9A" fillOpacity="0.85">Corridor: target ± 3 lb</text>
+        <rect x="172" y="104" width="158" height="20" fill="#C5A059" fillOpacity="0.06" />
+        <line x1="172" y1="104" x2="330" y2="104" stroke="#C5A059" strokeOpacity="0.55" strokeDasharray="5 5" />
+        <line x1="172" y1="124" x2="330" y2="124" stroke="#C5A059" strokeOpacity="0.55" strokeDasharray="5 5" />
+        <text x="330" y="134" textAnchor="end" fontSize="8.5" fill="#C5A059" fillOpacity="0.85">Corridor: target ± 3 lb</text>
 
         {/* target line */}
         <line x1="10" y1="114" x2="330" y2="114" stroke="#1B3152" />
 
         {/* phase dividers and names */}
-        <line x1="172" y1="134" x2="172" y2="172" stroke="#F1DC9A" strokeOpacity="0.2" />
-        <line x1="246" y1="134" x2="246" y2="172" stroke="#F1DC9A" strokeOpacity="0.2" />
+        <line x1="172" y1="134" x2="172" y2="172" stroke="#C5A059" strokeOpacity="0.2" />
+        <line x1="246" y1="134" x2="246" y2="172" stroke="#C5A059" strokeOpacity="0.2" />
         <g fontSize="9" letterSpacing="1.4" textAnchor="middle" fill="#9FB1CC">
           <text x="93" y="158">CUT</text>
           <text x="209" y="152">REVERSE DIET</text>
@@ -194,12 +194,12 @@ function CruisePreview() {
         </g>
 
         {/* cut: the descent to the target */}
-        <path d="M14,18 C72,22 124,68 172,114" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M14,18 C72,22 124,68 172,114" fill="none" stroke="#C5A059" strokeWidth="2.5" strokeLinecap="round" />
 
         {/* touchdown marker */}
-        <circle cx="172" cy="114" r="4.5" fill="none" stroke="#D4AF37" strokeWidth="1.5" />
-        <circle cx="172" cy="114" r="2" fill="#D4AF37" />
-        <text x="166" y="132" textAnchor="end" fontSize="9" fill="#F1DC9A">Touchdown</text>
+        <circle cx="172" cy="114" r="4.5" fill="none" stroke="#C5A059" strokeWidth="1.5" />
+        <circle cx="172" cy="114" r="2" fill="#C5A059" />
+        <text x="166" y="132" textAnchor="end" fontSize="9" fill="#C5A059">Touchdown</text>
 
         {/* Scale Shield: the first 10 days after touchdown (10 of the reverse diet's 42 days) */}
         <rect x="172" y="60" width="17.6" height="64" fill="#38BDF8" fillOpacity="0.1" />
@@ -208,16 +208,16 @@ function CruisePreview() {
         <text x="174" y="44" fontSize="7.5" fill="#7DD3FC" fillOpacity="0.75">10 DAYS</text>
 
         {/* Rebound Shield: the six-week reverse diet */}
-        <line x1="172" y1="78" x2="246" y2="78" stroke="#F1DC9A" strokeWidth="1.5" strokeOpacity="0.9" />
-        <line x1="172" y1="74" x2="172" y2="82" stroke="#F1DC9A" strokeOpacity="0.9" />
-        <line x1="246" y1="74" x2="246" y2="82" stroke="#F1DC9A" strokeOpacity="0.9" />
-        <text x="246" y="72" textAnchor="end" fontSize="8.5" fill="#F1DC9A">Rebound Shield</text>
+        <line x1="172" y1="78" x2="246" y2="78" stroke="#C5A059" strokeWidth="1.5" strokeOpacity="0.9" />
+        <line x1="172" y1="74" x2="172" y2="82" stroke="#C5A059" strokeOpacity="0.9" />
+        <line x1="246" y1="74" x2="246" y2="82" stroke="#C5A059" strokeOpacity="0.9" />
+        <text x="246" y="72" textAnchor="end" fontSize="8.5" fill="#C5A059">Rebound Shield</text>
 
         {/* calories stepping back up, one step at each of six Sunday Audits */}
         <motion.path
           d="M172,96 h12.3 v-2.2 h12.3 v-1.5 h12.3 v-1.5 h12.3 v-1.5 h12.3 v-1.5 h12.5"
           fill="none"
-          stroke="#F1DC9A"
+          stroke="#C5A059"
           strokeWidth="1.6"
           strokeOpacity="0.9"
           initial={{ pathLength: 0 }}
@@ -227,8 +227,8 @@ function CruisePreview() {
         />
 
         {/* body weight after touchdown: an example line inside the corridor */}
-        <path d="M172,114 C190,112.5 206,115 224,112 C234,110.6 240,111.5 246,111" fill="none" stroke="#D4AF37" strokeWidth="2.5" strokeLinecap="round" />
-        <path d="M246,111 C262,110 280,113 298,111.5 C312,110.5 322,111.5 330,111" fill="none" stroke="#D4AF37" strokeWidth="2" strokeDasharray="1 5" strokeLinecap="round" />
+        <path d="M172,114 C190,112.5 206,115 224,112 C234,110.6 240,111.5 246,111" fill="none" stroke="#C5A059" strokeWidth="2.5" strokeLinecap="round" />
+        <path d="M246,111 C262,110 280,113 298,111.5 C312,110.5 322,111.5 330,111" fill="none" stroke="#C5A059" strokeWidth="2" strokeDasharray="1 5" strokeLinecap="round" />
       </svg>
 
       <div className="mt-1 flex flex-wrap justify-center gap-x-4 gap-y-1 text-[10px] text-white/45">
@@ -272,13 +272,13 @@ function BurnPreview() {
       <div className="app-panel">
         <div className="flex items-center gap-2">
           <h4 className="app-panel-h flex-1">LOG WORKOUT</h4>
-          <span aria-hidden className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-[10px] border-[0.5px] border-[#d4af37]/45 bg-white/[0.04]">
+          <span aria-hidden className="flex h-[46px] w-[46px] flex-none items-center justify-center rounded-[10px] border-[0.5px] border-[#C5A059]/45 bg-white/[0.04]">
             <MicIcon size={24} />
           </span>
         </div>
         <p className="mb-2 font-appmono text-[10.5px] text-[#aab5c6]">Say it: &quot;Cardio, 30 minutes, medium&quot;</p>
 
-        <div role="radiogroup" aria-label="Workout type" className="mb-3 flex gap-[2px] rounded-full border border-[#d4af37]/[0.22] bg-white/[0.04] p-[3px]">
+        <div role="radiogroup" aria-label="Workout type" className="mb-3 flex gap-[2px] rounded-full border border-[#C5A059]/[0.22] bg-white/[0.04] p-[3px]">
           {(["RESISTANCE", "CARDIO"] as const).map((k) => (
             <button
               key={k}
@@ -310,7 +310,7 @@ function BurnPreview() {
             onBlur={() => setMinText(minutes ? String(minutes) : "")}
             inputMode="numeric"
             aria-label="Duration in minutes"
-            className="w-full rounded-lg border border-[#d4af37]/[0.22] bg-white/[0.03] px-[11px] py-[9px] font-appmono text-[15px] text-white tabular-nums outline-none focus:border-[#f0d878]"
+            className="w-full rounded-lg border border-[#C5A059]/[0.22] bg-white/[0.03] px-[11px] py-[9px] font-appmono text-[15px] text-white tabular-nums outline-none focus:border-[#C5A059]"
           />
         </label>
 
@@ -328,7 +328,7 @@ function BurnPreview() {
                   touch();
                 }}
                 className={`flex-1 rounded-lg border px-1 py-2.5 font-app text-[11px] font-medium tracking-[0.06em] transition-colors ${
-                  level === lv ? "border-[#f0d878] bg-[#d4af37] text-white" : "border-[#d4af37]/20 bg-[#1b3152] text-[#aab5c6] hover:text-white"
+                  level === lv ? "border-[#C5A059] bg-[#C5A059] text-white" : "border-[#C5A059]/20 bg-[#1b3152] text-[#aab5c6] hover:text-white"
                 }`}
               >
                 {lv}
@@ -342,7 +342,7 @@ function BurnPreview() {
           type="button"
           onClick={log}
           disabled={minutes <= 0}
-          className="block w-full rounded-[10px] bg-[#d4af37] p-[13px] font-app text-[12.5px] font-bold tracking-[0.08em] text-[#0b0b0b] transition-colors active:bg-[#f0d878] disabled:cursor-not-allowed disabled:border disabled:border-[#3a4049] disabled:bg-[#2c313a] disabled:text-[#7a838e]"
+          className="block w-full rounded-[10px] bg-[#C5A059] p-[13px] font-app text-[12.5px] font-bold tracking-[0.08em] text-[#0b0b0b] transition-colors active:bg-[#C5A059] disabled:cursor-not-allowed disabled:border disabled:border-[#3a4049] disabled:bg-[#2c313a] disabled:text-[#7a838e]"
         >
           LOG WORKOUT
         </button>
@@ -353,9 +353,9 @@ function BurnPreview() {
           <h4 className="app-panel-h">LOGGED WORKOUTS</h4>
           <ul>
             {logged.map((w, i) => (
-              <li key={i} className="flex items-center justify-between border-b border-[#d4af37]/[0.12] py-2.5 last:border-b-0">
+              <li key={i} className="flex items-center justify-between border-b border-[#C5A059]/[0.12] py-2.5 last:border-b-0">
                 <span className="font-app text-[13px] text-[#eaeef6]">{w.kind === "RESISTANCE" ? "Resistance training" : "Cardio"}</span>
-                <span className="font-appmono text-[12px] tabular-nums text-[#f0d878]">
+                <span className="font-appmono text-[12px] tabular-nums text-[#C5A059]">
                   {w.min} min · {w.level.charAt(0) + w.level.slice(1).toLowerCase()}
                 </span>
               </li>
@@ -387,7 +387,7 @@ function DirectivePreview() {
   // Only the FOOD part comes off what you eat; the ACTIVITY part is walked.
   const target = LAST_WEEK_TARGET - food;
   const lever = (label: string, value: number, onChange: (v: number) => void, aria: string, first: boolean) => (
-    <div className={first ? "pt-1" : "mt-4 border-t border-[#d4af37]/[0.14] pt-4"}>
+    <div className={first ? "pt-1" : "mt-4 border-t border-[#C5A059]/[0.14] pt-4"}>
       <div className="mb-1 flex items-baseline justify-between">
         <span className="font-app text-[12px] font-bold text-white">{label}</span>
         <span className="font-appmono text-[14px] tabular-nums text-[#C5A059]">−{value} KCAL</span>
@@ -415,7 +415,7 @@ function DirectivePreview() {
 
       <div className="app-panel mt-4">
         <div className="mb-2 flex min-h-[28px] items-center justify-between gap-2">
-          <span className="font-appmono text-[10px] tracking-[0.16em] text-[#d4af37]">DEFICIT ALLOCATION</span>
+          <span className="font-appmono text-[10px] tracking-[0.16em] text-[#C5A059]">DEFICIT ALLOCATION</span>
           <button
             type="button"
             onClick={() => setUnlocked((v) => !v)}
@@ -444,7 +444,7 @@ function DirectivePreview() {
         <div className={`transition-opacity ${unlocked ? "" : "opacity-40"}`}>
           {lever("FOOD", food, setFood, "Calories cut from food each day", true)}
           {lever("ACTIVITY", activity, (v) => setFood(WEEKLY_CUT - v), "Calories burned through added daily steps", false)}
-          <p className="mt-2 font-app text-[12.5px] tracking-[0.02em] text-[#f0d878]">+{steps.toLocaleString("en-US")} · Added daily steps above baseline</p>
+          <p className="mt-2 font-app text-[12.5px] tracking-[0.02em] text-[#C5A059]">+{steps.toLocaleString("en-US")} · Added daily steps above baseline</p>
         </div>
 
         <div className="mt-3.5 flex items-center justify-between gap-2 border-t border-[#1E356D] pt-3.5 font-appmono text-[10px] font-bold tracking-[0.1em] text-[#8E9EB5]">

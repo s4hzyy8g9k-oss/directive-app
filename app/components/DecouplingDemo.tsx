@@ -183,9 +183,9 @@ export default function DecouplingDemo() {
         >
           <defs>
             <linearGradient id="dd-gold" x1="0" x2="1" y1="0" y2="0">
-              <stop offset="0" stopColor="#A8862A" />
-              <stop offset="0.6" stopColor="#D4AF37" />
-              <stop offset="1" stopColor="#F6E7B4" />
+              <stop offset="0" stopColor="#7a5f22" />
+              <stop offset="0.6" stopColor="#C5A059" />
+              <stop offset="1" stopColor="#C5A059" />
             </linearGradient>
             <linearGradient id="dd-cyan" x1="0" x2="0" y1="0" y2="1">
               <stop offset="0" stopColor="#38BDF8" stopOpacity="0.55" />
@@ -229,30 +229,30 @@ export default function DecouplingDemo() {
 
           {/* future region */}
           <rect x={todayX} y={G.t} width={endX - todayX} height={plotH} fill="url(#dd-future)" />
-          <line x1={todayX} x2={todayX} y1={G.t - 6} y2={G.t + plotH} stroke="#F1DC9A" strokeOpacity="0.35" strokeDasharray="2 5" />
-          <text x={todayX + 6} y={G.t + G.fs * 0.4} fontSize={G.fs} fill="#F1DC9A" fillOpacity="0.7">
+          <line x1={todayX} x2={todayX} y1={G.t - 6} y2={G.t + plotH} stroke="#C5A059" strokeOpacity="0.35" strokeDasharray="2 5" />
+          <text x={todayX + 6} y={G.t + G.fs * 0.4} fontSize={G.fs} fill="#C5A059" fillOpacity="0.7">
             Today
           </text>
 
           {/* prescribed runway (phase 4) */}
           <motion.g initial={false} animate={{ opacity: phase >= 4 ? 1 : 0 }} transition={{ duration: 1.6 }}>
-            <path d={paths.corridor} fill="#D4AF37" fillOpacity="0.13" />
+            <path d={paths.corridor} fill="#C5A059" fillOpacity="0.13" />
             <line
               x1={x(0)}
               y1={y(targetAt(0))}
               x2={endX}
               y2={endY}
-              stroke="#F1DC9A"
+              stroke="#C5A059"
               strokeOpacity="0.4"
               strokeWidth={compact ? 2 : 1.5}
               strokeDasharray="6 7"
             />
             <path d={paths.forecast} fill="none" stroke="url(#dd-gold)" strokeWidth={compact ? 3 : 2.5} strokeDasharray="1 7" strokeLinecap="round" />
-            <circle cx={endX} cy={endY} r={compact ? 11 : 9} fill="none" stroke="#D4AF37" strokeWidth="1.5" />
-            <circle cx={endX} cy={endY} r={3} fill="#D4AF37" />
-            <line x1={endX - 16} x2={endX + 16} y1={endY} y2={endY} stroke="#D4AF37" strokeOpacity="0.6" />
-            <line x1={endX} x2={endX} y1={endY - 16} y2={endY + 16} stroke="#D4AF37" strokeOpacity="0.6" />
-            <text x={endX - 18} y={endY + (compact ? 38 : 30)} textAnchor="end" fontSize={G.fs} fill="#F1DC9A">
+            <circle cx={endX} cy={endY} r={compact ? 11 : 9} fill="none" stroke="#C5A059" strokeWidth="1.5" />
+            <circle cx={endX} cy={endY} r={3} fill="#C5A059" />
+            <line x1={endX - 16} x2={endX + 16} y1={endY} y2={endY} stroke="#C5A059" strokeOpacity="0.6" />
+            <line x1={endX} x2={endX} y1={endY - 16} y2={endY + 16} stroke="#C5A059" strokeOpacity="0.6" />
+            <text x={endX - 18} y={endY + (compact ? 38 : 30)} textAnchor="end" fontSize={G.fs} fill="#C5A059">
               170.0 lb · Nov 15
             </text>
           </motion.g>
@@ -285,7 +285,7 @@ export default function DecouplingDemo() {
           <motion.path
             d={paths.gold}
             fill="none"
-            stroke="#D4AF37"
+            stroke="#C5A059"
             strokeWidth={compact ? 10 : 8}
             strokeOpacity="0.35"
             filter="url(#dd-glow)"
@@ -321,7 +321,7 @@ export default function DecouplingDemo() {
             )}
             <circle cx={todayX} cy={spikeY} r={G.dot * 1.5} fill={phase === 1 ? "#F87171" : phase >= 2 ? "#38BDF8" : "#fff"} />
           </motion.g>
-          {phase >= 3 && <circle cx={todayX} cy={dryY} r={G.dot * 1.6} fill="#D4AF37" stroke="#02040C" strokeWidth="2" />}
+          {phase >= 3 && <circle cx={todayX} cy={dryY} r={G.dot * 1.6} fill="#C5A059" stroke="#02040C" strokeWidth="2" />}
 
           {/* spike label */}
           <AnimatePresence>
@@ -360,8 +360,8 @@ export default function DecouplingDemo() {
           <AnimatePresence>
             {phase >= 4 && (
               <motion.g initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                <rect x={todayX - (compact ? 164 : 138)} y={dryY + 14} width={compact ? 150 : 124} height={compact ? 34 : 26} rx={compact ? 17 : 13} fill="#02040C" stroke="#D4AF37" strokeOpacity="0.6" />
-                <text x={todayX - (compact ? 89 : 76)} y={dryY + (compact ? 37 : 31.5)} textAnchor="middle" fontSize={G.fs} fill="#F1DC9A">
+                <rect x={todayX - (compact ? 164 : 138)} y={dryY + 14} width={compact ? 150 : 124} height={compact ? 34 : 26} rx={compact ? 17 : 13} fill="#02040C" stroke="#C5A059" strokeOpacity="0.6" />
+                <text x={todayX - (compact ? 89 : 76)} y={dryY + (compact ? 37 : 31.5)} textAnchor="middle" fontSize={G.fs} fill="#C5A059">
                   +0.8 lb vs plan
                 </text>
               </motion.g>

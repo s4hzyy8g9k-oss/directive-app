@@ -97,14 +97,14 @@ export function VisualLog() {
 
   const column = (title: string, items: Item[], first: boolean) => (
     <div className={`min-w-0 ${first ? "" : "-ml-2 border-l border-[#1E356D] pl-2"}`}>
-      <div className="mb-[5px] border-b border-[#d4af37]/[0.18] pb-1.5 font-appmono text-[10.5px] tracking-[0.16em] text-[#f0d878] sm:text-[11px]">{title}</div>
+      <div className="mb-[5px] border-b border-[#C5A059]/[0.18] pb-1.5 font-appmono text-[10.5px] tracking-[0.16em] text-[#C5A059] sm:text-[11px]">{title}</div>
       {items.map((it) => {
         const v = texts[it.key] ?? "";
         const on = count(it.key) > 0;
         return (
           <div key={it.key} className="flex items-center justify-between gap-1 border-b border-[#1E356D] py-2 last:border-b-0">
             <button type="button" onClick={() => add(it.key)} aria-label={`Add a portion of ${it.label}`} className="flex min-w-0 flex-1 items-center gap-1 text-left active:scale-[0.98]">
-              <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] flex-none" fill="none" stroke={it.key === "lean" || it.key === "fatty" ? "#34D399" : "#d4af37"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
+              <svg viewBox="0 0 24 24" className="h-[15px] w-[15px] flex-none" fill="none" stroke={it.key === "lean" || it.key === "fatty" ? "#34D399" : "#C5A059"} strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
                 {it.circle && <circle cx="12" cy="12" r="7" />}
                 {it.d.map((d) => (
                   <path key={d} d={d} />
@@ -122,8 +122,8 @@ export function VisualLog() {
               onBlur={() => set(it.key, count(it.key) ? one(count(it.key)) : "")}
               aria-label={`${it.label} portions`}
               style={{ width: Math.max(1, v.length) * 9 + 15 }}
-              className={`flex-none rounded-md border bg-[#14244D] px-[2px] py-1.5 text-center font-appmono text-[14px] text-white tabular-nums outline-none placeholder:text-[#8797b3] focus:border-[#f0d878] sm:text-[15px] ${
-                on ? "border-[#f0d878] font-bold" : "border-[#2A437E]"
+              className={`flex-none rounded-md border bg-[#14244D] px-[2px] py-1.5 text-center font-appmono text-[14px] text-white tabular-nums outline-none placeholder:text-[#8797b3] focus:border-[#C5A059] sm:text-[15px] ${
+                on ? "border-[#C5A059] font-bold" : "border-[#2A437E]"
               }`}
             />
           </div>
@@ -149,7 +149,7 @@ export function VisualLog() {
           setRestaurant((r) => !r);
           setLogged(false);
         }}
-        className="mt-2.5 flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-[#d4af37]/[0.18] bg-white/[0.03] p-3 text-left"
+        className="mt-2.5 flex w-full items-center justify-between gap-2.5 rounded-[10px] border border-[#C5A059]/[0.18] bg-white/[0.03] p-3 text-left"
       >
         <span className="min-w-0">
           <span className="font-app text-[12.5px] text-[#eaeef6]">Restaurant Meal</span>
@@ -158,8 +158,8 @@ export function VisualLog() {
         <AppSwitchKnob on={restaurant} />
       </button>
 
-      <div className="mt-3 rounded-lg border border-[#d4af37]/20 bg-white/[0.03] px-3 py-2.5 text-center font-appmono tracking-[0.03em]">
-        <div className="text-[12px] font-bold leading-snug text-[#f0d878] sm:text-[13px]">ESTIMATED FUEL: {kcal.toLocaleString("en-US")} KCAL</div>
+      <div className="mt-3 rounded-lg border border-[#C5A059]/20 bg-white/[0.03] px-3 py-2.5 text-center font-appmono tracking-[0.03em]">
+        <div className="text-[12px] font-bold leading-snug text-[#C5A059] sm:text-[13px]">ESTIMATED FUEL: {kcal.toLocaleString("en-US")} KCAL</div>
         <div className="mt-1 text-[9.5px] leading-normal text-[#aab5c6] sm:text-[10px]">
           P: {one(r1(totals.p))}g | C: {one(carbs)}g | F: {one(fat)}g | Fluid: {one(r1(totals.oz))} oz
         </div>
@@ -173,7 +173,7 @@ export function VisualLog() {
           logged
             ? "bg-[#8fe0b3]/20 text-[#8fe0b3]"
             : any
-              ? "bg-[#d4af37] text-[#0b0b0b] active:bg-[#f0d878]"
+              ? "bg-[#C5A059] text-[#0b0b0b] active:bg-[#C5A059]"
               : "cursor-not-allowed border border-[#3a4049] bg-[#2c313a] text-[#7a838e]"
         }`}
       >

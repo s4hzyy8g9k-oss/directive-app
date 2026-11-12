@@ -52,7 +52,7 @@ export default function Starfield() {
       for (const s of stars) {
         const tw = reduce ? 1 : 0.55 + 0.45 * Math.sin(t * s.speed + s.phase);
         ctx.globalAlpha = s.a * tw;
-        ctx.fillStyle = s.gold ? "#F1DC9A" : "#DCE6F5";
+        ctx.fillStyle = s.gold ? "#C5A059" : "#DCE6F5";
         ctx.beginPath();
         ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
         ctx.fill();
@@ -75,8 +75,8 @@ export default function Starfield() {
         if (shooting) {
           const s = shooting;
           const grad = ctx.createLinearGradient(s.x, s.y, s.x - s.vx * 14, s.y - s.vy * 14);
-          grad.addColorStop(0, `rgba(241,220,154,${0.8 * s.life})`);
-          grad.addColorStop(1, "rgba(241,220,154,0)");
+          grad.addColorStop(0, `rgba(197, 160, 89,${0.8 * s.life})`);
+          grad.addColorStop(1, "rgba(197, 160, 89,0)");
           ctx.globalAlpha = 1;
           ctx.strokeStyle = grad;
           ctx.lineWidth = 1.2;
