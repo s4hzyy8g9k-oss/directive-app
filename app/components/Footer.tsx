@@ -34,8 +34,9 @@ export default function Footer() {
             <Link href="/consumer-health-data-privacy-policy" className="text-[13px] text-champagne/90 underline decoration-gold/40 underline-offset-2 hover:text-white">
               {footer.healthPolicyLink}
             </Link>
-            <div className="flex gap-6">
+            <div className="flex flex-wrap gap-x-6 gap-y-2 sm:justify-end">
               <Link href="/privacy" className="text-[13px] text-white/55 hover:text-white">Privacy Policy</Link>
+              <Link href="/delete-account" className="text-[13px] text-white/55 hover:text-white">Delete Account</Link>
               <Link href="/terms" className="text-[13px] text-white/55 hover:text-white">Terms of Service</Link>
               <Link href="/support" className="text-[13px] text-white/55 hover:text-white">Support</Link>
             </div>
