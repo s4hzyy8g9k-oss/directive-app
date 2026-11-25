@@ -116,8 +116,9 @@ export const pillars = {
     },
     {
       title: "Built for adults, not for streaks",
-      // Reworded 2026-10-12 (owner): the app has no late-evening badge and no standby mode. It sends no reminders at all.
-      body: "No guilt, no streaks, no mid-day nags asking if you drank water. Directive sends no reminders at all. Miss a day, or take a week off, and nothing scolds you. Log in again with your updated weight and it picks up from where you left off.",
+      // Reworded 2026-10-12 (owner): no late-evening badge, no standby mode. 2026-11-25: the app now has two opt-in reminders
+      // (Sunday weekly briefing ready, weigh-in), both off by default and sent from the phone itself.
+      body: "No guilt, no streaks, no mid-day nags asking if you drank water. Reminders are off unless you turn them on, and there are only two: your Sunday weekly briefing is ready, and time to weigh in. Miss a day, or take a week off, and nothing scolds you. Log in again with your updated weight and it picks up from where you left off.",
     },
     {
       title: "Bring your numbers to your appointment",
