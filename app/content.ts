@@ -270,3 +270,12 @@ export const supportTopics = [
   "Subscriptions",
   "Other",
 ] as const;
+
+// App store links. Every download link on the site, and in videos and posts, should point to /download, which sends
+// iPhone and iPad visitors to the App Store and Android visitors to Google Play, and shows both buttons on a computer.
+// appStore stays empty until the App Store listing is public; until then iPhone visitors see the /download page.
+// googlePlay uses the Android package name (assumed to match the iPhone bundle id; check against Play Console).
+export const stores = {
+  appStore: "",
+  googlePlay: "https://play.google.com/store/apps/details?id=com.directivefitness.directive",
+};
