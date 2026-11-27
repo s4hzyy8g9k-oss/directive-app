@@ -6,6 +6,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
   return [
     { path: "/", priority: 1 },
     { path: "/support", priority: 0.5 },
+    { path: "/download", priority: 0.6 },
     { path: "/privacy", priority: 0.3 },
     { path: "/terms", priority: 0.3 },
     { path: "/consumer-health-data-privacy-policy", priority: 0.3 },

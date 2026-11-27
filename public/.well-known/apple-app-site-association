@@ -1,11 +1,7 @@
 {
   "applinks": {
-    "apps": [],
     "details": [
-      {
-        "appID": "TEAMID.com.directive.app",
-        "paths": ["/app/*", "/invite/*", "/charter/*"]
-      }
+      { "appIDs": ["Z8ZHCUUPU6.com.directivefitness.directive"], "components": [{ "/": "/r/*" }] }
     ]
   }
 }
